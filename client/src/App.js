@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Board from './components/GameComponents/Board';
 
 function App() {
   const socket = io('http://localhost:5001');
@@ -17,9 +18,12 @@ function App() {
   socket.emit('send-message', 'Hello from the client')
 
   return (
-    <>
-      <div className="px-10 text-gray-500 font-bold mb-2">Hello world!</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<div>Hello world!</div>}></Route>
+        <Route path='/game' element={<Board />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
