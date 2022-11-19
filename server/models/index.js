@@ -2,22 +2,20 @@
 const { User } = require('../db/db.js')
 
 module.exports = {
-  test: async (callback) => {
+  createUser: async (user) => {
     try {
-      callback(null, 'Success in model')
+      const filter = {firebase_id: user.firebaseId};
+      return await User.findOneAndUpdate(filter, user, {upsert: true})
     } catch (error) {
-      callback(error, null);
+      return error
     }
   },
-  postTest: async (body, callback) => {
+  getUserData: async (user) => {
     try {
-      const filter = {email: body.email};
-
-      const result = await User.findOneAndUpdate(filter, body, {upsert: true})
-
-      callback(null, result);
+      const filter = {'firebase_id': user.firebaseId}
+      return await User.find(filter)
     } catch (error) {
-      callback(error, null);
+      return error
     }
   }
 }
