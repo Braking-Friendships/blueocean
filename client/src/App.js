@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Board from './components/GameComponents/Board';
+import NavBar from './components/landingPageComponents/NavBar';
+import LandingPage from './components/landingPageComponents/LandingPage';
 
 function App() {
   const socket = io('http://localhost:5001');
@@ -19,8 +21,9 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
-        <Route path='/' element={<div>Hello world!</div>}></Route>
+        <Route path='/' element={<LandingPage />}></Route>
         <Route path='/game' element={<Board />}></Route>
       </Routes>
     </BrowserRouter>
