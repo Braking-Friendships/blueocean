@@ -11,6 +11,7 @@ function App() {
   const [userInfo, setUserInfo] = useState();
 
   const getUserData = async (user) => {
+    return "User info received"
     /// EMIT USERDATA TO SOCKET
     /// RECEIVE USERDATA FROM SOCKET
     // let userData = await axios.get(`/api/login/${user.firebaseId}`, {params: user});
@@ -21,6 +22,7 @@ function App() {
   };
 
   const createNewUser = async (user) => {
+    return "User created"
     // let userDataPost = await axios.post(`/api/signup/${user.firebaseId}`, {params: user});
     // if (userDataPost) {
     //   let userData = await axios.get(`/api/login/${user.firebaseId}`, {params: user});
