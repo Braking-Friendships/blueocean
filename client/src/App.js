@@ -6,12 +6,14 @@ import Board from './components/GameComponents/Board';
 import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login/Login';
 import Signup from './components/Login/Signup';
+import NavBar from './components/landingPageComponents/NavBar';
+import LandingPage from './components/landingPageComponents/LandingPage';
+
 
 const socket = io('http://localhost:5001');
 socket.on('connect', () => {
   console.log(`You connected with id: ${socket.id}`);
 })
-
 function App() {
   const [userInfo, setUserInfo] = useState();
 
@@ -34,8 +36,9 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
-        <Route path='/' element={<div>Hello world!</div>}></Route>
+        <Route path='/' element={<LandingPage />}></Route>
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
