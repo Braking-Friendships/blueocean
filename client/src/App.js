@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect } from 'react';
+import Card from './components/GameComponents/Card';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <div className="px-10 text-gray-500 font-bold mb-2">Hello world!</div>
+      <Card />
     </>
   );
 }
