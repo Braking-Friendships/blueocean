@@ -9,6 +9,7 @@ import Signup from './components/Login/Signup';
 import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
+import UserProfile from './components/profile/UserProfile';
 
 
 const socket = io('http://localhost:5001');
@@ -44,6 +45,7 @@ function App() {
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
+        <Route path='/profile' element={<UserProfile socket={socket}/>}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
       </Routes>
     </>
