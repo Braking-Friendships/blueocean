@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
 return (
-    <nav className='flex justify-between text-white bg-[#3D405B] p-3'>
+    <nav className='flex justify-between text-white bg-[#3D405B] p-3 absolute w-screen'>
       <a href='/'>Braking Friendships</a>
       <ul className='flex gap-3'>
         <li>
