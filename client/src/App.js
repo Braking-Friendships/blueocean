@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Board from './components/GameComponents/Board';
 import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login/Login';
@@ -15,6 +15,7 @@ socket.on('connect', () => {
   console.log(`You connected with id: ${socket.id}`);
 })
 function App() {
+  const location = useLocation();
   const [userInfo, setUserInfo] = useState();
 
   const getUserData = async (user) => {
@@ -35,15 +36,15 @@ function App() {
   })
 
   return (
-    <BrowserRouter>
-      <NavBar />
+    <>
+      {location.pathname !== '/game' ? <NavBar /> : null}
       <Routes>
         <Route path='/' element={<LandingPage />}></Route>
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
