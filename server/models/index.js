@@ -4,7 +4,7 @@ const { User } = require('../db/db.js')
 module.exports = {
   createUser: async (user) => {
     try {
-      const filter = {firebase_id: user.firebaseId, username: user.username};
+      const filter = {firebase_id: user.firebaseId};
       return await User.findOneAndUpdate(filter, user, {upsert: true})
     } catch (error) {
       return error

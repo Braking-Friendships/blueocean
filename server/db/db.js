@@ -15,6 +15,12 @@ const userSchema = mongoose.Schema({
   email: String,
   firebase_id: String,
   username: String,
+  firstName: String,
+  lastName: String,
+  avatar: {
+    type: String,
+    default: '',
+  },
   friends: [String],
   total_games: {
     type: Number,
