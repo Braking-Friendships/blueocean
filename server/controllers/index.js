@@ -1,24 +1,20 @@
 const models = require('../models');
 
 module.exports.controller = {
-  test: (req, res) => {
-    models.test((err, data) => {
-      if (err) {
-        console.log('Error in test get', err)
-        res.status(404).end();
-      }
-      console.log(data)
-      res.status(200).send(data);
-    })
+  createUser: (user) => {
+    return models.createUser(user)
+      .then(result => {
+        console.log('User created')
+        return result
+      })
+      .catch(error => console.log('Error creating user'))
   },
-  postTest: (req, res) => {
-    models.postTest(req.body, (err, data) => {
-      if (err) {
-        console.log('Error in posting', err)
-        res.status(404).end();
-      }
-      console.log(data)
-      res.status(201).end();
-    })
+  getUserData: (user) => {
+    return models.getUserData(user)
+      .then(result => {
+        console.log(result, 'result in controller')
+        return result
+      })
+      .catch(error => console.log(error))
   }
 }
