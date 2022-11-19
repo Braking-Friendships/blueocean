@@ -1,11 +1,13 @@
 import react from 'react';
-
+import NavBar from './NavBar.jsx'
 
 const LandingPage = () => {
   return (
     <div>
-      this is the landing page
-      {/* <NavBar /> */}
+      <header>
+        Braking Friendships
+        <NavBar />
+      </header>
       {/* <GameNav /> */}
       {/* <Profile /> */}
     </div>
