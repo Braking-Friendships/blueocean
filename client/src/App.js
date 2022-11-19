@@ -1,22 +1,20 @@
 import axios from 'axios';
 import { useEffect } from 'react';
+import { io } from 'socket.io-client';
+
 
 function App() {
+  const socket = io('http://localhost:5001');
 
-  useEffect(() => {
-    axios.get('/api/test')
-      .then(result => console.log(result))
+  socket.on('connect', () => {
+    console.log(`You connected with id: ${socket.id}`);
+  })
 
-    axios.post('/api/test', {
-        email: 'email',
-        firebase_id: '',
-        username: '',
-        friends: [''],
-        total_games: 4,
-        total_wins: 4
-      })
-      .then(result => console.log(result))
-  }, [])
+  socket.on('receive-message', message => {
+    console.log(message)
+  })
+
+  socket.emit('send-message', 'Hello from the client')
 
   return (
     <>
