@@ -9,10 +9,10 @@ const LandingPage = () => {
       <div className='flex justify-evenly'>
         {/* <GameNav /> */}
         <div className='flex flex-col gap-4 justify-around'>
-        {/* bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded */}
-          <Link className='p-4 bg-[#81B29A] rounded h-16 w-80 text-xl text-center text-white font-bold hover:outline hover:outline-4 hover:outline-[#E07A5F] '> Host a Game </Link>
-          <button className='p-2 bg-[#81B29A] rounded w-80 h-16 text-xl text-white font-bold'> Join a Game </button>
-          <button className='p-2 bg-[#81B29A] rounded w-80 h-16 text-xl text-white font-bold'> Join a Random Game </button>
+        {/* bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded FROM JOSH */}
+          <Link className='p-4 bg-[#81B29A] rounded h-16 w-80 text-xl text-center text-white font-bold hover:outline hover:outline-4 hover:outline-[#E07A5F]'> Host a Game </Link>
+          <button className='p-2 bg-[#81B29A] rounded w-80 h-16 text-xl text-white font-bold hover:outline hover:outline-4 hover:outline-[#E07A5F]'> Join a Game </button>
+          <button className='p-2 bg-[#81B29A] rounded w-80 h-16 text-xl text-white font-bold hover:outline hover:outline-4 hover:outline-[#E07A5F]'> Join a Random Game </button>
         </div>
         {/* <Profile /> */}
         <div className='flex flex-col gap-4 justify-center'>

@@ -5,7 +5,7 @@ const NavBar = () => {
 return (
     <nav className='flex justify-between text-white bg-[#3D405B] p-3 absolute w-screen'>
       <a href='/'>Braking Friendships</a>
-      <ul className='flex gap-3'>
+      <ul className='flex gap-4 mr-4'>
         <li>
           <Link to='/profile'>Profile</Link>
         </li>
