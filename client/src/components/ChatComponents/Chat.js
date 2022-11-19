@@ -1,37 +1,17 @@
 import React from 'react';
-import {useState} from 'react';
 import ChatEntry from './ChatEntry.js';
-import {format} from 'date-fns';
 
 
 const Chat = (props) => {
-  const date = '2021-10-27T05:24:37.642Z';
-  console.log(date)
-  console.log(format(new Date(), "dd/MM/yyyy HH:mm:ss"))
+
+  let date = new Date().toISOString();
+  console.log(date, 'ISO')
   // const [messages, setMessages] = useState([]);
-  const messages = [{username: 'blah', isItMe: true, message: 'hello', date: date}, {username: 'blah', isItMe: false, message: 'hello', date: date}, {username: 'blah', isItMe: true, message: 'hello', date: date}, {username: 'blah', isItMe: false, message: 'hello', date: date}, {username: 'blah', isItMe: true, message: 'hello', date: date}, {username: 'blah', isItMe: false, message: 'hello', date: date}, {username: 'blah', isItMe: true, message: 'hello', date: date}, {username: 'blah', isItMe: true, message: 'hello', date: date}, {username: 'blah', isItMe: false, message: 'hello', date: date}, {username: 'blah', isItMe: false, message: 'hello', date: date}]
+  const messages = [{username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Josh', isItMe: false, message: 'hello', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hello', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: false, message: 'hello', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'hello', date: date}]
 
   return (
-    // <section id='chat'>
-    //   <div className='bg-[#F2CC8F] container mx-auto'>
 
-    //     <h1>Chat</h1>
-    //     {/* <!-- chat messages --> */}
-    //     <div className="">
-    //       <div id='' className=''>
-    //         {messages.map((mess, index) => (
-    //           <ChatEntry mess={mess} key={index} />
-    //         ))}
-    //       </div>
-    //       <hr></hr>
-    //     </div>
-
-    //   </div>
-    // </section>
-
-
-
-    <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 p-10">
+    <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-[#F4F1DE] text-gray-800 p-10">
 
       {/* <!-- Component Start --> */}
       <div className="flex flex-col flex-grow w-full max-w-xl bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden">
