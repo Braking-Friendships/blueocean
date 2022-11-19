@@ -3,36 +3,45 @@ import axios from 'axios';
 import UserProfileFriends from './UserProfileFriends';
 import madCat from '../../assets/avatars/madCat.png';
 import happyCat from '../../assets/avatars/happyCat.png';
+import sageCat from '../../assets/avatars/sageCat.png';
+import sneakyCat from '../../assets/avatars/sneakyCat.png';
+import tongueCat from '../../assets/avatars/tongueCat.png';
+import vampireCat from '../../assets/avatars/vampireCat.png';
+import unhappyCat from '../../assets/avatars/unhappyCat.png';
 
 const UserProfile = ({ socket }) => {
-  const [profile, setProfile] = useState({
-    username: 'Randy',
-    email: 'definitelyNotRandy@isRandy.com',
-    friends: ['!Randy', 'Randy++'],
-    total_wins: 1,
-    total_games: 7,
-    firebase_id: '2Phajn1cOASIM4jntQkZeAQwLUv2',
-    // avatar: madCat,
+  const [profile, setProfile] = useState(    {
+    _id: "6379627813a1460fe41c9dd0",
+    __v: 0,
+    firebase_id: '0.14438257512163855',
+    avatar: '/static/media/madCat.7ed8246f766244faa4f5.png',
+    email: 'HieuTest@gmail.com',
+    username: 'Hieu',
+    firstName: 'Hieu',
+    lastName: 'Ngo',
+    friends: [],
+    total_games: 0,
+    total_wins: 0,
   });
 
 
   // create fake user on click
-  const createUser = async () => {
-    console.log('create user clicked')
-    const fakeUserCreation = {
-      username: 'Not Randy',
-      email: 'definitelyNotRandy@isRandy.com',
-      friends: [],
-      firebaseId: Math.random().toString(),
-      firstName: 'Randy',
-      lastName: 'Not',
-      avatar: madCat
-    }
-    await socket.emit('create-user', fakeUserCreation)
-    socket.on('send-user-data', data => {
-      setProfile(data[0]);
-    })
-  }
+  // const createUser = async () => {
+  //   console.log('create user clicked')
+  //   const fakeUserCreation = {
+  //     username: 'Hieu',
+  //     email: 'HieuTest@gmail.com',
+  //     friends: [],
+  //     firebaseId: Math.random().toString(),
+  //     firstName: 'Hieu',
+  //     lastName: 'Ngo',
+  //     avatar: madCat
+  //   }
+  //   await socket.emit('create-user', fakeUserCreation)
+  //   socket.on('send-user-data', data => {
+  //     setProfile(data[0]);
+  //   })
+  // }
 
   // useEffect(() => {
   // socket.emit('get-user-data', 'Dave');
@@ -43,8 +52,8 @@ const UserProfile = ({ socket }) => {
   // setProfile(fakeProfile);
   // }, [])
 
-  console.log("~~~~ profile ~~~~")
-  console.log(profile)
+  // console.log("~~~~ profile ~~~~")
+  // console.log(profile)
 
   const calculateWinRate = () => {
     return ((profile.total_wins / profile.total_games) * 100).toFixed(2) + '%';
@@ -53,7 +62,7 @@ const UserProfile = ({ socket }) => {
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       {/* <div> */}
-      <h1 onClick={() => createUser()}>USER PROFILE</h1>
+      <h1>USER PROFILE</h1>
       <br />
 
       {!profile.avatar &&

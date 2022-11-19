@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
-const {controller} = require('./controllers/index.js');
+const { controller } = require('./controllers/index.js');
 const options = {
   cors: ['http://localhost:3000']
 };
@@ -15,6 +15,16 @@ io.on('connection', socket => {
 
   // SOCKET EMITTERS
   socket.emit('receive-message', 'hello this is from the server')
+
+  const setState = (gameState) => {
+    socket.ekGameState = gameState
+    console.log(socket.ekGameState)
+  }
+
+  const updateState = (currentState,) => {
+    // take in currentstate and change
+  }
+  socket.emit('')
 
 
   // SOCKET LISTENERS
@@ -33,6 +43,17 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
+  socket.on('start-game', async gameState => {
+    setState(gameState)
+    socket.emit('current-state', socket.ekGameState)
+  })
 })
 
-httpServer.listen(5001, () => console.log('Listening on 5001'));
+
+
+// UNCOMMENT AND RUN ONCE TO RECREATE DUMMY DATA
+// const { users } = require('./dummyData');
+// users.map(user => controller.createDummyData(user))
+
+
+  httpServer.listen(5001, () => console.log('Listening on 5001'));
