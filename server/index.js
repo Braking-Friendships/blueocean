@@ -16,6 +16,16 @@ io.on('connection', socket => {
   // SOCKET EMITTERS
   socket.emit('receive-message', 'hello this is from the server')
 
+  const setState = (gameState) => {
+    socket.ekGameState = gameState
+    console.log(socket.ekGameState)
+  }
+
+  const updateState = (currentState, ) => {
+    // take in currentstate and change
+  }
+  socket.emit('')
+
 
   // SOCKET LISTENERS
   socket.on('send-message', message => {
@@ -31,6 +41,10 @@ io.on('connection', socket => {
     const userData = await controller.getUserData(user)
     console.log(userData)
     socket.emit('send-user-data', userData)
+  })
+  socket.on('start-game', async gameState => {
+    setState(gameState)
+    socket.emit('current-state', socket.ekGameState)
   })
 })
 

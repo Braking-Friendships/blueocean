@@ -10,30 +10,55 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 
+// Josh: adding socket.js file to house all emitters
+import { socket, emitters } from './socket.js'
 
-const socket = io('http://localhost:5001');
-socket.on('connect', () => {
-  console.log(`You connected with id: ${socket.id}`);
-})
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
+  const [gameState, setGameState] = useState({
+    deck: [
+      {
+        type: 'bomb',
+        img: 'image tag'
+      }
+    ],
+    hand1: [
+      {
+        type: 'bomb',
+        img: 'image tag'
+      },
+      {
+        type: 'attack',
+        img: 'image tag'
+      }
+    ]
+  })
+
+  useEffect(() => {
+    emitters.startGame(gameState)
+  }, [])
 
   const getUserData = async (user) => {
     console.log(user)
-    socket.emit('get-user-data', user)
+    emitters.getUserData(user)
     return;
   };
 
   const createNewUser = async (user) => {
     console.log(user)
-    socket.emit('create-user', user)
+    emitters.createUser(user);
   };
 
   // SOCKET LISTENERS
   socket.on('send-user-data', data => {
     console.log('received data', data)
     setUserInfo(data[0])
+  })
+
+  socket.on('current-state', state => {
+    console.log(state)
+    setGameState(state)
   })
 
   return (
