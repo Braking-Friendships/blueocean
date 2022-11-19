@@ -51,8 +51,8 @@ const UserProfile = ({ socket }) => {
   // setProfile(fakeProfile);
   // }, [])
 
-  console.log("~~~~ profile ~~~~")
-  console.log(profile)
+  // console.log("~~~~ profile ~~~~")
+  // console.log(profile)
 
   const calculateWinRate = () => {
     return ((profile.total_wins / profile.total_games) * 100).toFixed(2) + '%';

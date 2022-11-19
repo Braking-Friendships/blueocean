@@ -10,8 +10,8 @@ module.exports = {
       username: 'Josh',
       lastName: 'Garza',
       friends: [],
-      total_games: 0,
-      total_wins: 0,
+      total_games: 9,
+      total_wins: 10,
     },
     {
       _id: "6379604113a1460fe41c9cd2",
@@ -23,8 +23,8 @@ module.exports = {
       username: 'Fernando',
       lastName: 'Gamboa',
       friends: [],
-      total_games: 0,
-      total_wins: 0,
+      total_games: 22,
+      total_wins: 30,
     },
     {
       _id: "6379606e13a1460fe41c9ce7",
@@ -36,8 +36,8 @@ module.exports = {
       username: 'Jonah',
       lastName: 'Choi',
       friends: [],
-      total_games: 0,
-      total_wins: 0,
+      total_games: 99,
+      total_wins: 99,
     },
     {
       _id: "6379624213a1460fe41c9db5",
@@ -49,8 +49,8 @@ module.exports = {
       username: 'Joe',
       lastName: 'Redmond',
       friends: [],
-      total_games: 0,
-      total_wins: 0,
+      total_games: 5,
+      total_wins: 7,
     },
     {
       _id: "6379626113a1460fe41c9dc4",
@@ -62,8 +62,8 @@ module.exports = {
       username: 'Eric',
       lastName: 'Pei',
       friends: [],
-      total_games: 0,
-      total_wins: 0,
+      total_games: 14,
+      total_wins: 19,
     },
     {
       _id: "6379627813a1460fe41c9dd0",
@@ -75,8 +75,8 @@ module.exports = {
       username: 'Hieu',
       lastName: 'Ngo',
       friends: [],
-      total_games: 0,
-      total_wins: 0,
+      total_games: 1,
+      total_wins: 99,
     }
   ]
 
