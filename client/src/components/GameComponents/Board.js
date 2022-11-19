@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
+import { socket, emitters } from '../../socket.js';
 
 const Board = () => {
   const [myHand, setMyHand] = useState([]);
@@ -19,6 +20,12 @@ const Board = () => {
     setP4L(decks.hand4.length);
     // setP5L(decks.hand5.length);
     setStackL(decks.deck.length);
+
+    emitters.startGame(decks);
+    emitters.playCard('hand1', decks.hand1[2].type, 2)
+    emitters.drawCard('hand1')
+    emitters.playerLoses('hand1')
+    emitters.endGame();
   }, []);
 
   const displayOtherHands = (count, side) => {

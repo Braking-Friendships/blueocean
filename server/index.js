@@ -18,11 +18,15 @@ io.on('connection', socket => {
 
   const setState = (gameState) => {
     socket.ekGameState = gameState
+    // set deck game state
+    // set each player hand
+    // emit each player's hand, other players hand count and count of deck to respective socket
     console.log('Setting game state: ', socket.ekGameState)
   }
 
-  const updateState = (currentState, ) => {
+  const updateState = (currentState, type) => {
     // take in currentstate and change
+    // switch case to check against type and update gamestate
   }
   socket.emit('')
 
@@ -52,12 +56,17 @@ io.on('connection', socket => {
     socket.emit('current-state', socket.ekGameState)
   })
   socket.on('end-game', () => {
-    console.log('before', socket.ekGameState)
     delete socket.ekGameState
-    console.log('after', socket.ekGameState)
+    console.log('Game over', socket.ekGameState)
   })
-  socket.on('play-card', (user, card) => {
-    console.log('User', user, 'Card', socket.ekGameState[user][card])
+  socket.on('play-card', (username, card, cardIdx) => {
+    console.log('User', username, 'Card', card, 'Card index', cardIdx)
+  })
+  socket.on('draw-card', (username) => {
+    console.log('drawing card:', username)
+  })
+  socket.on('player-loses', (username) => {
+    console.log(username, 'lost')
   })
 })
 
