@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
+import createDeck from '../../Tools/createDeck';
 
 const Board = () => {
   const [p1, setP1] = useState([]);
@@ -11,8 +12,10 @@ const Board = () => {
   const [stack, setStack] = useState();
 
   const startGame = () => {
-
+    console.log(createDeck(5));
   }
+  startGame();
+
   return (
 
     <div id="board" className='grid grid-cols-6 grid-rows-5 bg-black h-screen overflow-hidden'>
