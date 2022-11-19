@@ -4,8 +4,12 @@ import NavBar from './NavBar.js'
 const LandingPage = () => {
   return (
     <div>
-      this is the landing page
       {/* <GameNav /> */}
+      <div>
+        <button>Host a Game</button>
+        <button>Join a Game</button>
+        <button>Join a Random Game</button>
+      </div>
       {/* <Profile /> */}
     </div>
   )
