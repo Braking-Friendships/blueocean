@@ -16,20 +16,8 @@ const Login = ({ getUserData }) => {
       setError('');
       setLoading(true);
       const user = await login(emailRef.current.value, passwordRef.current.value);
-      const userInfo = await getUserData(user);
-      // if (user) {
-      //   const userInfo = await getUserData(user);
-      //   if (userRole) {
-      //     console.log('logging in as', userRole)
-      //     if (userRole === "Client") {
-      //       navigate('/client')
-      //     } else if (userRole === "Coach") {
-      //       navigate('/coach')
-      //     } else {
-      //       console.log('not loading')
-      //     }
-      //   }
-      // }
+      await getUserData(user);
+      navigate('/')
     } catch (err) {
       setError(err);
     }

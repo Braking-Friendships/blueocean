@@ -19,20 +19,9 @@ const Signup = ({ createNewUser }) => {
     try {
       setError('');
       setLoading(true);
-      let user = await signup(emailRef.current.value, passwordRef.current.value);
-      const newUserCreation = await createNewUser(user);
-      // if (user) {
-        // if (newUserCreation) {
-        //   console.log('signed up as', userType)
-        //   if (userType === 'Client') {
-        //     navigate('/client')
-        //   } else if (userType === 'Coach') {
-        //     navigate('/coach')
-        //   } else {
-        //     console.log('ERROR signing up')
-        //   }
-        // }
-      // }
+      const user = await signup(emailRef.current.value, passwordRef.current.value);
+      await createNewUser(user);
+      navigate('/')
     } catch (err) {
       setError(err);
     }

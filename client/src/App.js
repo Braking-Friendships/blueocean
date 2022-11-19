@@ -7,48 +7,38 @@ import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login/Login';
 import Signup from './components/Login/Signup';
 
+const socket = io('http://localhost:5001');
+socket.on('connect', () => {
+  console.log(`You connected with id: ${socket.id}`);
+})
+
 function App() {
   const [userInfo, setUserInfo] = useState();
 
   const getUserData = async (user) => {
-    return "User info received"
-    /// EMIT USERDATA TO SOCKET
-    /// RECEIVE USERDATA FROM SOCKET
-    // let userData = await axios.get(`/api/login/${user.firebaseId}`, {params: user});
-    // if (userData) {
-    //   setUserInfo(userData.data[0])
-    //   return userData.data[0];
-    // }
+    console.log(user)
+    socket.emit('get-user-data', user)
+    return;
   };
 
   const createNewUser = async (user) => {
-    return "User created"
-    // let userDataPost = await axios.post(`/api/signup/${user.firebaseId}`, {params: user});
-    // if (userDataPost) {
-    //   let userData = await axios.get(`/api/login/${user.firebaseId}`, {params: user});
-    //   setUserInfo(userData.data[0]);
-    //   return userData.data[0];
-    // }
+    console.log(user)
+    socket.emit('create-user', user)
   };
 
-
-
-  const socket = io('http://localhost:5001');
-  socket.on('connect', () => {
-    console.log(`You connected with id: ${socket.id}`);
+  // SOCKET LISTENERS
+  socket.on('send-user-data', data => {
+    console.log('received data', data)
+    setUserInfo(data[0])
   })
-  socket.on('receive-message', message => {
-    console.log(message)
-  })
-  socket.emit('send-message', 'Hello from the client')
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<div>Hello world!</div>}></Route>
         <Route path='/game' element={<Board />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/signup' element={<Signup />}></Route>
+        <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
+        <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
       </Routes>
     </BrowserRouter>
   );
