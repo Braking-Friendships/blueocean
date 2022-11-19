@@ -3,7 +3,7 @@ import lqTran from '../../assets/cards/lqTran.png';
 
 import { motion } from 'framer-motion';
 
-const PlayerCard = () => {
+const PlayerCard = ({ card }) => {
 
   const checkPlay = (event, info) => {
     console.log(info.point.x, info.point.y);
@@ -16,6 +16,9 @@ const PlayerCard = () => {
     onDragEnd={checkPlay}
     whileHover={{
       scale: 1.1
+    }}
+    whileTap={{
+      scale: 1
     }}
 
     >

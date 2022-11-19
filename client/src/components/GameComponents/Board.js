@@ -13,7 +13,6 @@ const Board = () => {
 
   useEffect(() => {
     let decks = createDeck(4);
-    console.log(decks)
     setMyHand(decks.hand1);
     setP2L(decks.hand2.length);
     setP3L(decks.hand3.length);
