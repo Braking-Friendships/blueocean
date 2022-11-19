@@ -14,9 +14,9 @@ const Board = () => {
 
   }
   return (
-    <div className='flex justify-center items-center justify-around'>
+    <div className='flex justify-center items-center justify-around h-screen '>
       <div className='flex-col justify-center items-center gap-8'><OtherCard orientation={90}/><OtherCard orientation={90}/></div>
-      <div className='flex-col'>
+      <div className='flex-col justify-between items-stretch h-full bg-black'>
         <div className='flex'><OtherCard /><OtherCard /></div>
         <div className='flex'><OtherCard stack={true} /><OtherCard /></div>
         <div className='flex'><PlayerCard isPlayer={true}/><PlayerCard isPlayer={true}/></div>

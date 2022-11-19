@@ -16,7 +16,7 @@ const PlayerCard = () => {
     onDragEnd={checkPlay}
 
     >
-      <img src={lqTran} width="250px" height="auto" className='pointer-events-none' alt="playing card" />
+      <img src={lqTran} width="200px" height="auto" className='pointer-events-none' alt="playing card" />
     </motion.div>
   )
 }
