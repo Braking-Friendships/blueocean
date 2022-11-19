@@ -10,5 +10,6 @@ export const emitters = {
   getUserData: (user) => socket.emit('get-user-data', user),
   createUser: (user) => socket.emit('create-user', user),
   startGame: (gameState) => socket.emit('start-game', gameState),
-  endGame: () => socket.emit('end-game')
+  endGame: () => socket.emit('end-game'),
+  playCard: (user, card) => socket.emit('play-card', user, card)
 }

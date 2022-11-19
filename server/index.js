@@ -56,6 +56,9 @@ io.on('connection', socket => {
     delete socket.ekGameState
     console.log('after', socket.ekGameState)
   })
+  socket.on('play-card', (user, card) => {
+    console.log('User', user, 'Card', socket.ekGameState[user][card])
+  })
 })
 
 httpServer.listen(5001, () => console.log('Listening on 5001'));

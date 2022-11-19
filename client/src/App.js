@@ -49,6 +49,7 @@ function App() {
   useEffect(() => {
     emitters.startGame(gameState)
     // emitters.endGame();
+    emitters.playCard('josh', 0)
   }, [])
 
   const getUserData = async (user) => {
