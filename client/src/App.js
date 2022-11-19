@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Board from './components/GameComponents/Board';
 import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login/Login';
+import Signup from './components/Login/Signup';
 
 function App() {
   const [userInfo, setUserInfo] = useState();
@@ -45,6 +46,7 @@ function App() {
         <Route path='/' element={<div>Hello world!</div>}></Route>
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login />}></Route>
+        <Route path='/signup' element={<Signup />}></Route>
       </Routes>
     </BrowserRouter>
   );

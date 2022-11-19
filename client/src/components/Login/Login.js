@@ -37,8 +37,8 @@ const Login = ({ getUserData }) => {
   };
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <form className="w-72 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
+    <div className="w-screen h-screen bg-[#F4F1DE] flex justify-center items-center">
+      <form className="w-72 bg-[#F2CC8F] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
         {/* <h2 className="w-48 text-3xl font-bold underline">Log in</h2> */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Email:</label>
@@ -49,13 +49,13 @@ const Login = ({ getUserData }) => {
           <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="password" ref={passwordRef} placeholder="password" />
         </div>
         <div className="mb-6 flex items-center justify-between">
-          <button className="bg-[#394D79] hover:bg-[#293757] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" disabled={loading} type="submit">Log in</button>
-          <div className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+          <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" disabled={loading} type="submit">Log in</button>
+          <div className="inline-block align-baseline font-bold text-sm text-[#1745E9]">
             <Link className="" to='/forgot-password'>Forgot password?</Link>
           </div>
         </div>
         <div className="">
-          Need an account? <Link className="font-bold text-sm text-blue-500 hover:text-blue-800" to='/signup'>Sign up</Link>
+          Need an account? <Link className="font-bold text-sm text-[#1745E9]" to='/signup'>Sign up</Link>
         </div>
         {error && console.log('error', {error})}
       </form>
