@@ -10,6 +10,7 @@ const OtherCard = ({ orientation,  }) => {
 
   return (
     <motion.div
+    className=' bg-blue-500'
     initial={false}
     animate={animate}
     >

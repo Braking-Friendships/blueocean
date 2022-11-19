@@ -14,9 +14,12 @@ const PlayerCard = () => {
     drag
     dragSnapToOrigin
     onDragEnd={checkPlay}
+    whileHover={{
+      scale: 1.1
+    }}
 
     >
-      <img src={lqTran} width="200px" height="auto" className='pointer-events-none' alt="playing card" />
+      <img src={lqTran} className='pointer-events-none w-52 h-auto' alt="playing card" />
     </motion.div>
   )
 }
