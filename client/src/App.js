@@ -24,7 +24,17 @@ function App() {
         img: 'image tag'
       }
     ],
-    hand1: [
+    josh: [
+      {
+        type: 'bomb',
+        img: 'image tag'
+      },
+      {
+        type: 'attack',
+        img: 'image tag'
+      }
+    ],
+    jonah: [
       {
         type: 'bomb',
         img: 'image tag'
@@ -38,6 +48,7 @@ function App() {
 
   useEffect(() => {
     emitters.startGame(gameState)
+    // emitters.endGame();
   }, [])
 
   const getUserData = async (user) => {

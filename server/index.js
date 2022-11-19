@@ -18,7 +18,7 @@ io.on('connection', socket => {
 
   const setState = (gameState) => {
     socket.ekGameState = gameState
-    console.log(socket.ekGameState)
+    console.log('Setting game state: ', socket.ekGameState)
   }
 
   const updateState = (currentState, ) => {
@@ -31,6 +31,8 @@ io.on('connection', socket => {
   socket.on('send-message', message => {
     console.log(message)
   })
+
+  // AUTH/USER DATA LISTENERS
   socket.on('get-user-data', async user => {
     const userData = await controller.getUserData(user)
     console.log(userData)
@@ -43,9 +45,16 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
+
+  // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
     setState(gameState)
     socket.emit('current-state', socket.ekGameState)
+  })
+  socket.on('end-game', () => {
+    console.log('before', socket.ekGameState)
+    delete socket.ekGameState
+    console.log('after', socket.ekGameState)
   })
 })
 
