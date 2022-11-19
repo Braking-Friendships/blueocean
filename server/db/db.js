@@ -16,8 +16,14 @@ const userSchema = mongoose.Schema({
   firebase_id: String,
   username: String,
   friends: [String],
-  total_games: Number,
-  total_wins: Number
+  total_games: {
+    type: Number,
+    default: 0,
+  },
+  total_wins: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const User = mongoose.model('User', userSchema);
