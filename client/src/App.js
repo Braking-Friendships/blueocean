@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Board from './components/GameComponents/Board';
+import Chat from './components/ChatComponents/Chat.js';
 
 function App() {
   const socket = io('http://localhost:5001');
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<div>Hello world!</div>}></Route>
         <Route path='/game' element={<Board />}></Route>
+        <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </BrowserRouter>
   );
