@@ -1,28 +1,83 @@
 import React from 'react'
 import lqTran from '../../assets/cards/lqTran.png';
-
+import { getTip } from '../../Tools/cardStuff';
 import { motion } from 'framer-motion';
 
-const PlayerCard = ({ card }) => {
+const PlayerCard = ({ card, playerArea }) => {
 
   const checkPlay = (event, info) => {
-    console.log(info.point.x, info.point.y);
+    // console.log(playerArea.y);
+    // console.log(info.point.x, info.point.y);
+    if(info.point.y < playerArea.y) {
+      console.log('played card:', card.type);
+    }
+  }
+
+  const cardContainer = {
+    hover: {
+      scale: 1.1,
+      'zIndex': 10,
+      transition: {
+        'zIndex': {
+          duration: 0
+        }
+      }
+    },
+    rest: {
+      scale: 1,
+      'zIndex': 2,
+      transition: {
+        'zIndex': {
+          duration: 0
+        }
+      }
+    },
+    drag: {
+      'pointer-events': 'none'
+
+    }
+  }
+  const tooltip = {
+    hover: {
+      opacity: 1,
+      transition: {
+        duration: 0,
+        ease: 'easeOut'
+      }
+    },
+    rest: {
+      opacity: 0,
+      transition: {
+        duration: 0,
+        ease: 'easeOut'
+      }
+    }
   }
 
   return (
     <motion.div
+    className='relative min-h-0 min-w-0'
     drag
     dragSnapToOrigin
+    dragConstraints={{bottom: 0}}
+    dragElastic={0.2}
     onDragEnd={checkPlay}
-    whileHover={{
-      scale: 1.1
-    }}
-    whileTap={{
-      scale: 1
-    }}
-
+    initial='rest'
+    whileHover='hover'
+    whileDrag='drag'
+    whileTap='rest'
+    variants={cardContainer}
     >
-      <img src={lqTran} className='pointer-events-none w-52 h-auto' alt="playing card" />
+      <img src={lqTran}
+      className='min-w-[200px] w-52 h-auto '
+      draggable={false}
+      alt="playing card" />
+      <motion.div id='tooltip'
+      className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[250px] -left-3 opacity-0 pointer-events-none flex justify-center items-center'
+      variants={tooltip}
+      >
+        {getTip(card)}
+      </motion.div>
     </motion.div>
   )
 }

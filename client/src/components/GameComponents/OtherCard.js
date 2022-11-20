@@ -20,7 +20,7 @@ const OtherCard = ({ side  }) => {
   return (
     <motion.div
     className='min-w-0 min-h-0'
-    initial={false}
+    initial='false'
     animate={settings}
     >
       <img src={singleCardback} className='pointer-events-none rounded-xl box-border min-w-[150px] w-[150px] h-auto' alt="playing card" />
