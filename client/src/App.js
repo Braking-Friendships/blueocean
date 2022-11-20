@@ -10,6 +10,7 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import UserProfile from './components/profile/UserProfile';
+import Lobby from './components/GameLobby/Lobby';
 
 // Josh: adding socket.js file to house all emitters
 import { socket, emitters } from './socket.js'
@@ -45,6 +46,7 @@ function App() {
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
         <Route path='/profile' element={<UserProfile />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
+        <Route path='/lobby' element={<Lobby />}></Route>
       </Routes>
     </>
   );
