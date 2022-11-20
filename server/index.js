@@ -105,7 +105,6 @@ io.on('connection', socket => {
   // ROOM LISTENERS
   socket.on('host-room', socketId => {
     const roomId = uid();
-    console.log(`hosting room id ${roomId} with curr socket: ${socketId}`)
     socket.join(roomId);
   })
   socket.on('join-room', roomId => {
