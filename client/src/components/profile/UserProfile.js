@@ -1,5 +1,4 @@
 import react, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { socket, emitters } from '../../socket';
 import UserProfileFriends from './UserProfileFriends';
 import madCat from '../../assets/avatars/madCat.png';
