@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const httpServer = require('http').createServer(app);
-const {controller} = require('./controllers/index.js');
+const { controller } = require('./controllers/index.js');
 const options = {
   cors: ['http://localhost:3000']
 };
@@ -114,4 +114,11 @@ io.on('connection', socket => {
   })
 })
 
-httpServer.listen(5001, () => console.log('Listening on 5001'));
+
+
+// UNCOMMENT AND RUN ONCE TO RECREATE DUMMY DATA
+// const { users } = require('./dummyData');
+// users.map(user => controller.createDummyData(user))
+
+
+  httpServer.listen(5001, () => console.log('Listening on 5001'));
