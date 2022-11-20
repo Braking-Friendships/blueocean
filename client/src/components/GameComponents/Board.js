@@ -51,7 +51,7 @@ const Board = () => {
       <div id="top-player" className='row-start-1 row-end-2 col-start-3 col-end-5  flex justify-center'>
         {displayOtherHands(p4L, 'top')}
       </div>
-      <div id="middle-stack" className='row-start-3 row-end-4 col-span-4 flex justify-center gap-7'>
+      <div id="middle-stack" className='row-start-3 row-end-4 col-span-4 flex justify-center items-end gap-7'>
         <OtherCard side='mid' />
         <OtherCard side='mid' />
       </div>

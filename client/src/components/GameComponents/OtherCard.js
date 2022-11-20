@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
 
-const OtherCard = ({ side  }) => {
+const OtherCard = ({ side }) => {
   const [settings, setSettings] = useState({});
 
   useEffect(() => {
@@ -20,10 +20,14 @@ const OtherCard = ({ side  }) => {
   return (
     <motion.div
     className='min-w-0 min-h-0'
-    initial='false'
+    initial={false}
     animate={settings}
     >
-      <img src={singleCardback} className='pointer-events-none rounded-xl box-border min-w-[150px] w-[150px] h-auto' alt="playing card" />
+      <img src={singleCardback}
+      className={`pointer-events-none rounded-xl box-border h-auto border-black border-[2px] bg-red-900
+      ${side==='mid' ? 'min-w-[200px] w-[200px]' : 'min-w-[150px] w-[150px]'}
+      `}
+      alt="playing card" />
     </motion.div>
   )
 }

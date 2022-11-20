@@ -41,15 +41,15 @@ const PlayerCard = ({ card, playerArea }) => {
     hover: {
       opacity: 1,
       transition: {
-        duration: 0,
-        ease: 'easeOut'
+        duration: 1,
+        ease: [0, 1, 1, 1]
       }
     },
     rest: {
       opacity: 0,
       transition: {
         duration: 0,
-        ease: 'easeOut'
+        ease: 'anticipate'
       }
     }
   }
@@ -69,11 +69,11 @@ const PlayerCard = ({ card, playerArea }) => {
     variants={cardContainer}
     >
       <img src={lqTran}
-      className='min-w-[200px] w-52 h-auto '
+      className='min-w-[200px] w-52 h-auto rounded-xl'
       draggable={false}
       alt="playing card" />
       <motion.div id='tooltip'
-      className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[250px] -left-3 opacity-0 pointer-events-none flex justify-center items-center'
+      className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[275px] -left-1 opacity-0 pointer-events-none flex justify-center items-center'
       variants={tooltip}
       >
         {getTip(card)}
