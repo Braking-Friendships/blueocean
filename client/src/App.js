@@ -10,26 +10,28 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import UserProfile from './components/profile/UserProfile';
+<<<<<<< HEAD
 import Chat from './components/ChatComponents/Chat';
+=======
+import Lobby from './components/GameLobby/Lobby';
+>>>>>>> main
 
+// Josh: adding socket.js file to house all emitters
+import { socket, emitters } from './socket.js'
 
-const socket = io('http://localhost:5001');
-socket.on('connect', () => {
-  console.log(`You connected with id: ${socket.id}`);
-})
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
 
   const getUserData = async (user) => {
     console.log(user)
-    socket.emit('get-user-data', user)
+    emitters.getUserData(user)
     return;
   };
 
   const createNewUser = async (user) => {
     console.log(user)
-    socket.emit('create-user', user)
+    emitters.createUser(user);
   };
 
   // SOCKET LISTENERS
@@ -46,8 +48,9 @@ function App() {
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
-        <Route path='/profile' element={<UserProfile socket={socket}/>}></Route>
+        <Route path='/profile' element={<UserProfile />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
+        <Route path='/lobby' element={<Lobby />}></Route>
         <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </>

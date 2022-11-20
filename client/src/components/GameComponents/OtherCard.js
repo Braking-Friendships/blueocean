@@ -1,20 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
 
-const OtherCard = ({ orientation,  }) => {
-  const animate = {
-    rotate: orientation || 0
-  }
+const OtherCard = ({ side  }) => {
+  const [settings, setSettings] = useState({});
+
+  useEffect(() => {
+    let set = {}
+    if(side === 'left'){
+      set.rotate = 90;
+    } else if (side === 'right') {
+      set.rotate = -90;
+    }
+
+    setSettings(set)
+  }, []);
 
   return (
     <motion.div
-    className=' bg-blue-500'
+    className='min-w-0 min-h-0'
     initial={false}
-    animate={animate}
+    animate={settings}
     >
-      <img src={singleCardback} width="150px" height="auto" className='pointer-events-none rounded-xl' alt="playing card" />
+      <img src={singleCardback} className='pointer-events-none rounded-xl box-border min-w-[150px] w-[150px] h-auto' alt="playing card" />
     </motion.div>
   )
 }
