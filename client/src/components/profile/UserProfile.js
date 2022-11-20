@@ -8,6 +8,7 @@ import sneakyCat from '../../assets/avatars/sneakyCat.png';
 import tongueCat from '../../assets/avatars/tongueCat.png';
 import vampireCat from '../../assets/avatars/vampireCat.png';
 import unhappyCat from '../../assets/avatars/unhappyCat.png';
+import { FiFeather } from "react-icons/fi";
 
 const UserProfile = () => {
   // CHANGES WHEN ACTUAL USER IS DETERMINED
@@ -59,23 +60,22 @@ const UserProfile = () => {
 
       {!profile.avatar &&
         <div>
+          <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded" onClick={changeAvatar()}><FiFeather /></button>
           <img src={happyCat} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
-          <br />
-          <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded" onClick={changeAvatar()}>Change Avatar</button>
         </div>
       }
       {profile.avatar &&
         <div>
+          <button className="bg-[#81B29A] justify-end hover:outline text-white font-bold py-2 px-4 rounded" onClick={changeAvatar()}><FiFeather /></button>
           <img src={profile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
-          <br />
-          <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded" onClick={changeAvatar()}>Change Avatar</button>
         </div>
       }
       <br />
 
-      <h4>{profile.username}</h4>
-      <br />
-      <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={changeName()}>Change Name</button>
+      <h4>
+        {profile.username} &nbsp;
+        <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={changeName()}><FiFeather /></button>
+      </h4>
       <br />
 
       <h4>Number of Wins: {profile.total_wins}</h4>
