@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     emitters.startGame(gameState)
-  }, [])
+  }, []);
 
   const getUserData = async (user) => {
     console.log(user)
@@ -70,7 +70,7 @@ function App() {
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
-        <Route path='/profile' element={<UserProfile socket={socket}/>}></Route>
+        <Route path='/profile' element={<UserProfile />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
       </Routes>
     </>
