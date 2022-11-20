@@ -3,9 +3,15 @@ const app = express();
 const httpServer = require('http').createServer(app);
 const { controller } = require('./controllers/index.js');
 const options = {
-  cors: ['http://localhost:3000']
+  cors: {
+    origin: ['http://localhost:3000', "https://admin.socket.io"],
+    credentials: true
+  }
 };
+const { instrument } = require("@socket.io/admin-ui");
 const io = require('socket.io')(httpServer, options);
+const ShortUniqueId = require('short-unique-id');
+const uid = new ShortUniqueId({ length: 6 });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +30,7 @@ const shufflePlayerOrder = (playersArray) => {
 }
 
 io.on('connection', socket => {
-  console.log(socket.ekGameState)
+  console.log(socket.id)
 
   const setInitialState = (gameState) => {
     // TODO: get socket ids from game lobby room, those become the users in game state
@@ -36,7 +42,6 @@ io.on('connection', socket => {
 
     emitState(socket.ekGameState)
 
-    // emit each player's hand, other players hand count and count of deck to respective socket
     console.log('Setting game state: ', socket.ekGameState)
   }
 
@@ -45,6 +50,8 @@ io.on('connection', socket => {
   }
 
   const emitState = (gameState) => {
+    // emit each player's hand, other players hand count and count of deck to respective socket
+    // currently emitting to single socket; grab other sockets from current room
     socket.emit('game-state', gameState)
   }
 
@@ -95,6 +102,16 @@ io.on('connection', socket => {
     socket.emit('send-user-data', userData)
   })
 
+  // ROOM LISTENERS
+  socket.on('host-room', socketId => {
+    const roomId = uid();
+    console.log(`hosting room id ${roomId} with curr socket: ${socketId}`)
+    socket.join(roomId);
+  })
+  socket.on('join-room', roomId => {
+    socket.join(roomId)
+  })
+
   // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
     setInitialState(gameState)
@@ -115,10 +132,12 @@ io.on('connection', socket => {
 })
 
 
+instrument(io, { auth: false });
+
 
 // UNCOMMENT AND RUN ONCE TO RECREATE DUMMY DATA
 // const { users } = require('./dummyData');
 // users.map(user => controller.createDummyData(user))
 
 
-  httpServer.listen(5001, () => console.log('Listening on 5001'));
+httpServer.listen(5001, () => console.log('Listening on 5001'));
