@@ -10,11 +10,9 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import UserProfile from './components/profile/UserProfile';
-<<<<<<< HEAD
-import Chat from './components/ChatComponents/Chat';
-=======
 import Lobby from './components/GameLobby/Lobby';
->>>>>>> main
+import Chat from './components/ChatComponents/Chat';
+
 
 // Josh: adding socket.js file to house all emitters
 import { socket, emitters } from './socket.js'
