@@ -10,7 +10,7 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import UserProfile from './components/profile/UserProfile';
-import Chat from './components/ChatComponents/Chat.js';
+import Chat from './components/ChatComponents/Chat';
 
 
 const socket = io('http://localhost:5001');

@@ -36,122 +36,14 @@ const Chat = (props) => {
               ))}
             </div>
           </div>
-
-          {/* response bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs">
-            profile bubble ---
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-            <div>
-              chat bubble -----
-              <div class="bg-[#E07A5F] p-3 rounded-r-lg rounded-bl-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-          </div>
-
-          my bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div class="bg-[#81B29A] text-black p-3 rounded-l-lg rounded-br-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          my bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div class="bg-[#81B29A] text-black p-3 rounded-l-lg rounded-br-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet.</p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-
-          response bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs">
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-            <div>
-              <div class="bg-[#E07A5F] p-3 rounded-r-lg rounded-bl-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-          </div>
-
-          my bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div class="bg-[#81B29A] text-black p-3 rounded-l-lg rounded-br-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          my bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div class="bg-[#81B29A] text-black p-3 rounded-l-lg rounded-br-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-          my bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div class="bg-[#81B29A] text-black p-3 rounded-l-lg rounded-br-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet.</p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
-
-          response bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs">
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-            <div>
-              <div class="bg-[#E07A5F] p-3 rounded-r-lg rounded-bl-lg">
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-          </div>
-
-          my bubble -----------------------
-          <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div>
-              <div class="bg-[#81B29A] text-black p-3 rounded-l-lg rounded-br-lg">
-                <p class="text-sm">Lorem ipsum dolor sit.</p>
-              </div>
-              <span class="text-xs text-gray-500 leading-none">2 min ago</span>
-            </div>
-            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div> */}
         </div>
-
 
         {/* type your message bar --------------------- */}
         <form className="bg-gray-300 p-4 flex items-start" onSubmit={(e) => {
           e.preventDefault();
-          console.log(e.target.msg.value, 'wow')
           handleMsgSubmit(e.target.msg.value);
         }}>
           <input className="flex-row items-center h-10 w-11/12 rounded px-3 text-sm" type="text" name='msg' placeholder="Type your message…"></input>
-          <button type='submit' className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6 ml-1 transform rotate-90">
-              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-            </svg>
-          </button>
-        </form>
-        <form className="bg-gray-300 p-4 flex items-start">
-          <input className="flex-row items-center h-10 w-11/12 rounded px-3 text-sm" type="text" placeholder="Type room name..."></input>
           <button type='submit' className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6 ml-1 transform rotate-90">
               <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
