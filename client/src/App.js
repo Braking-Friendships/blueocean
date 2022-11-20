@@ -18,28 +18,6 @@ import { socket, emitters } from './socket.js'
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
-  const [gameState, setGameState] = useState({
-    deck: [
-      {
-        type: 'bomb',
-        img: 'image tag'
-      }
-    ],
-    hand1: [
-      {
-        type: 'bomb',
-        img: 'image tag'
-      },
-      {
-        type: 'attack',
-        img: 'image tag'
-      }
-    ]
-  })
-
-  useEffect(() => {
-    emitters.startGame(gameState)
-  }, []);
 
   const getUserData = async (user) => {
     console.log(user)
@@ -56,11 +34,6 @@ function App() {
   socket.on('send-user-data', data => {
     console.log('received data', data)
     setUserInfo(data[0])
-  })
-
-  socket.on('current-state', state => {
-    console.log(state)
-    setGameState(state)
   })
 
   return (
