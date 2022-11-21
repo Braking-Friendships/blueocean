@@ -36,6 +36,7 @@ io.on('connection', socket => {
     // TODO: get socket ids from game lobby room, those become the users in game state
     // set socketid as hand1...
     gameState.playerOrder = shufflePlayerOrder([0, 1, 2, 3])
+    // prevTurns should have socketid or username and play
     gameState.prevTurns = {};
 
     socket.ekGameState = gameState;
@@ -56,6 +57,13 @@ io.on('connection', socket => {
   }
 
   const playCard = (username, cardType, cardIdx) => {
+    // we always know the active player by socket.id
+    // so we just need to know who the affected player is for each play
+    // For each case, what is the effect on:
+    // deck
+    // user hands
+    // player order
+    // For every case prevTurns needs to be updated
     switch (cardType) {
       case 'attack':
         console.log(username, 'attack card played')
@@ -78,7 +86,9 @@ io.on('connection', socket => {
       case 'shuffle':
         console.log(username, 'shuffle card played')
         break;
-      // how do we want to handle steal cards: burritocat, rainbowcat, tacocat, watermeloncat, beardcat
+      default:
+        // two cards needed for cat cards, handle verification on front end before emitting
+        break;
 
     }
   }
@@ -106,10 +116,15 @@ io.on('connection', socket => {
   socket.on('host-room', socketId => {
     const roomId = uid();
     socket.join(roomId);
+    console.log('Rooms available', io.of('/').adapter.rooms)
   })
   socket.on('join-room', roomId => {
     socket.join(roomId)
+    console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
   })
+  // const rooms = io.of('/').adapter.rooms;
+  // const sids = io.of('/').adapter.sids;
+  // console.log(rooms)
 
   // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
