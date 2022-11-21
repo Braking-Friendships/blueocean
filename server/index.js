@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const shufflePlayerOrder = (playersArray) => {
   let i = playersArray.length;
-  while(i > 0) {
+  while (i > 0) {
     let idxToSwitch = Math.floor(Math.random() * playersArray.length);
     i--;
     let temp = playersArray[i];
@@ -121,4 +121,4 @@ io.on('connection', socket => {
 // users.map(user => controller.createDummyData(user))
 
 
-  httpServer.listen(5001, () => console.log('Listening on 5001'));
+httpServer.listen(5001, () => console.log('Listening on 5001'));

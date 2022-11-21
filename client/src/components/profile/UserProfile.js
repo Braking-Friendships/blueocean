@@ -1,18 +1,15 @@
-import react, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { socket, emitters } from '../../socket';
-import UserProfileFriends from './UserProfileFriends';
+import FriendProfile from './FriendProfile';
 import madCat from '../../assets/avatars/madCat.png';
 import happyCat from '../../assets/avatars/happyCat.png';
 import sageCat from '../../assets/avatars/sageCat.png';
-import sneakyCat from '../../assets/avatars/sneakyCat.png';
-import tongueCat from '../../assets/avatars/tongueCat.png';
-import vampireCat from '../../assets/avatars/vampireCat.png';
-import unhappyCat from '../../assets/avatars/unhappyCat.png';
 import { FiFeather } from "react-icons/fi";
 
-const UserProfile = () => {
-  // CHANGES WHEN ACTUAL USER IS DETERMINED
+const UserProfile = ({ changeProfileView }) => {
+  // HARD CODE IN
   const [user, setUser] = useState('0.14438257512163855');
+  // const [currentProfileView, setCurrentProfileView] = useState (user)
   const [profile, setProfile] = useState(
     {
       _id: "6379627813a1460fe41c9dd0",
@@ -30,7 +27,7 @@ const UserProfile = () => {
 
 
   const changeName = () => {
-    // console.log('change name button clicked');
+    console.log('change name button clicked');
   };
 
   const changeAvatar = () => {
@@ -85,7 +82,7 @@ const UserProfile = () => {
 
       <div>Friends</div>
       {profile.friends.length > 0 &&
-        profile.friends.map(friend => { return <UserProfileFriends friend={friend} key={friend} /> })
+        profile.friends.map(friend => { return <div key={friend} onClick={(e) => changeProfileView(e)}>{friend}</div> })
       }
     </div>
   );
