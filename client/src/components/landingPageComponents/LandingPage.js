@@ -23,7 +23,7 @@ const LandingPage = () => {
       <div className='flex justify-evenly'>
         {/* <GameNav /> */}
         <div className='flex flex-col gap-4 justify-around'>
-          <Link className={linkStyle}> Host a Game </Link>
+          <Link to='/lobby' className={linkStyle}> Host a Game </Link>
           <button onClick={(e) => openModal(e)} className={buttonStyle}> Join a Game </button>
           <button className={buttonStyle}> Join a Random Game </button>
         </div>
