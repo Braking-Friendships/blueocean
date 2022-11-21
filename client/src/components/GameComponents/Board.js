@@ -46,7 +46,7 @@ const Board = () => {
   socket.on('game-state', gameState => console.log(gameState))
 
   return (
-    <div id="board" className='grid grid-cols-6 grid-rows-5 bg-blue-300 h-screen overflow-hidden'>
+    <div id="board" className='grid grid-cols-6 grid-rows-5 bg-blue-300 h-screen overflow-hidden col-span-4'>
       <div id="left-player" className='row-start-2 row-end-5 col-start-1 col-end-2 flex flex-col justify-center items-center '>
         {displayOtherHands(p2L, 'left')}
       </div>
