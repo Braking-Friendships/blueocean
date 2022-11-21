@@ -11,10 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@socket.io/admin-ui": "^0.5.1",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "mongoose": "^6.7.2",
     "nodemon": "^2.0.20",
+    "short-unique-id": "^4.4.4",
     "socket.io": "^4.5.3"
   }
 }
