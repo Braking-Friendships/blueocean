@@ -41,6 +41,8 @@ const Board = () => {
     return cards;
   }
 
+  emitters.hostRoom();
+  emitters.joinRoom('FKZlSJ')
   socket.on('game-state', gameState => console.log(gameState))
 
   return (
