@@ -10,6 +10,9 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import UserProfile from './components/profile/UserProfile';
+import Lobby from './components/GameLobby/Lobby';
+import Chat from './components/ChatComponents/Chat';
+
 
 // Josh: adding socket.js file to house all emitters
 import { socket, emitters } from './socket.js'
@@ -17,28 +20,6 @@ import { socket, emitters } from './socket.js'
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
-  const [gameState, setGameState] = useState({
-    deck: [
-      {
-        type: 'bomb',
-        img: 'image tag'
-      }
-    ],
-    hand1: [
-      {
-        type: 'bomb',
-        img: 'image tag'
-      },
-      {
-        type: 'attack',
-        img: 'image tag'
-      }
-    ]
-  })
-
-  useEffect(() => {
-    emitters.startGame(gameState)
-  }, [])
 
   const getUserData = async (user) => {
     console.log(user)
@@ -57,11 +38,6 @@ function App() {
     setUserInfo(data[0])
   })
 
-  socket.on('current-state', state => {
-    console.log(state)
-    setGameState(state)
-  })
-
   return (
     <>
       {location.pathname !== '/game' ? <NavBar /> : null}
@@ -70,8 +46,10 @@ function App() {
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
-        <Route path='/profile' element={<UserProfile socket={socket}/>}></Route>
+        <Route path='/profile' element={<UserProfile />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
+        <Route path='/lobby' element={<Lobby />}></Route>
+        <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </>
   );
