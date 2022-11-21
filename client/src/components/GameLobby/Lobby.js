@@ -22,16 +22,13 @@ const Lobby = () => {
     <br/>
       <div>Chat functions (imported separately)</div>
     <br/>
-
-      <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player1 Avatar</button>
-    <br/>
-      <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player2 Avatar</button>
-    <br/>
-      <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player3 Avatar</button>
-    <br/>
-      <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Playe4 Avatar</button>
-    <br/>
-      <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player5 Avatar</button>
+    <div className='flex justify-around gap-2'>
+        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player1 Avatar</button>
+        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player2 Avatar</button>
+        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player3 Avatar</button>
+        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player4 Avatar</button>
+        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player5 Avatar</button>
+    </div>
 
     </div>
   );
