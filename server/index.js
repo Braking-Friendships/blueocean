@@ -104,6 +104,11 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
+  socket.on('get-friend-data', async user => {
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-friend-data', userData)
+  })
   socket.on('create-user', async user => {
     console.log('~~ DATA FROM LOGIN ~~ ', user);
     const createUser = await controller.createUser(user)

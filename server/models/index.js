@@ -13,7 +13,8 @@ module.exports = {
   getUserData: async (user) => {
     console.log('user: ', user);
     try {
-      const filter = {firebase_id: user.firebaseId};
+      // const filter = {firebase_id: user.firebaseId};
+      const filter = {username: user.username};
       return await User.find(filter);
     } catch (error) {
       return error;
