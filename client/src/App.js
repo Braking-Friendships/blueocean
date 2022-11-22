@@ -21,11 +21,13 @@ function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
 
+  // USER LOGIN
   const getUserData = async (user) => {
     console.log('LOGIN GET USER DATA: ', user);
     emitters.getUserData(user);
   };
 
+  // USER SIGN-UP
   const createNewUser = async (user) => {
     console.log('NEW USER CREATED: ', user);
     emitters.createUser(user);
@@ -45,16 +47,11 @@ function App() {
     // console.log(localStorage)
   })
 
-  useEffect(() => {
-    console.log('~~~~ CURRENT USER INFO ~~~~')
-    console.log(userInfo)
-  }, [userInfo]);
-
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
     console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
     const user = {firebaseId: localStorage.getItem('u_id')}
-    getUserData(user);
+    if (user.firebaseId) getUserData(user);
   },[]);
 
   return (

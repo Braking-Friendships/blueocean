@@ -32,7 +32,7 @@ const UserProfile = ({ changeProfileView, userProfile, changeName, changeAvatar 
         </div>
       </div>
 
-      <div className="w-72 h-96 bg-[#F2CC8F] flex flex-col p-5 mr-60 rounded">
+      <div className="w-72 h-96 bg-[#F2CC8F] flex flex-col p-5 rounded">
         <div className="flex justify-center ">
           <h2>Friends</h2>
         </div>
