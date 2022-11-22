@@ -19,7 +19,23 @@ module.exports = {
       return error;
     }
   },
-
+  updateUser: async (user) => {
+    try {
+      const filter = {username: user.firebaseId};
+      return await User.findOneAndUpdate(filter, user);
+    } catch (error) {
+      return error;
+    }
+  },
+  getFriendData: async (user) => {
+    console.log('friend: ', user);
+    try {
+      const filter = {username: user.username};
+      return await User.find(filter);
+    } catch (error) {
+      return error;
+    }
+  },
 
 
 
