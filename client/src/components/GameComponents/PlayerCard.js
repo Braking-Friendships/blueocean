@@ -1,43 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
 import { motion, useAnimationControls } from 'framer-motion';
+import AnimatedCard from './AnimatedCard';
 
 const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
-  const cardRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
-  const cardControls = useAnimationControls();
-  const getTransitionPos = () => {
-    let { x, bottom } = cardRef.current?.getBoundingClientRect();
-
-    x = stackPosition.x - x;
-    let y = stackPosition.bottom - bottom;
-    return {x, y}
-  }
-  const animate = async(controls, ) => {
-    let poo = getTransitionPos();
-
-    await cardControls.start({
-      x: poo.x,
-      y: poo.y,
-      transition: {
-        duration: 0
-      }
-    })
-
-    cardControls.start({
-      x: 0,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: idx * 0.2
-      }
-    })
-  };
-  useEffect(() => {
-    if(stackPosition){
-      animate();
-    }
-  }, [stackPosition]);
 
   const dragStart = () => {
     setIsDragging(true);
@@ -97,11 +64,9 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
   }
 
   return (
-    <motion.div
-      ref={cardRef}
-      className={`relative min-h-0 min-w-0 z-0`}
-      animate={cardControls}
-      whileHover={{'zIndex': 10}}
+    <AnimatedCard
+    stackPosition={stackPosition}
+    idx={idx}
     >
       <motion.div
       layout
@@ -130,7 +95,7 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
         : null}
 
       </motion.div>
-    </motion.div>
+    </AnimatedCard>
   )
 }
 

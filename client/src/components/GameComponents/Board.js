@@ -49,7 +49,7 @@ const Board = () => {
   const displayOtherHands = (count, side) => {
     let cards = [];
     for(let i = 0; i < count; i++) {
-      cards.push(<OtherCard key={i} side={side} stackPosition={stackPosition} />)
+      cards.push(<OtherCard key={i} side={side} stackPosition={stackPosition} idx={i} />)
     }
     return cards;
   }
