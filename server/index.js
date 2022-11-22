@@ -16,17 +16,14 @@ const uid = new ShortUniqueId({ length: 6 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-<<<<<<< HEAD
 const shuffle = (targetArray) => {
   let i = targetArray.length;
   while(i > 0) {
     let idxToSwitch = Math.floor(Math.random() * targetArray.length);
-=======
 const shufflePlayerOrder = (playersArray) => {
   let i = playersArray.length;
   while (i > 0) {
     let idxToSwitch = Math.floor(Math.random() * playersArray.length);
->>>>>>> main
     i--;
     let temp = targetArray[i];
     targetArray[i] = targetArray[idxToSwitch];
@@ -85,6 +82,18 @@ io.on('connection', socket => {
       socket.ekGameState['hand1'].splice(userCardIdxs[0], 1)
     }
 
+
+
+    // Set 5 second timer after calling playCard and emit the count down
+    // also emit the card that was played
+
+
+    // Set current player
+    socket.ekGameState.currentPlayer = socket.ekGameState.playerOrder.shift()
+
+    // [0, 3, 2, 1]
+
+
     // player order as array
     // current player is unshift playerorder
     // attack is just an insert of 10
@@ -126,7 +135,6 @@ io.on('connection', socket => {
         break;
       default:
         const stealCard = socket.ekGameState[affectedUser].splice(affectedUserIdx, 1);
-
         socket.ekGameState['hand1'].push(stealCard[0]);
         break;
 
@@ -199,12 +207,9 @@ io.on('connection', socket => {
     socket.join(roomId);
     // console.log('Rooms available', io.of('/').adapter.rooms)
   })
-<<<<<<< HEAD
   socket.on('join-room', roomId => {
     socket.join(roomId)
     // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
-  })
-=======
   socket.on('join-room', userObj => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
@@ -213,7 +218,6 @@ io.on('connection', socket => {
   const rooms = io.of('/').adapter.rooms;
   const sids = io.of('/').adapter.sids;
   console.log(rooms)
->>>>>>> main
 
   // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
