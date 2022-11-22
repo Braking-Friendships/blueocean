@@ -98,6 +98,26 @@ io.on('connection', socket => {
     console.log(message)
   })
 
+  // Socket listeners for chat components ------------
+  socket.on('send-chat-message', (message, room) => {
+    // if room text is empty send to everyone
+    if (room === '') {
+      // socket.broadcast sends message to everyone except me
+      socket.broadcast.emit('receive-message', message);
+      console.log(message);
+    } else {
+      // send message to room only
+      socket.to(room).emit('receive-message', message);;
+    }
+  });
+  // socket listener for room joins
+  socket.on('join-room', (room, cb) => {
+    socket.join(room);
+    cb(`Joined ${room}`)
+  })
+  // ---------------------------------------------------
+
+
   // AUTH/USER DATA LISTENERS
   socket.on('get-user-data', async user => {
     const userData = await controller.getUserData(user)

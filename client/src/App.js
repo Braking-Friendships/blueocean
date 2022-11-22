@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import Board from './components/GameComponents/Board';
 import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login/Login';
 import Signup from './components/Login/Signup';
@@ -16,6 +15,7 @@ import Chat from './components/ChatComponents/Chat';
 
 // Josh: adding socket.js file to house all emitters
 import { socket, emitters } from './socket.js'
+import GameRoom from './components/GameComponents/GameRoom';
 
 function App() {
   const location = useLocation();
@@ -43,7 +43,7 @@ function App() {
       {location.pathname !== '/game' ? <NavBar /> : null}
       <Routes>
         <Route path='/' element={<LandingPage />}></Route>
-        <Route path='/game' element={<Board />}></Route>
+        <Route path='/game' element={<GameRoom />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
         <Route path='/profile' element={<ViewProfile />}></Route>
