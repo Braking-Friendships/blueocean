@@ -38,6 +38,11 @@ function App() {
     setUserInfo(data[0])
   })
 
+  useEffect(() => {
+    console.log('~~~~ CURRENT USER ~~~~')
+    console.log(userInfo)
+  }, [userInfo]);
+
   return (
     <>
       {location.pathname !== '/game' ? <NavBar /> : null}
