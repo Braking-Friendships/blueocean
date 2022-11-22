@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { socket, emitters } from '../../socket';
+import Chat from '../ChatComponents/Chat';
 
 const Lobby = () => {
 
@@ -30,7 +31,12 @@ const Lobby = () => {
         <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player5 Avatar</button>
     </div>
 
+      <div className="absolute inset-y-20 right-10">
+        <Chat />
+      </div>
+
     </div>
+
   );
 };
 

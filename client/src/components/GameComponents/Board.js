@@ -3,6 +3,7 @@ import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
+import Chat from '../ChatComponents/Chat';
 
 const Board = () => {
   const [myHand, setMyHand] = useState([]);
