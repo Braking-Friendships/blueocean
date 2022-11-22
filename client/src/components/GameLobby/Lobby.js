@@ -1,14 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { socket, emitters } from '../../socket';
-import Chat from '../ChatComponents/Chat';
+import madCat from '../../assets/avatars/madCat.png';
+import happyCat from '../../assets/avatars/happyCat.png';
+import sageCat from '../../assets/avatars/sageCat.png';
+import sneakyCat from '../../assets/avatars/sneakyCat.png';
+import tongueCat from '../../assets/avatars/tongueCat.png';
 
-const Lobby = () => {
+
+const Lobby = ({ userInfo }) => {
+
+  // logic
+  // get room id from landing page (passed down)
+
+  // from room, get ids
+
+  console.log('userinfo', userInfo)
+
+  const [roomId, setRoomId] = useState('')
+  const [profiles, setProfiles] = useState()
+  // useEffect(() => {
+  //   setRoomId('CdVal6')
+  // }, [])
+
+  const [user, setUser] = useState('0.14438257512163855');
+
+  useEffect(() => {
+      socket.emit('get-user-data', { firebaseId: user });
+      socket.on('send-user-data', data => {
+        setProfiles(data);
+      })
+    setRoomId('CdVal6')
+  }, [user])
 
 
+
+
+  emitters.joinRoom(roomId)
+  socket.on('game-state', gameState => console.log('game', gameState))
 
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
-      <h1>Game Lobby</h1>
+      <h1>{roomId}</h1>
       <div>Game ID</div>
       {/* <icon src="" alt="pencil"/> */}
     <br/>
@@ -23,33 +55,18 @@ const Lobby = () => {
     <br/>
       <div>Chat functions (imported separately)</div>
     <br/>
-    <div className='flex justify-around gap-2'>
-        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player1 Avatar</button>
-        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player2 Avatar</button>
-        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player3 Avatar</button>
-        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player4 Avatar</button>
-        <button className="bg-[silver] hover:outline text-white font-bold py-2 px-4 rounded-full">Player5 Avatar</button>
+
+      <div>
+        {profiles ? (profiles.map((profile) =>
+        <div className ='flex flex-col justify-center items-center'>
+          <h4>{profile.username}</h4>
+          <img src={profile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
+        </div>)) : null}
+      </div>
     </div>
-
-      {/* Chat offcanvas modal  */}
-      <div className="absolute inset-y-20 right-10">
-
-        <button class="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Open Chat</button>
-
-        <div class="offcanvas offcanvas-end fixed bottom-0 flex flex-col max-w-full bg-white invisible bg-clip-padding shadow-sm outline-none transition duration-300 ease-in-out text-gray-700 top-0 right-0 border-none w-96" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-          <div class="offcanvas-header flex items-center justify-between p-4">
-            <button type="button" class="btn-close box-content w-4 h-4 p-2 -my-5 -mr-2 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
-            <h5 class="offcanvas-title mb-0 leading-normal font-semibold" id="offcanvasRightLabel">CHAT</h5>
-          </div>
-          <div class="">
-            <Chat />
-          </div>
-        </div>
-        </div>
-
-    </div>
-
   );
 };
 
 export default Lobby;
+
+

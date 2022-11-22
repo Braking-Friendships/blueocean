@@ -48,7 +48,7 @@ function App() {
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
         <Route path='/profile' element={<UserProfile />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
-        <Route path='/lobby' element={<Lobby />}></Route>
+        <Route path='/lobby' element={<Lobby userInfo={userInfo}/>}></Route>
         <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </>

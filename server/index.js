@@ -111,10 +111,10 @@ io.on('connection', socket => {
     }
   });
   // socket listener for room joins
-  socket.on('join-room', (room, cb) => {
-    socket.join(room);
-    cb(`Joined ${room}`)
-  })
+  // socket.on('join-room', (room, cb) => {
+  //   socket.join(room);
+  //   cb(`Joined ${room}`)
+  // })
   // ---------------------------------------------------
 
 
