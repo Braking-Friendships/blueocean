@@ -3,9 +3,13 @@ import React, { useState } from 'react';
 import img from './tyranitarCropped.png'
 import { Link } from 'react-router-dom';
 import JoinGameModal from './JoinGameModal.js'
+import { io } from 'socket.io-client';
+import { socket, emitters } from '../../socket.js'
 
-const LandingPage = ({ userInfo }) => {
+const LandingPage = ({userInfo}) => {
   const [showModal, setShowModal] = useState(false);
+  const id = socket.id;
+  const path = `/lobby/${id}`
 
   const openModal = (e) => {
     e.preventDefault();
@@ -15,13 +19,16 @@ const LandingPage = ({ userInfo }) => {
     e.preventDefault();
     setShowModal(false);
   }
+  const hostRoom = () => {
+    socket.emit('host-room', id)
+  }
   return (
     <div className='relative top-1/4'>
-      {showModal ? <JoinGameModal closeModal={closeModal} /> : null}
+      {showModal ? <JoinGameModal closeModal={closeModal} userInfo={userInfo}/> : null}
       <div className='flex justify-evenly'>
         {/* <GameNav /> */}
         <div className='flex flex-col gap-4 justify-around'>
-          <Link to='/lobby' className={linkStyle}> Host a Game </Link>
+          <Link to='/lobby' onClick={hostRoom} className={linkStyle}> Host a Game </Link>
           <button onClick={(e) => openModal(e)} className={buttonStyle}> Join a Game </button>
           <button className={buttonStyle}> Join a Random Game </button>
         </div>

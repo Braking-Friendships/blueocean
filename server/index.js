@@ -159,13 +159,14 @@ io.on('connection', socket => {
     socket.join(roomId);
     console.log('Rooms available', io.of('/').adapter.rooms)
   })
-  socket.on('join-room', roomId => {
-    socket.join(roomId)
-    console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
+  socket.on('join-room', userObj => {
+    console.log(userObj)
+    socket.join(`${userObj.room}`)
+    console.log('Sockets in room', io.of(`/${userObj.room}`).adapter.sids)
   })
-  // const rooms = io.of('/').adapter.rooms;
-  // const sids = io.of('/').adapter.sids;
-  // console.log(rooms)
+  const rooms = io.of('/').adapter.rooms;
+  const sids = io.of('/').adapter.sids;
+  console.log(rooms)
 
   // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
