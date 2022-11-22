@@ -52,7 +52,7 @@ const Chat = (props) => {
     // <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-[#F4F1DE] text-gray-800 p-10">
 
       // {/* <!-- Component Start --> */}
-      <div className="flex flex-col flex-grow w-screen max-w-md bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
+      <div className="flex flex-col flex-grow w-screen max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
         <div className="flex flex-col flex-grow h-98 p-4 overflow-auto">
 
           {/* <!-- chat messages --> */}
