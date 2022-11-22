@@ -26,6 +26,7 @@ function App() {
     emitters.getUserData(user)
     return;
   };
+  console.log(userInfo, 'USERINFO', socket.id, 'SOCKET')
 
   const createNewUser = async (user) => {
     console.log(user)
@@ -42,7 +43,7 @@ function App() {
     <>
       {location.pathname !== '/game' ? <NavBar /> : null}
       <Routes>
-        <Route path='/' element={<LandingPage />}></Route>
+        <Route path='/' element={<LandingPage userInfo={userInfo}/>}></Route>
         <Route path='/game' element={<Board />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData}/>}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser}/>}></Route>
