@@ -16,7 +16,6 @@ const ViewProfile = () => {
   const [avatarModal, setAvatarModal] = useState(false);
 
   const changeProfileView = async (e) => {
-    console.log('Friend ~~ ', e.target.textContent)
     await socket.emit('get-friend-data', { username: e.target.textContent });
     await socket.on('send-friend-data', data => {
       console.log('data ~~ ', data);
@@ -39,11 +38,6 @@ const ViewProfile = () => {
 
   const submitChange = (e) => {
     e.preventDefault();
-    if (e.target.username) {
-      console.log('username: ', e.target.username.value);
-    } else {
-      console.log('avatar: ', avatar);
-    }
     // EDIT USERNAME
     if (e.target.username) {
       socket.emit('post-edit-username', {
@@ -80,12 +74,12 @@ const ViewProfile = () => {
     })
   }, [avatarModal])
 
-  useEffect(() => {
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
-    console.log(userProfile.username);
-    console.log(userProfile);
-    console.log(avatar);
-  }, [userProfile, avatar])
+  // useEffect(() => {
+  //   console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
+  //   console.log(userProfile.username);
+  //   console.log(userProfile);
+  //   console.log(avatar);
+  // }, [userProfile, avatar])
 
 
 

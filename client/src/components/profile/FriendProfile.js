@@ -2,7 +2,6 @@ import React from 'react';
 
 
 const FriendProfile = ({ changeProfileView, friendProfile, returnToUserProfile }) => {
-
   const calculateWinRate = () => {
     return ((friendProfile.total_wins / friendProfile.total_games) * 100).toFixed(2) + '%';
   }
