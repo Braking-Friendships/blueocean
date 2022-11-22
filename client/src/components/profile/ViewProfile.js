@@ -7,23 +7,26 @@ import ChangeAvatarModal from './ChangeAvatarModal';
 
 const ViewProfile = () => {
   const [userProfileState, setUserProfileState] = useState(true);
-  const [friendsProfileState, setFriendsProfileState] = useState(false);
-  const [friendsName, setFriendsName] = useState();
+  // const [friendsProfileState, setFriendsProfileState] = useState(false);
+  // const [friendsName, setFriendsName] = useState();
   const [userProfile, setUserProfile] = useState({})
-  const [currentFriendProfile, setCurrentFriendProfile] = useState({});
+  const [friendProfile, setFriendProfile] = useState({});
   const [nameModal, setNameModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
-
 
   const changeProfileView = async (e) => {
     console.log('Friend ~~ ', e.target.textContent)
     await socket.emit('get-friend-data', { username: e.target.textContent });
     await socket.on('send-friend-data', data => {
       console.log('data ~~ ', data);
-      setCurrentFriendProfile(data[0]);
+      setFriendProfile(data[0]);
     })
     await setUserProfileState(false);
-    await setFriendsProfileState(true);
+    // await setFriendsProfileState(true);
+  }
+
+  const returnToUserProfile = () => {
+    setUserProfileState(true);
   }
 
   const changeName = () => {
@@ -40,7 +43,7 @@ const ViewProfile = () => {
 
   useEffect(() => {
     setUserProfileState(true);
-    setFriendsProfileState(false);
+    // setFriendsProfileState(false);
     socket.emit('get-user-data', { username: 'Hieu' });
     socket.on('send-user-data', data => {
       setUserProfile(data[0]);
@@ -55,7 +58,10 @@ const ViewProfile = () => {
 
   return (
     <div>
-      {userProfileState && !friendsProfileState &&
+      {userProfileState &&
+        <img src={userProfile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
+      }
+      {userProfileState &&
         <UserProfile
           changeProfileView={changeProfileView}
           userProfile={userProfile}
@@ -63,17 +69,19 @@ const ViewProfile = () => {
           changeAvatar={changeAvatar}
         />
       }
-      <ChangeNameModal
+      {/* <ChangeNameModal
         nameModal={nameModal}
         setNameModal={setNameModal}
-      />
+      /> */}
 
-      {friendsProfileState && !userProfileState &&
+      {!userProfileState &&
         <div>
           {/* <Link to='/profile'>Profile</Link> */}
 
           <FriendProfile
             changeProfileView={changeProfileView}
+            friendProfile={friendProfile}
+            returnToUserProfile={returnToUserProfile}
           />
         </div>
       }
