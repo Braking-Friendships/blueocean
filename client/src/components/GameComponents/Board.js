@@ -4,6 +4,7 @@ import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
 
+
 const Board = () => {
   const playerAreaRef = useRef();
 
