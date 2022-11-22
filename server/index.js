@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const shufflePlayerOrder = (playersArray) => {
   let i = playersArray.length;
-  while(i > 0) {
+  while (i > 0) {
     let idxToSwitch = Math.floor(Math.random() * playersArray.length);
     i--;
     let temp = playersArray[i];
@@ -132,19 +132,41 @@ io.on('connection', socket => {
     socket.emit('send-user-data', userData)
   })
 
+  // PROFILE CHANGES
+  socket.on('get-friend-data', async user => {
+    const userData = await controller.getFriendData(user)
+    console.log(userData)
+    socket.emit('send-friend-data', userData)
+  })
+  socket.on('post-edit-username', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-username', userData)
+  })
+  socket.on('post-edit-avatar', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-avatar', userData)
+  })
+
+
+
   // ROOM LISTENERS
   socket.on('host-room', socketId => {
     const roomId = uid();
     socket.join(roomId);
     console.log('Rooms available', io.of('/').adapter.rooms)
   })
-  socket.on('join-room', roomId => {
-    socket.join(roomId)
-    console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
+  socket.on('join-room', userObj => {
+    console.log(userObj)
+    socket.join(`${userObj.room}`)
+    console.log('Sockets in room', io.of(`/${userObj.room}`).adapter.sids)
   })
-  // const rooms = io.of('/').adapter.rooms;
-  // const sids = io.of('/').adapter.sids;
-  // console.log(rooms)
+  const rooms = io.of('/').adapter.rooms;
+  const sids = io.of('/').adapter.sids;
+  console.log(rooms)
 
   // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
