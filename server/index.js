@@ -20,15 +20,10 @@ const shuffle = (targetArray) => {
   let i = targetArray.length;
   while(i > 0) {
     let idxToSwitch = Math.floor(Math.random() * targetArray.length);
-const shufflePlayerOrder = (playersArray) => {
-  let i = playersArray.length;
-  while (i > 0) {
-    let idxToSwitch = Math.floor(Math.random() * playersArray.length);
     i--;
     let temp = targetArray[i];
     targetArray[i] = targetArray[idxToSwitch];
     targetArray[idxToSwitch] = temp;
-
   }
   return targetArray;
 }
@@ -41,6 +36,7 @@ io.on('connection', socket => {
     // set socketid as hand1...
     gameState.playerOrder = shuffle([0, 1, 2, 3])
     // prevTurns should have socketid or username and play
+    // we might not need prevTurns since nope just cancels a move before it's effect is played
     gameState.prevTurns = [];
 
     socket.ekGameState = gameState;
@@ -60,10 +56,28 @@ io.on('connection', socket => {
     socket.emit('game-state', gameState)
   }
 
+  const drawCard = (username = 'hand1') => {
+    socket.ekGameState['hand1'].push(socket.ekGameState.deck[0])
+    socket.ekGameState.deck.splice(0, 1)
+  }
+
   const playCard = (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => {
     const gameState = socket.ekGameState;
     const deck = socket.ekGameState.deck;
     const playerHand = socket.ekGameState['hand1']
+    const playerOrder = socket.ekGameState.playerOrder;
+
+
+    console.log('Player order before:', socket.ekGameState.playerOrder)
+
+
+    // Set current player
+    const currPlayer = playerOrder.shift();
+    socket.ekGameState.currentPlayer = currPlayer;
+
+    if (playerOrder[0] !== playerOrder[playerOrder.length - 1]) {
+      playerOrder.push(currPlayer);
+    }
 
     // Update prevTurns
     socket.ekGameState.prevTurns.push({
@@ -82,14 +96,74 @@ io.on('connection', socket => {
       socket.ekGameState['hand1'].splice(userCardIdxs[0], 1)
     }
 
+    // SANS ATTACK
+    // [3, 0, 2, 1]
+    // [0, 2, 1, 3]
 
+    // WITH ATTACK
+    // [3, 0, 2, 1]
+    // [0, 0, 2, 1, 3]
 
     // Set 5 second timer after calling playCard and emit the count down
+    let timer = 5;
+
+    const x = setInterval(() => {
+      socket.emit('countdown', timer)
+      console.log(timer)
+      timer -= 1;
+      if (timer < 0) {
+        clearInterval(x);
+        console.log('timer up')
+        switch (userCardType) {
+          case 'attack':
+            playerOrder.unshift(playerOrder[0])
+            // no effect on deck
+            // player order remains same with repeat plays on attacked player
+            console.log(socket.id, 'attack card played')
+            break;
+          case 'defuse':
+            // insert bomb card at insertidx
+            const bomb = deck.splice(0, 1)
+            const copy = deck.slice(0, insertIdx).concat(bomb[0]).concat(deck.slice(insertIdx))
+            socket.ekGameState.deck = copy;
+            break;
+          case 'favor':
+            // remove card from affectedPlayer and give it to current player
+            const giveCard = socket.ekGameState['hand2'].splice(0, 1)
+            socket.ekGameState['hand1'].push(giveCard[0])
+            // pass in user to drawCard once we have a working data structure for gamestate
+            drawCard();
+            break;
+          case 'future':
+            // show player next three cards
+            socket.emit('show-future', deck.slice(0, 3))
+            drawCard();
+            break;
+          case 'skip':
+            break;
+          case 'shuffle':
+            shuffle(socket.ekGameState.deck)
+            drawCard();
+            break;
+          default:
+            const stealCard = socket.ekGameState['hand2'].splice(affectedUserIdx, 1);
+            socket.ekGameState['hand1'].push(stealCard[0]);
+            drawCard();
+            break;
+        }
+        emitState(socket.ekGameState);
+        console.log('Player order after:', socket.ekGameState.playerOrder)
+      }
+    }, 1000)
+
+    socket.on('nope-played', () => {
+      clearInterval(x)
+      console.log('cancelled play')
+    })
     // also emit the card that was played
 
 
     // Set current player
-    socket.ekGameState.currentPlayer = socket.ekGameState.playerOrder.shift()
 
     // [0, 3, 2, 1]
 
@@ -98,47 +172,6 @@ io.on('connection', socket => {
     // current player is unshift playerorder
     // attack is just an insert of 10
 
-    switch (userCardType) {
-      case 'attack':
-        // no effect on deck
-        // player order remains same with repeat plays on attacked player
-        console.log(socket.id, 'attack card played')
-        break;
-      case 'defuse':
-        // insert bomb card at insertidx
-        const bomb = deck.splice(0, 1)
-        const copy = deck.slice(0, insertIdx).concat(bomb[0]).concat(deck.slice(insertIdx))
-        socket.ekGameState.deck = copy;
-        break;
-      case 'favor':
-        // remove card from affectedPlayer and give it to current player
-        const giveCard = socket.ekGameState['hand2'].splice(0, 1)
-        socket.ekGameState['hand1'].push(giveCard[0])
-        break;
-      case 'future':
-        // show player next three cards
-        socket.emit('show-future', deck.slice(0, 3))
-        break;
-      case 'nope':
-        // no effect on deck
-        // no effect on player order
-        console.log(socket.id, 'nope card played')
-        break;
-      case 'skip':
-
-        // no effect on deck
-        // no effect on player order
-        console.log(socket.id, 'skip card played')
-        break;
-      case 'shuffle':
-        shuffle(socket.ekGameState.deck)
-        break;
-      default:
-        const stealCard = socket.ekGameState[affectedUser].splice(affectedUserIdx, 1);
-        socket.ekGameState['hand1'].push(stealCard[0]);
-        break;
-
-    }
   }
 
   // SOCKET LISTENERS
@@ -159,10 +192,10 @@ io.on('connection', socket => {
     }
   });
   // socket listener for room joins
-  socket.on('join-room', (room, cb) => {
-    socket.join(room);
-    cb(`Joined ${room}`)
-  })
+  // socket.on('join-room', (room, cb) => {
+  //   socket.join(room);
+  //   cb(`Joined ${room}`)
+  // })
   // ---------------------------------------------------
 
 
@@ -207,9 +240,10 @@ io.on('connection', socket => {
     socket.join(roomId);
     // console.log('Rooms available', io.of('/').adapter.rooms)
   })
-  socket.on('join-room', roomId => {
-    socket.join(roomId)
-    // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
+  // socket.on('join-room', roomId => {
+  //   socket.join(roomId)
+  //   // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
+  // })
   socket.on('join-room', userObj => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
@@ -232,8 +266,9 @@ io.on('connection', socket => {
     playCard(userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx)
   })
   socket.on('draw-card', (username) => {
-    socket.ekGameState['hand1'].push(socket.ekGameState.deck[0])
-    socket.ekGameState.deck.splice(0, 1)
+    drawCard();
+    // socket.ekGameState['hand1'].push(socket.ekGameState.deck[0])
+    // socket.ekGameState.deck.splice(0, 1)
   })
   socket.on('player-loses', (username) => {
     console.log(username, 'lost')

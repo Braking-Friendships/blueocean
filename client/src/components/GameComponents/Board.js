@@ -29,8 +29,8 @@ const Board = () => {
   const [p5L, setP5L] = useState(null);
   const [stackL, setStackL] = useState(52);
 
-  let decks = createDeck(4);
   useEffect(() => {
+    let decks = createDeck(4);
     setMyHand(decks.hand1);
     setP2L(decks.hand2.length);
     setP3L(decks.hand3.length);
@@ -40,14 +40,14 @@ const Board = () => {
     setFirstLoad(false);
     // emitters.playCard('hand2', decks.hand2[4].type, 4)
     // emitters.playerLoses('hand1')
+    emitters.startGame(decks);
   }, []);
-  emitters.startGame(decks);
   // emitters.playCard('future', [1], '', '', 6)
   // emitters.endGame();
-  emitters.drawCard('hand1')
-  socket.on('show-future', futureCards => {
-    console.log('Next three cards', futureCards)
-  })
+  // emitters.drawCard('hand1')
+  // socket.on('show-future', futureCards => {
+  //   console.log('Next three cards', futureCards)
+  // })
 
   const displayOtherHands = (count, side) => {
     let cards = [];
@@ -56,10 +56,6 @@ const Board = () => {
     }
     return cards;
   }
-
-  emitters.hostRoom();
-  emitters.joinRoom('FKZlSJ')
-  socket.on('game-state', gameState => console.log(gameState))
 
   return (
     <div id="board" className='grid grid-cols-6 grid-rows-5 bg-blue-300 h-screen overflow-hidden col-span-4'>
