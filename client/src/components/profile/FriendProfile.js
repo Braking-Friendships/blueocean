@@ -3,16 +3,15 @@ import React from 'react';
 
 const FriendProfile = ({ changeProfileView, friendProfile, returnToUserProfile }) => {
 
-
   const calculateWinRate = () => {
     return ((friendProfile.total_wins / friendProfile.total_games) * 100).toFixed(2) + '%';
   }
 
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
-              <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => returnToUserProfile()}>BACK</button>
-      <h1>USER PROFILE</h1>
-      <br />
+      <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => returnToUserProfile()}>BACK</button>
+
+      <br /><br />
 
       <img src={friendProfile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
       <br />
@@ -27,10 +26,10 @@ const FriendProfile = ({ changeProfileView, friendProfile, returnToUserProfile }
       }
       <br />
 
-      <div>Friends</div>
+      {/* <div>Friends</div>
       {friendProfile.friends &&
         friendProfile.friends.map(friend => { return <div key={friend}>{friend}</div> })
-      }
+      } */}
     </div>
   );
 };

@@ -2,17 +2,12 @@ import React from 'react';
 import { FiFeather } from "react-icons/fi";
 
 const UserProfile = ({ changeProfileView, userProfile, changeName, changeAvatar }) => {
-  console.log(userProfile.avatar);
-
   const calculateWinRate = () => {
     return ((userProfile.total_wins / userProfile.total_games) * 100).toFixed(2) + '%';
   }
 
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
-      <h1>USER PROFILE</h1>
-      <br />
-
         <button className="bg-[#81B29A] justify-end hover:outline text-white font-bold py-2 px-4 rounded" onClick={() => changeAvatar()}><FiFeather /></button>
         <img src={userProfile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
       <br />

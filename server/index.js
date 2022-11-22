@@ -104,11 +104,6 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
-  socket.on('get-friend-data', async user => {
-    const userData = await controller.getUserData(user)
-    console.log(userData)
-    socket.emit('send-friend-data', userData)
-  })
   socket.on('create-user', async user => {
     console.log('~~ DATA FROM LOGIN ~~ ', user);
     const createUser = await controller.createUser(user)
@@ -116,6 +111,27 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
+
+  // PROFILE CHANGES
+  socket.on('get-friend-data', async user => {
+    const userData = await controller.getFriendData(user)
+    console.log(userData)
+    socket.emit('send-friend-data', userData)
+  })
+  socket.on('post-edit-username', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-username', userData)
+  })
+  socket.on('post-edit-avatar', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-avatar', userData)
+  })
+
+
 
   // ROOM LISTENERS
   socket.on('host-room', socketId => {
