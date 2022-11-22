@@ -15,5 +15,9 @@ export const emitters = {
   endGame: () => socket.emit('end-game'),
   playCard: (username, card, cardIdx) => socket.emit('play-card', username, card, cardIdx),
   drawCard: (username) => socket.emit('draw-card', username),
-  playerLoses: (username) => socket.emit('player-loses', username)
+  playerLoses: (username) => socket.emit('player-loses', username),
+  // chat emmiters -----
+  handleBroadSubmit: (message, room) => socket.emit('send-chat-message', message, room),
+  handleRmSubmit: (room) => socket.emit('join-room', room, message => console.log(message, 'ROOM SUBMIT MESSAGE SENT')),
+  // -------------------
 }

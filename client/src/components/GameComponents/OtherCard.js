@@ -2,30 +2,29 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
+import AnimatedCard from './AnimatedCard';
 
-const OtherCard = ({ side  }) => {
-  const [settings, setSettings] = useState({});
-
-  useEffect(() => {
-    let set = {}
-    if(side === 'left'){
-      set.rotate = 90;
-    } else if (side === 'right') {
-      set.rotate = -90;
-    }
-
-    setSettings(set)
-  }, []);
+const OtherCard = React.forwardRef(({ side, stackPosition, idx }, ref) => {
 
   return (
-    <motion.div
-    className='min-w-0 min-h-0'
-    initial={false}
-    animate={settings}
+    <AnimatedCard
+    side={side}
+    stackPosition={stackPosition}
+    idx={idx}
     >
-      <img src={singleCardback} className='pointer-events-none rounded-xl box-border min-w-[150px] w-[150px] h-auto' alt="playing card" />
-    </motion.div>
+      <motion.div
+      ref={ref || null}
+      className='min-w-0 min-h-0 p-0'
+      >
+        <img src={singleCardback}
+        className={`pointer-events-none rounded-xl box-border h-auto border-black border-[2px] bg-red-900 min-w-[150px] w-[200px]
+
+        `}
+        alt="playing card" />
+      </motion.div>
+    </AnimatedCard>
   )
-}
+});
 
 export default OtherCard
+//${side==='mid' ? 'min-w-[200px] ' : 'min-w-[150px] w-[150px]'}

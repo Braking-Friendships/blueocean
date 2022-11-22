@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const shufflePlayerOrder = (playersArray) => {
   let i = playersArray.length;
-  while(i > 0) {
+  while (i > 0) {
     let idxToSwitch = Math.floor(Math.random() * playersArray.length);
     i--;
     let temp = playersArray[i];
@@ -98,6 +98,26 @@ io.on('connection', socket => {
     console.log(message)
   })
 
+  // Socket listeners for chat components ------------
+  socket.on('send-chat-message', (message, room) => {
+    // if room text is empty send to everyone
+    if (room === '') {
+      // socket.broadcast sends message to everyone except me
+      socket.broadcast.emit('receive-message', message);
+      console.log(message);
+    } else {
+      // send message to room only
+      socket.to(room).emit('receive-message', message);;
+    }
+  });
+  // socket listener for room joins
+  socket.on('join-room', (room, cb) => {
+    socket.join(room);
+    cb(`Joined ${room}`)
+  })
+  // ---------------------------------------------------
+
+
   // AUTH/USER DATA LISTENERS
   socket.on('get-user-data', async user => {
     const userData = await controller.getUserData(user)
@@ -111,6 +131,27 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
+
+  // PROFILE CHANGES
+  socket.on('get-friend-data', async user => {
+    const userData = await controller.getFriendData(user)
+    console.log(userData)
+    socket.emit('send-friend-data', userData)
+  })
+  socket.on('post-edit-username', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-username', userData)
+  })
+  socket.on('post-edit-avatar', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-avatar', userData)
+  })
+
+
 
   // ROOM LISTENERS
   socket.on('host-room', socketId => {
