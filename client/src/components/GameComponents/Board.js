@@ -5,6 +5,7 @@ import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
 
+
 const Board = () => {
   const playerAreaRef = useRef();
   const stackRef = useRef();
@@ -69,14 +70,16 @@ const Board = () => {
         <OtherCard ref={stackRef} side='mid' />
         <OtherCard side='mid' />
       </div>
-      {!firstLoad && <HandHolder
+      {!firstLoad && <div
+      id="bottom-player"
       className='row-start-5 row-end-6 col-start-2 col-end-6 flex justify-center items-end gap-2 bg-red-300'
       ref={playerAreaRef}
+      draggable={false}
       >
         {myHand.map((card, i) =>
-          <PlayerCard key={i} card={card} playerArea={playerArea} stackPosition={stackPosition} />
+          <PlayerCard key={i} card={card} playerArea={playerArea} stackPosition={stackPosition} idx={i} />
         )}
-      </HandHolder>}
+      </div>}
 
       <div id="right-player" className='row-start-2 row-end-5 col-span-1 col-end-7 flex flex-col justify-center items-center'>
         {displayOtherHands(p4L, 'right')}

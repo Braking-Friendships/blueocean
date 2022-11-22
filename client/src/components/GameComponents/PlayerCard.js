@@ -1,15 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
-import { motion } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 
-const PlayerCard = ({ card, playerArea, stackPosition }) => {
+const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
   const cardRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
-  // const [initialAnimation, setInitialAnimation] = useState(getTransitionPos());
+  const cardControls = useAnimationControls();
+  const getTransitionPos = () => {
+    let { x, bottom } = cardRef.current?.getBoundingClientRect();
 
-  /* useEffect(() => {
-    setInitialAnimation(getTransitionPos());
-  }, [stackPosition]); */
+    x = stackPosition.x - x;
+    let y = stackPosition.bottom - bottom;
+    return {x, y}
+  }
+  const animate = async(controls, ) => {
+    let poo = getTransitionPos();
+
+    await cardControls.start({
+      x: poo.x,
+      y: poo.y,
+      transition: {
+        duration: 0
+      }
+    })
+
+    cardControls.start({
+      x: 0,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: idx * 0.2
+      }
+    })
+  };
+  useEffect(() => {
+    if(stackPosition){
+      animate();
+    }
+  }, [stackPosition]);
 
   const dragStart = () => {
     setIsDragging(true);
@@ -26,53 +54,29 @@ const PlayerCard = ({ card, playerArea, stackPosition }) => {
       console.log('played card:', card.type);
     }
   }
-  const getTransitionPos = () => {
-    let { x, y } = cardRef.current?.getBoundingClientRect();
-
-    x = stackPosition.x - x;
-    y = stackPosition.y - y;
-    return {x, y}
-  }
-  const startingPOI = getTransitionPos();
-  const initialAnimation = {
-    onLoad: {
-      y: startingPOI.y,
-      x: startingPOI.x
-    },
-    done:  {
-      y: 0,
-      x: 0
-    }
-  }
 
   const cardContainer = {
 
     rest: {
       scale: 1,
-      'zIndex': 2,
+      /* 'zIndex': 2,
       transition: {
         'zIndex': {
           duration: 0
         }
-      }
+      } */
     },
     hover: {
       scale: 1.1,
-      'zIndex': 10,
+      /* 'zIndex': 10,
       transition: {
         'zIndex': {
           duration: 0
         }
-      }
+      } */
     },
     tap: {
       scale: 1,
-      'zIndex': 10,
-      transition: {
-        'zIndex': {
-          duration: 0
-        }
-      }
     }
   }
   const tooltip = {
@@ -95,13 +99,12 @@ const PlayerCard = ({ card, playerArea, stackPosition }) => {
   return (
     <motion.div
       ref={cardRef}
-      className={`relative min-h-0 min-w-0`}
-      variants={initialAnimation}
-      initial='onLoad'
-      animate='done'
-
+      className={`relative min-h-0 min-w-0 z-0`}
+      animate={cardControls}
+      whileHover={{'zIndex': 10}}
     >
       <motion.div
+      layout
       drag
       dragSnapToOrigin
       dragConstraints={{ bottom: 0 }}
