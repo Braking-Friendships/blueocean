@@ -5,10 +5,9 @@ import FriendProfile from './FriendProfile';
 import ChangeNameModal from './ChangeNameModal';
 import ChangeAvatarModal from './ChangeAvatarModal';
 
-const ViewProfile = () => {
+const ViewProfile = ({ userInfo }) => {
   const [userProfileState, setUserProfileState] = useState(true);
   const [friendsProfileState, setFriendsProfileState] = useState(false);
-  // const [friendsName, setFriendsName] = useState();
   const [userProfile, setUserProfile] = useState({});
   const [friendProfile, setFriendProfile] = useState({});
   const [nameModal, setNameModal] = useState(false);
@@ -41,7 +40,7 @@ const ViewProfile = () => {
     // EDIT USERNAME
     if (e.target.username) {
       socket.emit('post-edit-username', {
-        firebaseId: userProfile.firebase_id,
+        firebaseId: userInfo.firebase_id,
         username: e.target.username.value
       });
       socket.on('send-edit-username', data => {
@@ -51,7 +50,7 @@ const ViewProfile = () => {
       setNameModal(false);
     } else { // EDIT AVATAR
       socket.emit('post-edit-avatar', {
-        firebaseId: userProfile.firebase_id,
+        firebaseId: userInfo.firebase_id,
         avatar: avatar
       });
       socket.on('send-edit-avatar', data => {
@@ -63,16 +62,16 @@ const ViewProfile = () => {
   }
 
 
-  useEffect(() => {
-    setUserProfileState(true);
-    setFriendsProfileState(false);
-    // HARD CODED DATA
-    socket.emit('get-user-data', { firebaseId: 0.14438257512163855 });
-    socket.on('send-user-data', data => {
-      setUserProfile(data[0]);
-      setAvatar(data[0].avatar);
-    })
-  }, [avatarModal])
+  // useEffect(() => {
+  //   setUserProfileState(true);
+  //   setFriendsProfileState(false);
+  //   // HARD CODED DATA
+  //   socket.emit('get-user-data', { firebaseId: 0.14438257512163855 });
+  //   socket.on('send-user-data', data => {
+  //     setUserProfile(data[0]);
+  //     setAvatar(data[0].avatar);
+  //   })
+  // }, [avatarModal])
 
   // useEffect(() => {
   //   console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
@@ -88,7 +87,7 @@ const ViewProfile = () => {
       {userProfileState && !friendsProfileState &&
         <UserProfile
           changeProfileView={changeProfileView}
-          userProfile={userProfile}
+          userProfile={userInfo}
           changeName={changeName}
           changeAvatar={changeAvatar}
         />
@@ -101,7 +100,7 @@ const ViewProfile = () => {
       <ChangeAvatarModal
         avatarModal={avatarModal}
         setAvatarModal={() => setAvatarModal(false)}
-        profileAvatar={userProfile.avatar}
+        profileAvatar={userInfo.avatar}
         submitChange={submitChange}
         avatar={avatar}
         setAvatar={setAvatar}
