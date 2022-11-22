@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react'
-import lqTran from '../../assets/cards/lqTran.png';
+import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
 import { motion } from 'framer-motion';
 
-const PlayerCard = ({ card, playerArea }) => {
+const PlayerCard = ({ card, playerArea, stackPosition }) => {
   const cardRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
+  // const [initialAnimation, setInitialAnimation] = useState(getTransitionPos());
+
+  /* useEffect(() => {
+    setInitialAnimation(getTransitionPos());
+  }, [stackPosition]); */
 
   const dragStart = () => {
     setIsDragging(true);
@@ -14,7 +18,6 @@ const PlayerCard = ({ card, playerArea }) => {
   const checkPlay = (event, info) => {
     // console.log(playerArea.y);
     // console.log(info.point.x, info.point.y);
-    console.log(cardRef.current);
     setTimeout(() => {
       setIsDragging(false);
 
@@ -23,20 +26,39 @@ const PlayerCard = ({ card, playerArea }) => {
       console.log('played card:', card.type);
     }
   }
+  const getTransitionPos = () => {
+    let { x, y } = cardRef.current?.getBoundingClientRect();
+
+    x = stackPosition.x - x;
+    y = stackPosition.y - y;
+    return {x, y}
+  }
+  const startingPOI = getTransitionPos();
+  const initialAnimation = {
+    onLoad: {
+      y: startingPOI.y,
+      x: startingPOI.x
+    },
+    done:  {
+      y: 0,
+      x: 0
+    }
+  }
 
   const cardContainer = {
-    hover: {
-      scale: 1.1,
-      'zIndex': 10,
+
+    rest: {
+      scale: 1,
+      'zIndex': 2,
       transition: {
         'zIndex': {
           duration: 0
         }
       }
     },
-    rest: {
-      scale: 1,
-      'zIndex': 2,
+    hover: {
+      scale: 1.1,
+      'zIndex': 10,
       transition: {
         'zIndex': {
           duration: 0
@@ -52,7 +74,6 @@ const PlayerCard = ({ card, playerArea }) => {
         }
       }
     }
-
   }
   const tooltip = {
     hover: {
@@ -73,33 +94,39 @@ const PlayerCard = ({ card, playerArea }) => {
 
   return (
     <motion.div
-    ref={cardRef}
-    className={`relative min-h-0 min-w-0`}
-    drag
-    dragSnapToOrigin
-    dragConstraints={{bottom: 0}}
-    dragElastic={0.2}
-    onDragStart={dragStart}
-    onDragEnd={checkPlay}
-    initial='rest'
-    whileHover='hover'
-    whileTap='tap'
-    variants={cardContainer}
-    draggable={false}
-    >
-      <img src={getCardImg(card.img)}
-      className='min-w-[200px] w-52 h-auto rounded-xl'
-      draggable={false}
-      alt="playing card" />
-      {!isDragging
-      ? <motion.div id='tooltip'
-      className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[275px] -left-1 opacity-0 pointer-events-none flex justify-center items-center'
-      variants={tooltip}
-      >
-        {getTip(card)}
-      </motion.div>
-      : null}
+      ref={cardRef}
+      className={`relative min-h-0 min-w-0`}
+      variants={initialAnimation}
+      initial='onLoad'
+      animate='done'
 
+    >
+      <motion.div
+      drag
+      dragSnapToOrigin
+      dragConstraints={{ bottom: 0 }}
+      dragElastic={0.2}
+      onDragStart={dragStart}
+      onDragEnd={checkPlay}
+      whileHover='hover'
+      whileTap='tap'
+      variants={cardContainer}
+      draggable={false}
+      >
+        <img src={getCardImg(card.img)}
+        className='min-w-[200px] w-52 h-auto rounded-xl'
+        draggable={false}
+        alt="playing card" />
+        {!isDragging
+        ? <motion.div id='tooltip'
+        className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[275px] -left-1 opacity-0 pointer-events-none flex justify-center items-center'
+        variants={tooltip}
+        >
+          {getTip(card)}
+        </motion.div>
+        : null}
+
+      </motion.div>
     </motion.div>
   )
 }

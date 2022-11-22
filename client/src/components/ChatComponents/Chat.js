@@ -22,9 +22,9 @@ const Chat = (props) => {
 
   return (
 
-    <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-[#F4F1DE] text-gray-800 p-10">
 
-      {/* <!-- Component Start --> */}
+
+      // {/* <!-- Component Start --> */}
       <div className="flex flex-col flex-grow w-full max-w-xl bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
         <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
 
@@ -51,9 +51,8 @@ const Chat = (props) => {
           </button>
         </form>
       </div>
-      {/* <!-- Component End  --> */}
+      // {/* <!-- Component End  --> */}
 
-    </div>
   )
 }
 

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
 
-const OtherCard = ({ side }) => {
+const OtherCard = React.forwardRef(({ side }, ref) => {
   const [settings, setSettings] = useState({});
 
   useEffect(() => {
@@ -19,6 +19,7 @@ const OtherCard = ({ side }) => {
 
   return (
     <motion.div
+    ref={ref || null}
     className='min-w-0 min-h-0'
     initial={false}
     animate={settings}
@@ -30,6 +31,6 @@ const OtherCard = ({ side }) => {
       alt="playing card" />
     </motion.div>
   )
-}
+});
 
 export default OtherCard

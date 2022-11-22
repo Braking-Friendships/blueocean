@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import HandHolder from './HandHolder';
 import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
@@ -6,8 +7,19 @@ import { socket, emitters } from '../../socket.js';
 
 const Board = () => {
   const playerAreaRef = useRef();
+  const stackRef = useRef();
 
-  const playerArea = playerAreaRef.current?.getBoundingClientRect();
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [playerArea, setPlayerArea] = useState(null);
+  const [stackPosition, setStackPosition] = useState(null);
+
+  useEffect(() => {
+    setStackPosition(stackRef.current?.getBoundingClientRect());
+  }, [])
+
+  useEffect(() => {
+    setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
+  }, [firstLoad]);
 
   const [myHand, setMyHand] = useState([]);
   const [p2L, setP2L] = useState(null);
@@ -24,7 +36,7 @@ const Board = () => {
     setP4L(decks.hand4.length);
     // setP5L(decks.hand5.length);
     setStackL(decks.deck.length);
-
+    setFirstLoad(false);
     // emitters.startGame(decks);
     // emitters.endGame();
     // emitters.playCard('hand1', decks.hand1[2].type, 2)
@@ -36,7 +48,7 @@ const Board = () => {
   const displayOtherHands = (count, side) => {
     let cards = [];
     for(let i = 0; i < count; i++) {
-      cards.push(<OtherCard key={i} side={side} />)
+      cards.push(<OtherCard key={i} side={side} stackPosition={stackPosition} />)
     }
     return cards;
   }
@@ -54,16 +66,18 @@ const Board = () => {
         {displayOtherHands(p4L, 'top')}
       </div>
       <div id="middle-stack" className='row-start-3 row-end-4 col-span-4 flex justify-center items-end gap-7'>
-        <OtherCard side='mid' />
+        <OtherCard ref={stackRef} side='mid' />
         <OtherCard side='mid' />
       </div>
-      <div id="bottom-player" className='row-start-5 row-end-6 col-start-2 col-end-6 flex justify-center items-end gap-2'
+      {!firstLoad && <HandHolder
+      className='row-start-5 row-end-6 col-start-2 col-end-6 flex justify-center items-end gap-2 bg-red-300'
       ref={playerAreaRef}
       >
         {myHand.map((card, i) =>
-          <PlayerCard key={i} card={card} playerArea={playerArea} />
+          <PlayerCard key={i} card={card} playerArea={playerArea} stackPosition={stackPosition} />
         )}
-      </div>
+      </HandHolder>}
+
       <div id="right-player" className='row-start-2 row-end-5 col-span-1 col-end-7 flex flex-col justify-center items-center'>
         {displayOtherHands(p4L, 'right')}
       </div>
