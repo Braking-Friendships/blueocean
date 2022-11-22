@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const shufflePlayerOrder = (playersArray) => {
   let i = playersArray.length;
-  while(i > 0) {
+  while (i > 0) {
     let idxToSwitch = Math.floor(Math.random() * playersArray.length);
     i--;
     let temp = playersArray[i];
@@ -131,6 +131,27 @@ io.on('connection', socket => {
     console.log(userData)
     socket.emit('send-user-data', userData)
   })
+
+  // PROFILE CHANGES
+  socket.on('get-friend-data', async user => {
+    const userData = await controller.getFriendData(user)
+    console.log(userData)
+    socket.emit('send-friend-data', userData)
+  })
+  socket.on('post-edit-username', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-username', userData)
+  })
+  socket.on('post-edit-avatar', async user => {
+    const createUser = await controller.updateUser(user)
+    const userData = await controller.getUserData(user)
+    console.log(userData)
+    socket.emit('send-edit-avatar', userData)
+  })
+
+
 
   // ROOM LISTENERS
   socket.on('host-room', socketId => {
