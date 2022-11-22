@@ -1,71 +1,72 @@
 import React from "react";
 React.createContext();
 
+
 const bomb = {
   type: 'bomb',
   count: 4,
-  variation: []
+  variation: ['bomb']
 }
 const defuse = {
   type: 'defuse',
   count: 6,
-  variation: []
+  variation: ['defuse']
 }
 
 const attack = {
   type: 'attack',
   count: 4,
-  variation: ['img1']
+  variation: ['attack']
 }
 const favor = {
   type: 'favor',
   count: 4,
-  variation: []
+  variation: ['favor']
 }
 const nope = {
   type: 'nope',
   count: 5,
-  variation: []
+  variation: ['nope']
 }
 const shuffle = {
   type: 'shuffle',
   count: 4,
-  variation: []
+  variation: ['shuffle']
 }
 const skip = {
   type: 'skip',
   count: 4,
-  variation: []
+  variation: ['skip']
 }
 const future = {
   type: 'future',
   count: 5,
-  variation: []
+  variation: ['future']
 }
 const tacocat = {
   type: 'tacocat',
   count: 4,
-  variation: []
+  variation: ['tacocat']
 }
 const watermeloncat = {
   type: 'watermeloncat',
   count: 4,
-  variation: []
+  variation: ['watermeloncat']
 }
 const burritocat = {
   type: 'burritocat',
   count: 4,
-  variation: []
+  variation: ['burritocat']
 }
 const rainbowcat = {
   type: 'rainbowcat',
   count: 4,
-  variation: []
+  variation: ['rainbowcat']
 }
 const beardcat = {
   type: 'beardcat',
   count: 4,
-  variation: []
+  variation: ['beardcat']
 }
 
 const cardTypes = [defuse, attack, skip, favor, nope, shuffle, future, tacocat, watermeloncat, burritocat, rainbowcat, beardcat];
@@ -122,7 +123,7 @@ const finalHandsAndDeck = (deck, playerCount) => {
   let result = {};
 
   for(let i = 0; i < playerCount; i++) {
-    let hand = [{type: 'defuse', img: null}];
+    let hand = [{type: 'defuse', img: 'defuse'}];
     for(let i = 0; i < 7; i++){
       hand.push(deck.pop());
     }
