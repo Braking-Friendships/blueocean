@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
   lastName: String,
   avatar: {
     type: String,
-    default: '',
+    default: '/static/media/happyCat.2c53228aef54c3bfef6c.png',
   },
   friends: [String],
   total_games: {

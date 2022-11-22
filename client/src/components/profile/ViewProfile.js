@@ -5,7 +5,7 @@ import FriendProfile from './FriendProfile';
 import ChangeNameModal from './ChangeNameModal';
 import ChangeAvatarModal from './ChangeAvatarModal';
 
-const ViewProfile = () => {
+const ViewProfile = ({ userInfo }) => {
   const [userProfileState, setUserProfileState] = useState(true);
   const [friendsProfileState, setFriendsProfileState] = useState(false);
   // const [friendsName, setFriendsName] = useState();

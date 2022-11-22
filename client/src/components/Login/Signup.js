@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = ({ createNewUser }) => {
+  const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -20,6 +21,7 @@ const Signup = ({ createNewUser }) => {
       setError('');
       setLoading(true);
       const user = await signup(emailRef.current.value, passwordRef.current.value);
+      user.username = usernameRef.current.value;
       await createNewUser(user);
       navigate('/')
     } catch (err) {
@@ -31,6 +33,10 @@ const Signup = ({ createNewUser }) => {
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex justify-center items-center">
       <form className="w-72 bg-[#F2CC8F] shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" ref={usernameRef} required placeholder="username" />
+        </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Email:</label>
           <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" ref={emailRef} required placeholder="email" />
