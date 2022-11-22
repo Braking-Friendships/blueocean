@@ -9,34 +9,12 @@ import tongueCat from '../../assets/avatars/tongueCat.png';
 
 const Lobby = ({ userInfo }) => {
 
-  // logic
-  // get room id from landing page (passed down)
 
-  // from room, get ids
-
-  console.log('userinfo', userInfo)
-
-  const [roomId, setRoomId] = useState('')
+  const [roomId, setRoomId] = useState('CdVal6')
   const [profiles, setProfiles] = useState()
-  // useEffect(() => {
-  //   setRoomId('CdVal6')
-  // }, [])
+  // emitters.joinRoom(roomId)
+  // socket.on('game-state', gameState => console.log('game', gameState))
 
-  const [user, setUser] = useState('0.14438257512163855');
-
-  useEffect(() => {
-      socket.emit('get-user-data', { firebaseId: user });
-      socket.on('send-user-data', data => {
-        setProfiles(data);
-      })
-    setRoomId('CdVal6')
-  }, [user])
-
-
-
-
-  emitters.joinRoom(roomId)
-  socket.on('game-state', gameState => console.log('game', gameState))
 
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
