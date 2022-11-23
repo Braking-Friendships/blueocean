@@ -1,92 +1,55 @@
-import react, { useState, useEffect } from 'react';
-import { socket, emitters } from '../../socket';
-import UserProfileFriends from './UserProfileFriends';
-import madCat from '../../assets/avatars/madCat.png';
-import happyCat from '../../assets/avatars/happyCat.png';
-import sageCat from '../../assets/avatars/sageCat.png';
-import sneakyCat from '../../assets/avatars/sneakyCat.png';
-import tongueCat from '../../assets/avatars/tongueCat.png';
-import vampireCat from '../../assets/avatars/vampireCat.png';
-import unhappyCat from '../../assets/avatars/unhappyCat.png';
+import React from 'react';
+import { FiFeather } from "react-icons/fi";
 
-const UserProfile = () => {
-  // CHANGES WHEN ACTUAL USER IS DETERMINED
-  const [user, setUser] = useState('0.14438257512163855');
-  const [profile, setProfile] = useState(
-    {
-      _id: "6379627813a1460fe41c9dd0",
-      __v: 0,
-      firebase_id: '0.14438257512163855',
-      avatar: sageCat,
-      email: 'HieuTest@gmail.com',
-      username: 'blahblah',
-      firstName: 'Hieu',
-      lastName: 'Ngo',
-      friends: ['Randy'],
-      total_games: 0,
-      total_wins: 0,
-    });
-
-
-  const changeName = () => {
-    // console.log('change name button clicked');
-  };
-
-  const changeAvatar = () => {
-    // console.log('change avatar button clicked');
-  };
-
-
-
-  useEffect(() => {
-    socket.emit('get-user-data', { firebaseId: user });
-    socket.on('send-user-data', data => {
-      setProfile(data[0]);
-    })
-  }, [user])
-
-
-
+const UserProfile = ({ changeProfileView, userProfile, changeName, changeAvatar }) => {
   const calculateWinRate = () => {
-    return ((profile.total_wins / profile.total_games) * 100).toFixed(2) + '%';
+    return ((userProfile.total_wins / userProfile.total_games) * 100).toFixed(2) + '%';
   }
 
   return (
-    <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
-      {/* <div> */}
-      <h1>USER PROFILE</h1>
-      <br />
-
-      {!profile.avatar &&
-        <div>
-          <img src={happyCat} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
-          <br />
-          <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded" onClick={changeAvatar()}>Change Avatar</button>
+    <div className="w-screen h-screen bg-[#F4F1DE] flex justify-evenly items-center">
+      <div className="w-2/3 h-96 flex flex-col items-center gap-10">
+        <div className="flex">
+          <div>
+            <img src={userProfile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
+          </div>
+          <div>
+            <button className="bg-[#81B29A] justify-end hover:outline text-white font-bold py-2 px-4 rounded" onClick={() => changeAvatar()}><FiFeather /></button>
+          </div>
         </div>
-      }
-      {profile.avatar &&
-        <div>
-          <img src={profile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
-          <br />
-          <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded" onClick={changeAvatar()}>Change Avatar</button>
+
+        <div className="flex items-center bg-[#3D405B] p-2 px-10 text-white rounded">
+          <div className="flex-initial justify-center items-center m-8">
+            <h2>Username:</h2>
+            {userProfile.username} &nbsp;
+            <button className=" hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => changeName()}><FiFeather /></button>
+          </div>
+          <div className="flex-col p-2 ">
+            <h4>Number of Wins: {userProfile.total_wins}</h4>
+            <h4>Total games played: {userProfile.total_games}</h4>
+            {userProfile.total_games > 0 && <h4>Win Rate: {calculateWinRate()}</h4>}
+          </div>
         </div>
-      }
-      <br />
+      </div>
 
-      <h4>{profile.username}</h4>
-      <br />
-      <button className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={changeName()}>Change Name</button>
-      <br />
-
-      <h4>Number of Wins: {profile.total_wins}</h4>
-      <h4>Total games played: {profile.total_games}</h4>
-      {profile.total_games > 0 && <h4>Win Rate: {calculateWinRate()}</h4>}
-      <br />
-
-      <div>Friends</div>
-      {profile.friends.length > 0 &&
-        profile.friends.map(friend => { return <UserProfileFriends friend={friend} key={friend} /> })
-      }
+      <div className="w-72 h-96 bg-[#F2CC8F] flex flex-col p-5 rounded">
+        <div className="flex justify-center ">
+          <h2>Friends</h2>
+        </div>
+        <div className="flex-col py-5 overflow-y-scroll ">
+          {userProfile.friends &&
+            userProfile.friends.map(friend => {
+              return (
+                <div className="my-4 p-2 rounded bg-[#E07A5F]"
+                  key={friend}
+                  onClick={(e) => changeProfileView(e)}
+                >{friend}
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
     </div>
   );
 };
