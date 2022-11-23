@@ -25,6 +25,9 @@ function App() {
   const [user, setUser] = useState(false);
   // const [roomState, setRoomState] = useState({roomId: id, players:[{userInfo}]});
 
+  // help pass badge notifications
+  const [chatMessages, setChatMessages] = useState(0);
+
   // const updateRoomState = (change) => {
   //   // setRoomState(...roomState, change)
   //   // emit (room-updated) => updates

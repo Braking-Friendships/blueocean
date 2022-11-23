@@ -1,25 +1,30 @@
 import React from 'react'
 import Board from './Board'
 import Chat from '../ChatComponents/Chat';
+import {useState} from 'react';
 
-const GameRoom = () => {
+
+const GameRoom = (props) => {
+  const [isOpen, setOpen] = useState(false);
+
   return (
     <>
-      <div className='grid grid-cols-5'>
+      <div className={isOpen ? 'grid grid-cols-5 bg-[#3D405B]': ""}>
         <Board />
-      </div>
-      <div className="absolute inset-y-20 right-0">
-        <button className="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Open Chat</button>
-
-        <div className="offcanvas offcanvas-end fixed bottom-0 flex flex-col max-w-full bg-white invisible bg-clip-padding shadow-sm outline-none transition duration-300 ease-in-out text-gray-700 top-0 right-0 border-none w-96" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-          <div className="offcanvas-header flex items-center justify-between p-4">
-            <button type="button" className="btn-close box-content w-4 h-4 p-2 -my-5 -mr-2 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
-            <h5 className="offcanvas-title mb-0 leading-normal font-semibold" id="offcanvasRightLabel">CHAT</h5>
-          </div>
-          <div className="">
+        <div className={isOpen ? 'h-170 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 pt-0 pb-0': "hidden"}>
+          <button type="button" className="absolute left-0 ml-3 mt-3 text-white" onClick={(e) => setOpen(!isOpen)}>X</button>
+          <h5 className="absolute ml-48 mt-10 text-white">Chat</h5>
+          <div className="h-170 flex flex-col flex-grow mt-10">
             <Chat />
           </div>
         </div>
+      </div>
+
+      <div className={!isOpen ? "absolute inset-y-20 right-10" : "hidden"}>
+        <button className="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" onClick={(e) => setOpen(!isOpen)}>
+          <span className="mr-2">Open Chat</span>
+          <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">!</span>
+        </button>
       </div>
     </>
   )
