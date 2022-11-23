@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const NavBar = ({ userInfo, logout }) => {
 
-  console.log(userInfo);
   return (
     <nav className='flex justify-between text-white bg-[#3D405B] absolute w-screen h-10 pl-4'>
       <Link to='/' className='hover:bg-[#E07A5F] h-10 pt-2'>Braking Friendships</Link>

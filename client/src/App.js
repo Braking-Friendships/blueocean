@@ -21,7 +21,6 @@ import GameRoom from './components/GameComponents/GameRoom';
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
-  const [guest, setGuest] = useState();
 
   // USER LOGIN
   const getUserData = async (user) => {
@@ -53,25 +52,24 @@ function App() {
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
     console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
-    let user;
-    if (localStorage.getItem('u_id') !== undefined) {
-      user = { firebaseId: localStorage.getItem('u_id') }
-      getUserData(user);
-    // } else {
-    //   const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
-    //   setUserInfo({ username: guest })
-    }
-    // if (user.firebaseId) { getUserData(user) }
-    // else {setGuest({username: guest})}
+    const user = { firebaseId: localStorage.getItem('u_id') };
 
+    const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
+    if (user.firebaseId) { getUserData(user) }
+    // else { setUserInfo({ username: guest, avatar: happyCat }) }
   }, []);
+
+  useEffect(() => {
+    console.log('~~~~ USER/GUEST ~~~~');
+    console.log('user: ', userInfo);
+  }, [userInfo])
 
 
   return (
     <>
       {location.pathname !== '/game' ? <NavBar userInfo={userInfo} logout={logout} /> : null}
       <Routes>
-        <Route path='/' element={<LandingPage userInfo={userInfo} guest={guest} />}></Route>
+        <Route path='/' element={<LandingPage userInfo={userInfo} />}></Route>
         <Route path='/game' element={<GameRoom />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>

@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 import { socket, emitters } from '../../socket.js'
 import happyCat from '../../assets/avatars/happyCat.png';
 
-const LandingPage = ({userInfo}) => {
+const LandingPage = ({userInfo, guestInfo}) => {
   const [showModal, setShowModal] = useState(false);
   const id = socket.id;
   const path = `/lobby/${id}`
