@@ -10,7 +10,7 @@ const UserProfile = ({ changeProfileView, userProfile, changeName, changeAvatar 
     <div className="w-screen h-screen bg-[#F4F1DE] flex justify-evenly items-center">
       <div className="w-2/3 h-96 flex flex-col items-center gap-10">
         <div className="flex">
-          <div>
+          <div className="block">
             <img src={userProfile.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
           </div>
           <div>
@@ -36,6 +36,7 @@ const UserProfile = ({ changeProfileView, userProfile, changeName, changeAvatar 
         <div className="flex justify-center ">
           <h2>Friends</h2>
         </div>
+        <div></div>
         <div className="flex-col py-5 overflow-y-scroll ">
           {userProfile.friends &&
             userProfile.friends.map(friend => {

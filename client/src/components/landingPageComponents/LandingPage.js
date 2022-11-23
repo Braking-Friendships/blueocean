@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import JoinGameModal from './JoinGameModal.js'
 import { io } from 'socket.io-client';
 import { socket, emitters } from '../../socket.js'
+import happyCat from '../../assets/avatars/happyCat.png';
 
 const LandingPage = ({userInfo}) => {
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +39,9 @@ const LandingPage = ({userInfo}) => {
   //  console.log(data)
   // })
 
+
+  // const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
+
   return (
     <div className='relative top-1/4'>
       {showModal ? <JoinGameModal closeModal={closeModal} userInfo={userInfo}/> : null}
@@ -49,15 +53,7 @@ const LandingPage = ({userInfo}) => {
           <button className={buttonStyle}> Join a Random Game </button>
         </div>
         {/* <Profile /> */}
-        {!userInfo &&
-          <div className='flex flex-col gap-4 justify-center'>
-            <img src={img} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
-            <div className='flex justify-center'>
-              <div className='max-w-max text-2xl'>Username</div>
-            </div>
-          </div>
-        }
-        {userInfo &&
+        {/* {!user &&
           <div className='flex flex-col gap-4 justify-center'>
             <img src={userInfo.avatar} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
             <div className='flex justify-center'>
@@ -65,6 +61,14 @@ const LandingPage = ({userInfo}) => {
             </div>
           </div>
         }
+        {user && */}
+          <div className='flex flex-col gap-4 justify-center'>
+            <img src={userInfo.avatar} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
+            <div className='flex justify-center'>
+              <div className='max-w-max text-2xl'>{userInfo.username}</div>
+            </div>
+          </div>
+        {/* } */}
       </div>
     </div>
   )
