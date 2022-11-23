@@ -111,10 +111,10 @@ io.on('connection', socket => {
     }
   });
   // socket listener for room joins
-  socket.on('join-room', (room, cb) => {
-    socket.join(room);
-    cb(`Joined ${room}`)
-  })
+  // socket.on('join-room', (room, cb) => {
+  //   socket.join(room);
+  //   cb(`Joined ${room}`)
+  // })
   // ---------------------------------------------------
 
 
@@ -157,12 +157,19 @@ io.on('connection', socket => {
   socket.on('host-room', socketId => {
     const roomId = uid();
     socket.join(roomId);
-    console.log('Rooms available', io.of('/').adapter.rooms)
+    const roomObj = {
+      room: roomId,
+      players:[socketId]
+    }
+    console.log(roomObj)
+    controller.createRoom(roomObj);
+    // console.log('Rooms available', io.of('/').adapter.rooms)
   })
   socket.on('join-room', userObj => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
-    console.log('Sockets in room', io.of(`/${userObj.room}`).adapter.sids)
+    controller.addPlayer(userObj.room, userObj.socketId)
+    // console.log('players in room after joining', io.of('/').adapter.rooms)
   })
   const rooms = io.of('/').adapter.rooms;
   const sids = io.of('/').adapter.sids;

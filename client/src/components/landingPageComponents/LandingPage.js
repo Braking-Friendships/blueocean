@@ -9,6 +9,7 @@ const { useState } = React;
 
 const LandingPage = ({userInfo}) => {
   const [showModal, setShowModal] = useState(false);
+  const [rooms, setRooms] = useState([])
   const id = socket.id;
   const path = `/lobby/${id}`
 
@@ -23,6 +24,13 @@ const LandingPage = ({userInfo}) => {
   const hostRoom = () => {
     socket.emit('host-room', id)
   }
+
+  //grab room data from database
+
+  // socket.on('rooms-available', data => {
+  //  console.log(data)
+  // })
+
   return (
     <div className='relative top-1/4'>
       {showModal ? <JoinGameModal closeModal={closeModal} userInfo={userInfo}/> : null}
