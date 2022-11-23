@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 import { socket, emitters } from '../../socket.js'
 import happyCat from '../../assets/avatars/happyCat.png';
 
-const LandingPage = ({userInfo, guestInfo}) => {
+const LandingPage = ({userInfo}) => {
   const [showModal, setShowModal] = useState(false);
   const [rooms, setRooms] = useState([])
   const id = socket.id;
@@ -32,7 +32,7 @@ const LandingPage = ({userInfo, guestInfo}) => {
   // })
 
 
-  const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
+  // const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
 
   return (
     <div className='relative top-1/4'>
@@ -45,15 +45,7 @@ const LandingPage = ({userInfo, guestInfo}) => {
           <button className={buttonStyle}> Join a Random Game </button>
         </div>
         {/* <Profile /> */}
-        {!userInfo &&
-          <div className='flex flex-col gap-4 justify-center'>
-            <img src={happyCat} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
-            <div className='flex justify-center'>
-              <div className='max-w-max text-2xl'>{guest}</div>
-            </div>
-          </div>
-        }
-        {userInfo &&
+        {/* {!user &&
           <div className='flex flex-col gap-4 justify-center'>
             <img src={userInfo.avatar} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
             <div className='flex justify-center'>
@@ -61,6 +53,14 @@ const LandingPage = ({userInfo, guestInfo}) => {
             </div>
           </div>
         }
+        {user && */}
+          <div className='flex flex-col gap-4 justify-center'>
+            <img src={userInfo.avatar} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
+            <div className='flex justify-center'>
+              <div className='max-w-max text-2xl'>{userInfo.username}</div>
+            </div>
+          </div>
+        {/* } */}
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NavBar = ({ userInfo, logout }) => {
+const NavBar = ({user, logout }) => {
 
   return (
     <nav className='flex justify-between text-white bg-[#3D405B] absolute w-screen h-10 pl-4'>
@@ -10,7 +10,7 @@ const NavBar = ({ userInfo, logout }) => {
         {/* <li className={listItemStyle}>
           <Link to='/instructions'>Instructions</Link>
         </li> */}
-        {userInfo &&
+        {user &&
           <>
             <li className={listItemStyle}>
               <Link to='/profile'>Profile</Link>
@@ -20,7 +20,7 @@ const NavBar = ({ userInfo, logout }) => {
             </li>
           </>
         }
-        {!userInfo &&
+        {!user &&
           <>
             <li className={listItemStyle}>
               <Link to='/login'>Profile</Link>

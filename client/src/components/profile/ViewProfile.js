@@ -8,6 +8,8 @@ import ChangeAvatarModal from './ChangeAvatarModal';
 const ViewProfile = ({ userInfo }) => {
   const [userProfileState, setUserProfileState] = useState(true);
   const [friendsProfileState, setFriendsProfileState] = useState(false);
+  // Render All friend's profile in an array
+    // when player's name is clicked, filter profile to only that person's name and show their profile
   const [friendProfile, setFriendProfile] = useState({});
   const [nameModal, setNameModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
