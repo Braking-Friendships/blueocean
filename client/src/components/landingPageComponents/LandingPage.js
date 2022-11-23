@@ -9,6 +9,7 @@ import happyCat from '../../assets/avatars/happyCat.png';
 
 const LandingPage = ({userInfo, guestInfo}) => {
   const [showModal, setShowModal] = useState(false);
+  const [rooms, setRooms] = useState([])
   const id = socket.id;
   const path = `/lobby/${id}`
 
@@ -23,6 +24,13 @@ const LandingPage = ({userInfo, guestInfo}) => {
   const hostRoom = () => {
     socket.emit('host-room', id)
   }
+
+  //grab room data from database
+
+  // socket.on('rooms-available', data => {
+  //  console.log(data)
+  // })
+
 
   const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
 

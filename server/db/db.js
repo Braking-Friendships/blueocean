@@ -34,5 +34,12 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+const roomSchema = mongoose.Schema({
+  room: String,
+  players: [String]
+});
 
-module.exports = { db, User };
+const Room = mongoose.model('Room', roomSchema);
+
+
+module.exports = { db, User, Room };

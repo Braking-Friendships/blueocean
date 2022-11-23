@@ -1,5 +1,5 @@
 // import db.js when created
-const { User } = require('../db/db.js');
+const { User, Room } = require('../db/db.js');
 
 module.exports = {
   createUser: async (user) => {
@@ -34,6 +34,20 @@ module.exports = {
       return await User.find(filter);
     } catch (error) {
       return error;
+    }
+  },
+  createRoom: async (room) => {
+    try {
+      return await Room.create(room);
+    } catch (error) {
+      return error;
+    }
+  },
+  addPlayer: async (room, player) => {
+    try {
+      return await Room.updateOne({room: room}, { $push: {players: player}})
+    } catch {
+
     }
   },
 
