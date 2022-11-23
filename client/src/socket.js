@@ -14,6 +14,7 @@ export const emitters = {
   startGame: (gameState) => socket.emit('start-game', gameState),
   endGame: () => socket.emit('end-game'),
   playCard: (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => socket.emit('play-card', userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx),
+  defuse: (insertIdx, userCardIdxs) => socket.emit('defuse', null, userCardIdxs),
   drawCard: (username) => socket.emit('draw-card', username),
   playerLoses: (username) => socket.emit('player-loses', username),
   // chat emmiters -----

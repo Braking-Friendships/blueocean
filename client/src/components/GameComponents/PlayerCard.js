@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import AnimatedCard from './AnimatedCard';
 import { socket, emitters } from '../../socket.js';
 
-const PlayerCard = ({ card, playerArea, stackPosition, idx, playCard }) => {
+const PlayerCard = ({ card, playerArea, getStackPos, firstLoad, idx, playCard }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const dragStart = () => {
@@ -92,7 +92,9 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx, playCard }) => {
 
   return (
     <AnimatedCard
-    stackPosition={stackPosition}
+    // stackPosition={stackPosition}
+    getStackPos={getStackPos}
+    firstLoad={firstLoad}
     idx={idx}
     >
       <motion.div
