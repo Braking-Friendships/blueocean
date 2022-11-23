@@ -40,6 +40,7 @@ io.on('connection', socket => {
     gameState.prevTurns = [];
 
     socket.ekGameState = gameState;
+    socket.ekGameState.currentPlayer = gameState.playerOrder.shift()
 
     emitState(socket.ekGameState)
 
@@ -57,8 +58,23 @@ io.on('connection', socket => {
   }
 
   const drawCard = (username = 'hand1') => {
-    socket.ekGameState['hand1'].push(socket.ekGameState.deck[0])
-    socket.ekGameState.deck.splice(0, 1)
+    socket.ekGameState[username].push(socket.ekGameState.deck.shift())
+
+    let currPlayer = socket.ekGameState.currentPlayer;
+    const playerOrder = socket.ekGameState.playerOrder;
+
+    console.log('Player order before:', socket.ekGameState.playerOrder)
+
+
+    if (currPlayer !== playerOrder[playerOrder.length - 1]) {
+      playerOrder.push(currPlayer);
+    }
+    // Set current player
+    socket.ekGameState.currentPlayer = playerOrder.shift();
+
+    console.log('Player order after:', socket.ekGameState.playerOrder)
+    console.log('Current player:', socket.ekGameState.currentPlayer)
+    // reset attack counter if attack wasn't played
   }
 
   const playCard = (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => {
@@ -66,18 +82,9 @@ io.on('connection', socket => {
     const deck = socket.ekGameState.deck;
     const playerHand = socket.ekGameState['hand1']
     const playerOrder = socket.ekGameState.playerOrder;
+    const currPlayer = socket.ekGameState.currentPlayer;
 
-
-    console.log('Player order before:', socket.ekGameState.playerOrder)
-
-
-    // Set current player
-    const currPlayer = playerOrder.shift();
-    socket.ekGameState.currentPlayer = currPlayer;
-
-    if (playerOrder[0] !== playerOrder[playerOrder.length - 1]) {
-      playerOrder.push(currPlayer);
-    }
+    // TODO: draw card only on end turn, don't assume a cardtype played means turn is over
 
     // Update prevTurns
     socket.ekGameState.prevTurns.push({
@@ -108,6 +115,7 @@ io.on('connection', socket => {
     let timer = 5;
 
     const x = setInterval(() => {
+      // if attack count > 0 and cardType !== attack {reset attack count}
       socket.emit('countdown', timer)
       console.log(timer)
       timer -= 1;
@@ -116,9 +124,28 @@ io.on('connection', socket => {
         console.log('timer up')
         switch (userCardType) {
           case 'attack':
+            // increment attack count
+
+            // loop through and remove elements that are identical until they aren't
+            // unshift for next player attack count * 2 - 1
+
+            // [0, 1, 2]
+
+            // attack count = 1 (add 1)
+
+            // attack count = 2 (add 3)
+
+            // attack count = 3 (add 5)
+
+            // attack count = 4 (add 7)
+
+            // add attack count * 2 - 1 to the next player
+
+            // [1, 1, 2, 0]
+
+
             playerOrder.unshift(playerOrder[0])
-            // no effect on deck
-            // player order remains same with repeat plays on attacked player
+
             console.log(socket.id, 'attack card played')
             break;
           case 'defuse':
@@ -152,7 +179,6 @@ io.on('connection', socket => {
             break;
         }
         emitState(socket.ekGameState);
-        console.log('Player order after:', socket.ekGameState.playerOrder)
       }
     }, 1000)
 
