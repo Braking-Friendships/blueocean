@@ -321,28 +321,32 @@ io.on('connection', socket => {
 
 
   // ROOM LISTENERS
-  socket.on('host-room', socketId => {
+  socket.on('host-room', userObj => {
     const roomId = uid();
     socket.join(roomId);
     const roomObj = {
       room: roomId,
-      players:[socketId]
+      host: userObj.socketId,
+      players:[userObj]
     }
-    console.log(roomObj)
     controller.createRoom(roomObj);
-    // console.log('Rooms available', io.of('/').adapter.rooms)
+    console.log('Rooms available', io.of('/').adapter.rooms)
   })
   // socket.on('join-room', roomId => {
   //   socket.join(roomId)
   //   // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
   // })
-  socket.on('join-room', userObj => {
+  socket.on('join-room', async userObj => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
-    controller.addPlayer(userObj.room, userObj.socketId)
-    // io.sockets.in(`${userObj.room}`).emit('hello', io.of(`/`).adapter.rooms.get(userObj.room));
-    socket.to(`${userObj.room}`).emit('joined', (userObj))
+    const sendUpdate = await controller.addPlayer(userObj.room, userObj)
+    const roomData = await controller.getRoomData(userObj.room)
+    io.in(`${userObj.room}`).emit('joined', roomData);
+    // console.log('players in room after joining', io.of('/').adapter.rooms)
   })
+
+    // socket.to(`${userObj.room}`).emit('joined', (userObj))
+
 
   socket.on('join-game', (room) => {
     console.log(room, 'room')

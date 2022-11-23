@@ -14,10 +14,10 @@ import Chat from './components/ChatComponents/Chat';
 import GameInstructions from './contexts/GameInstructions';
 import happyCat from './assets/avatars/happyCat.png';
 
-
 // Josh: adding socket.js file to house all emitters
 import { socket, emitters } from './socket.js'
 import GameRoom from './components/GameComponents/GameRoom';
+
 
 function App() {
   const location = useLocation();
