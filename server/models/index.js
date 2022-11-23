@@ -47,7 +47,15 @@ module.exports = {
     try {
       return await Room.updateOne({room: room}, { $push: {players: player}})
     } catch {
-
+      return error;
+    }
+  },
+  getRoomData: async (room) => {
+    try {
+      const filter = {room: room};
+      return await Room.find(filter);
+    } catch (error) {
+      return error;
     }
   },
 

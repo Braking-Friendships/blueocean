@@ -336,10 +336,12 @@ io.on('connection', socket => {
   //   socket.join(roomId)
   //   // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
   // })
-  socket.on('join-room', userObj => {
+  socket.on('join-room', async userObj => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
-    controller.addPlayer(userObj.room, userObj)
+    const sendUpdate = await controller.addPlayer(userObj.room, userObj)
+    const roomData = await controller.getRoomData(userObj.room)
+    io.in(`${userObj.room}`).emit('joined', roomData);
     // console.log('players in room after joining', io.of('/').adapter.rooms)
   })
 
