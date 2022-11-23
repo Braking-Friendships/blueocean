@@ -12,10 +12,10 @@ import ViewProfile from './components/profile/ViewProfile';
 import Lobby from './components/GameLobby/Lobby';
 import Chat from './components/ChatComponents/Chat';
 
-
 // Josh: adding socket.js file to house all emitters
 import { socket, emitters } from './socket.js'
 import GameRoom from './components/GameComponents/GameRoom';
+
 
 function App() {
   const location = useLocation();

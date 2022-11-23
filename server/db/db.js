@@ -36,7 +36,12 @@ const User = mongoose.model('User', userSchema);
 
 const roomSchema = mongoose.Schema({
   room: String,
-  players: [String]
+  host: String,
+  players: [{
+    email: String,
+    socketId: String,
+    fireId: String,
+  }]
 });
 
 const Room = mongoose.model('Room', roomSchema);

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from 'react';
 import img from './tyranitarCropped.png'
@@ -8,7 +9,6 @@ import { socket, emitters } from '../../socket.js'
 
 const LandingPage = ({userInfo}) => {
   const [showModal, setShowModal] = useState(false);
-  const [rooms, setRooms] = useState([])
   const id = socket.id;
   const path = `/lobby/${id}`
 
@@ -20,8 +20,16 @@ const LandingPage = ({userInfo}) => {
     e.preventDefault();
     setShowModal(false);
   }
-  const hostRoom = () => {
-    socket.emit('host-room', id)
+  const hostRoom = (e) => {
+    const userObj = {};
+    if (userInfo) {
+      userObj.email = userInfo.email;
+      userObj.socketId = socket.id;
+      userObj.fireId = userInfo.firebase_id;
+    } else {
+      userObj.socketId = socket.id;
+    }
+    socket.emit('host-room', userObj)
   }
 
   //grab room data from database
