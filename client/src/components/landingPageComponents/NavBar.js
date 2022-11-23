@@ -8,9 +8,9 @@ const NavBar = ({ userInfo, logout }) => {
     <nav className='flex justify-between text-white bg-[#3D405B] absolute w-screen h-10 pl-4'>
       <Link to='/' className='hover:bg-[#E07A5F] h-10 pt-2'>Braking Friendships</Link>
       <ul className='flex gap-4 mr-4'>
-        <li className={listItemStyle}>
+        {/* <li className={listItemStyle}>
           <Link to='/instructions'>Instructions</Link>
-        </li>
+        </li> */}
         {userInfo &&
           <>
             <li className={listItemStyle}>
