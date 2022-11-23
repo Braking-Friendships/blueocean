@@ -4,17 +4,18 @@ import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
 import AnimatedCard from './AnimatedCard';
 
-const OtherCard = React.forwardRef(({ side, stackPosition, idx }, ref) => {
+const OtherCard = React.forwardRef(({ side, getStackPos, firstLoad, idx }, ref) => {
 
   return (
     <AnimatedCard
     side={side}
-    stackPosition={stackPosition}
+    getStackPos={getStackPos}
+    firstLoad={firstLoad}
     idx={idx}
     >
       <motion.div
       ref={ref || null}
-      className='min-w-0 min-h-0 p-0'
+      className={`min-w-0  p-0 ${ref ? 'min-h-[271px]' : 'min-h-0'}`}
       >
         <img src={singleCardback}
         className={`pointer-events-none rounded-xl box-border h-auto border-black border-[2px] bg-red-900 min-w-[150px] w-[200px]

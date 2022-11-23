@@ -9,21 +9,26 @@ import tongueCat from '../../assets/avatars/tongueCat.png';
 import unhappyCat from '../../assets/avatars/unhappyCat.png';
 import vampireCat from '../../assets/avatars/vampireCat.png';
 
-const ChangeAvatarModal = ({ avatarModal, setAvatarModal, profileAvatar, submitChange, avatar, setAvatar }) => {
+const ChangeAvatarModal = ({ avatarModal, setAvatarModal, profileAvatar, submitChange, avatar, userAvatar }) => {
+  const [currentAvatar, setCurrentAvatar] = useState(userAvatar);
   const avatarChoices = [happyCat, madCat, readingCat, sageCat, shockedCat, sneakyCat, tongueCat, unhappyCat, vampireCat];
 
   const displayChoice = (e) => {
     const innerHtml = e.target.innerHTML;
-    if (innerHtml.includes('happyCat')) { setAvatar(happyCat) }
-    if (innerHtml.includes('madCat')) { setAvatar(madCat) }
-    if (innerHtml.includes('readingCat')) { setAvatar(readingCat) }
-    if (innerHtml.includes('sageCat')) { setAvatar(sageCat) }
-    if (innerHtml.includes('shockedCat')) { setAvatar(shockedCat) }
-    if (innerHtml.includes('sneakyCat')) { setAvatar(sneakyCat) }
-    if (innerHtml.includes('tongueCat')) { setAvatar(tongueCat) }
-    if (innerHtml.includes('unhappyCat')) { setAvatar(unhappyCat) }
-    if (innerHtml.includes('vampireCat')) { setAvatar(vampireCat) }
+    if (innerHtml.includes('happyCat')) { setCurrentAvatar(happyCat) }
+    if (innerHtml.includes('madCat')) { setCurrentAvatar(madCat) }
+    if (innerHtml.includes('readingCat')) { setCurrentAvatar(readingCat) }
+    if (innerHtml.includes('sageCat')) { setCurrentAvatar(sageCat) }
+    if (innerHtml.includes('shockedCat')) { setCurrentAvatar(shockedCat) }
+    if (innerHtml.includes('sneakyCat')) { setCurrentAvatar(sneakyCat) }
+    if (innerHtml.includes('tongueCat')) { setCurrentAvatar(tongueCat) }
+    if (innerHtml.includes('unhappyCat')) { setCurrentAvatar(unhappyCat) }
+    if (innerHtml.includes('vampireCat')) { setCurrentAvatar(vampireCat) }
   };
+
+  useEffect(() => {
+    avatar.current = currentAvatar;
+  }, [currentAvatar])
 
   if (!avatarModal) { return null }
 
@@ -57,7 +62,7 @@ const ChangeAvatarModal = ({ avatarModal, setAvatarModal, profileAvatar, submitC
 
           <label>Chosen Avatar</label>
           <div className="p-2">
-            <img src={avatar} className='pointer-events-none w-32 h-auto rounded-full' alt="avatar card" />
+            <img src={currentAvatar} className='pointer-events-none w-32 h-auto rounded-full' alt="avatar card" />
           </div>
           <button className="p-2 bg-[#81B29A] rounded w-60 h-16 text-xl text-white font-bold hover:outline hover:outline-4 hover:outline-[#E07A5F]" type='submit'>Submit</button>
         </form>
