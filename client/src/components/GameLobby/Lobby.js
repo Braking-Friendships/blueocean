@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { socket, emitters } from '../../socket';
 import madCat from '../../assets/avatars/madCat.png';
 import happyCat from '../../assets/avatars/happyCat.png';
 import sageCat from '../../assets/avatars/sageCat.png';
 import sneakyCat from '../../assets/avatars/sneakyCat.png';
 import tongueCat from '../../assets/avatars/tongueCat.png';
+import createDeck from '../../Tools/createDeck';
 
 
 const Lobby = ({ userInfo }) => {
@@ -15,39 +17,28 @@ const Lobby = ({ userInfo }) => {
   // emitters.joinRoom(roomId)
   // socket.on('game-state', gameState => console.log('game', gameState))
 
+  const navigate = useNavigate();
   console.log(socket.id)
   const [users, setUsers] = useState([])
+
   socket.on('joined', data => {
     setUsers([...users, data])
     console.log(data)
     console.log(users)
   })
 
+  socket.on('start-join', (room) => {
+    navigate(`/game`)
+  })
 
-  // console.log(users[0].host, 'outside')
-  // if (users[0].host === true) {
-  //   console.log('emit')
-  //   socket.emit('all-joined', users)
-  // } else {
-  //   socket.on('all-users', data => {
-  //     console.log(data)
-  //   })
-  // }
+  const loadGame = (room) => {
+    let decks = createDeck(4);
+    emitters.startGame(decks);
+    socket.emit('join-game', room)
+    navigate(`/game`)
+  }
 
 
-  // const emitAll = () => {
-  //   console.log('emit all')
-  //   socket.emit('all-joined', users)
-  // }
-  // const getAll = () => {
-  //   console.log('got all')
-  //   socket.on('all-users', data => {
-  //     console.log(data)
-  //   })
-  // }
-
-  // emitAll()
-  // getAll()
 
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
@@ -57,7 +48,7 @@ const Lobby = ({ userInfo }) => {
       {/* <icon src="" alt="pencil"/> */}
     <br/>
 
-    <button className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
+    <button onClick={() => {loadGame(users[0]?.room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
     <br/>
     <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
 

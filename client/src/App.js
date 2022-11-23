@@ -20,6 +20,17 @@ import GameRoom from './components/GameComponents/GameRoom';
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
+  const [roomState, setRoomState] = useState({roomId: id, players:[{userInfo}]});
+
+  const updateRoomState = (change) => {
+    // setRoomState(...roomState, change)
+    // emit (room-updated) => updates
+  }
+
+  // on(room change) invoke updateRoomState(change)
+
+  // in index.js on server
+  // on(room-updated) broadcast(room change) room change to room
 
   // USER LOGIN
   const getUserData = async (user) => {

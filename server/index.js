@@ -280,14 +280,16 @@ io.on('connection', socket => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
     controller.addPlayer(userObj.room, userObj.socketId)
-    // console.log('players in room after joining', io.of('/').adapter.rooms)
-
+    // io.sockets.in(`${userObj.room}`).emit('hello', io.of(`/`).adapter.rooms.get(userObj.room));
+    socket.to(`${userObj.room}`).emit('joined', (userObj))
   })
-  // socket.on('all-joined', users => {
-  //   console.log(users, 'users')
-  //   const room = users[0]?.room
-  //   socket.to(`${room}`).emit('all-users', ('hello', users))
-  // })
+
+  socket.on('join-game', (room) => {
+    console.log(room, 'room')
+    socket.to(`${room}`).emit('start-join', (room))
+  })
+
+
   const rooms = io.of('/').adapter.rooms;
   const sids = io.of('/').adapter.sids;
   console.log(rooms)
