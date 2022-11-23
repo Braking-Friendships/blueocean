@@ -28,13 +28,18 @@ const Board = () => {
   const [p4L, setP4L] = useState(null);
   const [p5L, setP5L] = useState(null);
   const [stackL, setStackL] = useState(52);
+  const [lastCardPlayed, setLastCardPlayed] = useState(null);
 
   useEffect(() => {
     let decks = createDeck(4);
+
+    // let huhHand = decks.hand1.map((card) => {card.id = Math.random(); return card})
+
     setMyHand(decks.hand1);
-    setP2L(decks.hand2.length);
+    // setMyHand(decks.hand1);
+    setP2L(decks.hand2.length || null);
     setP3L(decks.hand3.length);
-    setP4L(decks.hand4.length);
+    setP4L(decks.hand4.length || null);
     // setP5L(decks.hand5.length);
     setStackL(decks.deck.length);
     setFirstLoad(false);
@@ -45,6 +50,14 @@ const Board = () => {
     // emitters.drawCard('hand1')
     // emitters.playerLoses('hand1')
   }, []);
+
+  const playCard = (idx) => {
+    let tempHand = [...myHand];
+    let tempCard = tempHand.splice(idx, 1);
+
+    setLastCardPlayed(tempCard);
+    setMyHand(tempHand);
+  }
 
   const displayOtherHands = (count, side) => {
     let cards = [];
@@ -60,15 +73,30 @@ const Board = () => {
 
   return (
     <div id="board" className='grid grid-cols-6 grid-rows-5 bg-blue-300 h-screen overflow-hidden col-span-4'>
+      {p2L !== null &&
       <div id="left-player" className='row-start-2 row-end-5 col-start-1 col-end-2 flex flex-col justify-center items-center '>
         {displayOtherHands(p2L, 'left')}
-      </div>
+      </div>}
       <div id="top-player" className='row-start-1 row-end-2 col-start-3 col-end-5  flex justify-center'>
-        {displayOtherHands(p4L, 'top')}
+        {displayOtherHands(p3L, 'top')}
       </div>
-      <div id="middle-stack" className='row-start-3 row-end-4 col-span-4 flex justify-center items-end gap-7'>
+      <div id="middle-stack" className='row-start-3 row-end-4 col-start-2 col-end-6 flex justify-center items-end gap-7'>
         <OtherCard ref={stackRef} side='mid' />
-        <OtherCard side='mid' />
+        <div className='w-[200px] h-[271px]'
+        style={{
+          background:
+            `linear-gradient(to right, black 4px, transparent 4px) 0 0,
+            linear-gradient(to right, black 4px, transparent 4px) 0 100%,
+            linear-gradient(to left, black 4px, transparent 4px) 100% 0,
+            linear-gradient(to left, black 4px, transparent 4px) 100% 100%,
+            linear-gradient(to bottom, black 4px, transparent 4px) 0 0,
+            linear-gradient(to bottom, black 4px, transparent 4px) 100% 0,
+            linear-gradient(to top, black 4px, transparent 4px) 0 100%,
+            linear-gradient(to top, black 4px, transparent 4px) 100% 100%`,
+          backgroundSize: '40px 40px',
+          backgroundRepeat: 'no-repeat'
+        }}
+        >If theres no current card</div>
       </div>
       {!firstLoad && <div
       id="bottom-player"
@@ -77,13 +105,13 @@ const Board = () => {
       draggable={false}
       >
         {myHand.map((card, i) =>
-          <PlayerCard key={i} card={card} playerArea={playerArea} stackPosition={stackPosition} idx={i} />
+          <PlayerCard key={card.id} card={card} playerArea={playerArea} stackPosition={stackPosition} idx={i} playCard={playCard} />
         )}
       </div>}
-
-      <div id="right-player" className='row-start-2 row-end-5 col-span-1 col-end-7 flex flex-col justify-center items-center'>
+      {p4L &&
+      <div id="right-player" className='row-start-2 row-end-5 col-start-6 col-end-7 flex flex-col justify-center items-center'>
         {displayOtherHands(p4L, 'right')}
-      </div>
+      </div>}
 
     </div>
   )

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 import AnimatedCard from './AnimatedCard';
 
-const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
+const PlayerCard = ({ card, playerArea, stackPosition, idx, playCard }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const dragStart = () => {
@@ -19,8 +19,18 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
     }, 500);
     if(info.point.y < playerArea.y) {
       console.log('played card:', card.type);
+      playCard(idx);
     }
   }
+  /*
+  Need this if i want to set snapback to origin
+  const checkPos = (event, info) => {
+    if(info.point.y < playerArea.y) {
+      setSnapback(false);
+    } else {
+      setSnapback(true);
+    }
+  } */
 
   const cardContainer = {
 
