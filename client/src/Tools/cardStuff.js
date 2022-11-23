@@ -49,6 +49,8 @@ export const getCardImg = (imgTag) => {
 
 export const getTip = (card) => {
   switch (card.type){
+    case 'bomb':
+      return 'QUICKLY! DEFUSE THE BOMB!';
     case 'defuse':
       return 'DEFUSES AN EXPLODING KITTEN!';
     case 'attack':

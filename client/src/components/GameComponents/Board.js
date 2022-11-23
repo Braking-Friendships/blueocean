@@ -12,11 +12,10 @@ const Board = () => {
 
   const [firstLoad, setFirstLoad] = useState(true);
   const [playerArea, setPlayerArea] = useState(null);
-  const [stackPosition, setStackPosition] = useState(null);
 
-  useEffect(() => {
-    setStackPosition(stackRef.current?.getBoundingClientRect());
-  }, [])
+  const getStackPos = () => {
+    return stackRef.current?.getBoundingClientRect();
+  }
 
   useEffect(() => {
     setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
@@ -29,27 +28,42 @@ const Board = () => {
   const [p5L, setP5L] = useState(null);
   const [stackL, setStackL] = useState(52);
   const [lastCardPlayed, setLastCardPlayed] = useState(null);
-  socket.on('game-state', gameState => {
-    console.log(gameState);
-    setMyHand(gameState.hand1);
-    setStackL(gameState.deck.length);
-  })
+  const [BOMB, setBOMB] = useState(null);
+  const [bombTimer, setBombTimer] = useState(null);
+
+  useEffect(() => {
+    socket.on('game-state', gameState => {
+      console.log(gameState);
+      setMyHand(gameState.hand1);
+      setStackL(gameState.deck.length);
+    });
+
+    socket.on('bomb', (newCard) => {
+      console.log(newCard)
+      setBOMB(newCard);
+    });
+    socket.on('countdown', (timer) => {
+      setBombTimer(timer);
+    })
+
+  }, [])
+
   useEffect(() => {
     let decks = createDeck(4);
 
-    // let huhHand = decks.hand1.map((card) => {card.id = Math.random(); return card})
-
     setMyHand(decks.hand1);
-    // setMyHand(decks.hand1);
     setP2L(decks.hand2.length || null);
     setP3L(decks.hand3.length);
     setP4L(decks.hand4.length || null);
     // setP5L(decks.hand5.length);
     setStackL(decks.deck.length);
-    setFirstLoad(false);
-    // emitters.playCard('hand2', decks.hand2[4].type, 4)
-    // emitters.playerLoses('hand1')
+
     emitters.startGame(decks);
+
+    let timer = setTimeout(() => {
+      setFirstLoad(false);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
   // emitters.playCard('future', [1], '', '', 6)
   // emitters.endGame();
@@ -60,14 +74,20 @@ const Board = () => {
 
   const playCard = (idx) => {
     let tempHand = [...myHand];
-    let tempCard = tempHand.splice(idx, 1);
+    let tempCard = tempHand.splice(idx, 1)[0];
 
-    //if type is cat, ask for another cat
+    if(tempCard.type === 'defuse'){
+      console.log('defuse');
+      setBOMB(null);
+      emitters.defuse(null, [idx]);
+    } else if(tempCard.type.includes('cat')) {
+      //if type is cat, ask for another cat
+
+    } else {
+      emitters.playCard(tempCard.type, [idx]);
+    }
     //if action is a steal, ask for player input on who to steal from
-
-    emitters.playCard(tempCard.type, [idx])
-
-    setLastCardPlayed(tempCard[0]);
+    setLastCardPlayed(tempCard);
     setMyHand(tempHand);
   }
   const drawCard = () => {
@@ -77,7 +97,7 @@ const Board = () => {
   const displayOtherHands = (count, side) => {
     let cards = [];
     for(let i = 0; i < count; i++) {
-      cards.push(<OtherCard key={i} side={side} stackPosition={stackPosition} idx={i} />)
+      cards.push(<OtherCard key={i} side={side} getStackPos={getStackPos} firstLoad={firstLoad} idx={i} />)
     }
     return cards;
   }
@@ -92,11 +112,14 @@ const Board = () => {
         {displayOtherHands(p3L, 'top')}
       </div>
       <div id="middle-stack" className='row-start-3 row-end-4 col-start-2 col-end-6 flex justify-center items-end gap-7'>
+        {BOMB ? <PlayerCard key={BOMB.id} card={BOMB} /> : null}
+
         <button onClick={drawCard}>
           <OtherCard ref={stackRef} side='mid' />
         </button>
+
         {lastCardPlayed
-        ? <PlayerCard key={lastCardPlayed.id} card={lastCardPlayed}  />
+        ? <PlayerCard key={lastCardPlayed.id} card={lastCardPlayed} firstLoad={firstLoad} />
         : <div className='w-[200px] h-[271px]'
         style={{
           background:
@@ -113,16 +136,16 @@ const Board = () => {
         }}
         ></div>}
       </div>
-      {!firstLoad && <div
+      <div
       id="bottom-player"
       className='row-start-5 row-end-6 col-start-2 col-end-6 flex justify-center items-end gap-2 bg-red-300'
       ref={playerAreaRef}
       draggable={false}
       >
-        {myHand.map((card, i) =>
-          <PlayerCard key={card.id} card={card} playerArea={playerArea} stackPosition={stackPosition} idx={i} playCard={playCard} />
+        {myHand?.map((card, i) =>
+          <PlayerCard key={card.id} card={card} playerArea={playerArea} firstLoad={firstLoad} getStackPos={getStackPos} idx={i} playCard={playCard} />
         )}
-      </div>}
+      </div>
       {p4L &&
       <div id="right-player" className='row-start-2 row-end-5 col-start-6 col-end-7 flex flex-col justify-center items-center'>
         {displayOtherHands(p4L, 'right')}

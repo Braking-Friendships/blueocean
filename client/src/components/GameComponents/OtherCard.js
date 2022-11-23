@@ -4,12 +4,13 @@ import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
 import AnimatedCard from './AnimatedCard';
 
-const OtherCard = React.forwardRef(({ side, stackPosition, idx }, ref) => {
+const OtherCard = React.forwardRef(({ side, getStackPos, firstLoad, idx }, ref) => {
 
   return (
     <AnimatedCard
     side={side}
-    stackPosition={stackPosition}
+    getStackPos={getStackPos}
+    firstLoad={firstLoad}
     idx={idx}
     >
       <motion.div

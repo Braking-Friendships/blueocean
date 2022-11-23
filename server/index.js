@@ -31,6 +31,7 @@ const shuffle = (targetArray) => {
 io.on('connection', socket => {
   // console.log(socket.id)
 
+
   const setInitialState = (gameState) => {
     // TODO: get socket ids from game lobby room, those become the users in game state
     // set socketid as hand1...
@@ -60,23 +61,60 @@ io.on('connection', socket => {
   const drawCard = (username = 'hand1') => {
     //Would have to check for bomb before moving on. In which case it would prompt user to defuse.
     let newCard = socket.ekGameState.deck.pop();
+    let deck = socket.ekGameState.deck;
+
 
     if(newCard.type === 'bomb'){
       //Emit the bomb
+      socket.emit('bomb', newCard)
+
+      let timer = 10;
+      const bombTimer = setInterval(() => {
+        // if attack count > 0 and cardType !== attack {reset attack count}
+        socket.emit('countdown', timer)
+        console.log(timer)
+
+        timer--;
+
+        if(timer < 0) {
+          // player loses
+          // remove player from order and delete player hand
+          clearInterval(bombTimer);
+          socket.ekGameState.playerOrder = socket.ekGameState.playerOrder.filter((user) => {
+            return user !== username;
+          })
+          socket.ekGameState[username] = null;
+
+          endTurn();
+        }
+      }, 1000);
+
+      socket.on('defuse', (insertIdx, userCardIdxs) => {
+        console.log('defuse detected')
+        clearInterval(bombTimer);
+        socket.ekGameState['hand1'].splice(userCardIdxs[0], 1);
+
+        socket.ekGameState.deck = deck.slice(0, insertIdx).concat([newCard]).concat(deck.slice(insertIdx));
+        endTurn();
+      })
       //it should remain on their turn so we can just
       // end function?
 
+
       //somewhere else we can say if they play defuse, we go next player.
       //Lets extract the logic to switch turns to a new function, for use in skip, bomb/defuse, (attack?)
+    } else {
+      socket.ekGameState[username].push(newCard);
+      endTurn();
     }
 
-    socket.ekGameState[username].push(newCard);
+  }
 
+  const endTurn = () => {
     let currPlayer = socket.ekGameState.currentPlayer;
     const playerOrder = socket.ekGameState.playerOrder;
 
     console.log('Player order before:', socket.ekGameState.playerOrder)
-
 
     if (currPlayer !== playerOrder[playerOrder.length - 1]) {
       playerOrder.push(currPlayer);
@@ -98,14 +136,15 @@ io.on('connection', socket => {
 
     // TODO: draw card only on end turn, don't assume a cardtype played means turn is over
 
-    // Update prevTurns
-    socket.ekGameState.prevTurns.push({
+    //Emit the action to all players, so they can see the card
+    let tempTurn = {
       userCardType: userCardType ?? '',
       userCardIdxs: userCardIdxs ?? [],
       affectedUser: affectedUser ?? '',
       affectedUserIdx: affectedUserIdx ?? '',
       insertIdx: insertIdx ?? ''
-    })
+    }
+    //emit just this object
 
     // Remove played cards from user's hand
     if (userCardIdxs.length === 2) {
@@ -122,6 +161,9 @@ io.on('connection', socket => {
     // WITH ATTACK
     // [3, 0, 2, 1]
     // [0, 0, 2, 1, 3]
+
+
+
 
     // Set 5 second timer after calling playCard and emit the count down
     let timer = 5;
@@ -155,10 +197,7 @@ io.on('connection', socket => {
 
             // [1, 1, 2, 0]
 
-
-            playerOrder.unshift(playerOrder[0])
-
-            console.log(socket.id, 'attack card played')
+            endTurn();
             break;
           case 'defuse':
             // insert bomb card at insertidx
@@ -173,31 +212,37 @@ io.on('connection', socket => {
             const giveCard = socket.ekGameState['hand2'].splice(0, 1)
             socket.ekGameState['hand1'].push(giveCard[0])
             // pass in user to drawCard once we have a working data structure for gamestate
-            drawCard();
             break;
           case 'future':
             // show player next three cards
-            socket.emit('show-future', deck.slice(0, 3))
-            drawCard();
             break;
           case 'skip':
+            endTurn();
             break;
           case 'shuffle':
             shuffle(socket.ekGameState.deck)
-            drawCard();
             break;
           default:
             const stealCard = socket.ekGameState['hand2'].splice(affectedUserIdx, 1);
             socket.ekGameState['hand1'].push(stealCard[0]);
-            drawCard();
             break;
         }
+         // Update prevTurns
+        socket.ekGameState.prevTurns.push(tempTurn)
         emitState(socket.ekGameState);
       }
     }, 1000)
 
-    socket.on('nope-played', () => {
+    socket.on('nope-played', (userCardType, userCardIdxs) => {
       clearInterval(x)
+      socket.ekGameState.prevTurns.push({
+        userCardType: userCardType ?? '',
+        userCardIdxs: userCardIdxs ?? [],
+        affectedUser: affectedUser ?? '',
+        affectedUserIdx: affectedUserIdx ?? '',
+        insertIdx: insertIdx ?? ''
+      })
+      emitState(socket.ekGameState);
       console.log('cancelled play')
     })
     // also emit the card that was played
