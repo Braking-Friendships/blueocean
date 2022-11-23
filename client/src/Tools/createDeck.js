@@ -71,6 +71,8 @@ const beardcat = {
 
 const cardTypes = [defuse, attack, skip, favor, nope, shuffle, future, tacocat, watermeloncat, burritocat, rainbowcat, beardcat];
 
+let totalCount = 1;
+
 const createDeck = (playerCount) => {
 
   let deck = [];
@@ -94,15 +96,14 @@ const createDeck = (playerCount) => {
 
       card.type = cardDesc.type;
       card.img = img;
+      card.id = totalCount++;
 
       deck.push(card);
     }
   })
-
   deck = shuffleDeck(deck);
-
-  return finalHandsAndDeck(deck, playerCount);
-
+  let x = finalHandsAndDeck(deck, playerCount);
+  return x;
 }
 
 const shuffleDeck = (deck) => {
@@ -123,7 +124,7 @@ const finalHandsAndDeck = (deck, playerCount) => {
   let result = {};
 
   for(let i = 0; i < playerCount; i++) {
-    let hand = [{type: 'defuse', img: 'defuse'}];
+    let hand = [{type: 'defuse', img: 'defuse', id: totalCount++}];
     for(let i = 0; i < 7; i++){
       hand.push(deck.pop());
     }
@@ -131,7 +132,7 @@ const finalHandsAndDeck = (deck, playerCount) => {
   }
 
   for(let i = 0; i < playerCount - 1; i++) {
-    deck.push({type: 'bomb', img: bomb.variation[i]})
+    deck.push({type: 'bomb', img: bomb.variation[0], id: totalCount++})
   }
 
   result.deck = shuffleDeck(deck);

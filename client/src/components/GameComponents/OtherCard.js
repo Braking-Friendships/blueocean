@@ -2,34 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
+import AnimatedCard from './AnimatedCard';
 
-const OtherCard = ({ side }) => {
-  const [settings, setSettings] = useState({});
-
-  useEffect(() => {
-    let set = {}
-    if(side === 'left'){
-      set.rotate = 90;
-    } else if (side === 'right') {
-      set.rotate = -90;
-    }
-
-    setSettings(set)
-  }, []);
+const OtherCard = React.forwardRef(({ side, getStackPos, firstLoad, idx }, ref) => {
 
   return (
-    <motion.div
-    className='min-w-0 min-h-0'
-    initial={false}
-    animate={settings}
+    <AnimatedCard
+    side={side}
+    getStackPos={getStackPos}
+    firstLoad={firstLoad}
+    idx={idx}
     >
-      <img src={singleCardback}
-      className={`pointer-events-none rounded-xl box-border h-auto border-black border-[2px] bg-red-900
-      ${side==='mid' ? 'min-w-[200px] w-[200px]' : 'min-w-[150px] w-[150px]'}
-      `}
-      alt="playing card" />
-    </motion.div>
+      <motion.div
+      ref={ref || null}
+      className={`min-w-0  p-0 ${ref ? 'min-h-[271px]' : 'min-h-0'}`}
+      >
+        <img src={singleCardback}
+        className={`pointer-events-none rounded-xl box-border h-auto border-black border-[2px] bg-red-900 min-w-[150px] w-[200px]
+
+        `}
+        alt="playing card" />
+      </motion.div>
+    </AnimatedCard>
   )
-}
+});
 
 export default OtherCard
+//${side==='mid' ? 'min-w-[200px] ' : 'min-w-[150px] w-[150px]'}

@@ -9,11 +9,13 @@ socket.on('connect', () => {
 export const emitters = {
   getUserData: (user) => socket.emit('get-user-data', user),
   createUser: (user) => socket.emit('create-user', user),
+  editUserInfo: (user) => socket.emit('edit-user', user),
   hostRoom: () => socket.emit('host-room', socket.id),
   joinRoom: (roomId) => socket.emit('join-room', roomId),
   startGame: (gameState) => socket.emit('start-game', gameState),
   endGame: () => socket.emit('end-game'),
-  playCard: (username, card, cardIdx) => socket.emit('play-card', username, card, cardIdx),
+  playCard: (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => socket.emit('play-card', userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx),
+  defuse: (insertIdx, userCardIdxs) => socket.emit('defuse', null, userCardIdxs),
   drawCard: (username) => socket.emit('draw-card', username),
   playerLoses: (username) => socket.emit('player-loses', username),
   // chat emmiters -----

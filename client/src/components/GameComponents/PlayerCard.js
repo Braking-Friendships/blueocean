@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react'
-import lqTran from '../../assets/cards/lqTran.png';
+import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
 import { motion } from 'framer-motion';
+import AnimatedCard from './AnimatedCard';
+import { socket, emitters } from '../../socket.js';
 
-const PlayerCard = ({ card, playerArea }) => {
-  const cardRef = useRef();
+const PlayerCard = ({ card, playerArea, getStackPos, firstLoad, idx, playCard }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const dragStart = () => {
@@ -14,45 +14,64 @@ const PlayerCard = ({ card, playerArea }) => {
   const checkPlay = (event, info) => {
     // console.log(playerArea.y);
     // console.log(info.point.x, info.point.y);
-    console.log(cardRef.current);
+
+
     setTimeout(() => {
       setIsDragging(false);
 
     }, 500);
     if(info.point.y < playerArea.y) {
+      // emit card.type and other args to play-card
+      // userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx
+      // emitters.playCard('favor', [2], 'next', 1, '')
+      // socket.emit('nope-played', 'cancel')
+
       console.log('played card:', card.type);
+      playCard(idx);
+      console.log('card info:', card);
     }
   }
+  /*
+  Need this if i want to set snapback to origin
+  const checkPos = (event, info) => {
+    if(info.point.y < playerArea.y) {
+      setSnapback(false);
+    } else {
+      setSnapback(true);
+    }
+  } */
+
+  // emitters.startGame(decks);
+  // emitters.playCard('future', [1], '', '', 6)
+  // emitters.endGame();
+  // emitters.drawCard('hand1')
+  // socket.on('show-future', futureCards => {
+  //   console.log('Next three cards', futureCards)
+  // })
 
   const cardContainer = {
-    hover: {
-      scale: 1.1,
-      'zIndex': 10,
-      transition: {
-        'zIndex': {
-          duration: 0
-        }
-      }
-    },
+
     rest: {
       scale: 1,
-      'zIndex': 2,
+      /* 'zIndex': 2,
       transition: {
         'zIndex': {
           duration: 0
         }
-      }
+      } */
+    },
+    hover: {
+      scale: 1.1,
+      /* 'zIndex': 10,
+      transition: {
+        'zIndex': {
+          duration: 0
+        }
+      } */
     },
     tap: {
       scale: 1,
-      'zIndex': 10,
-      transition: {
-        'zIndex': {
-          duration: 0
-        }
-      }
     }
-
   }
   const tooltip = {
     hover: {
@@ -72,35 +91,40 @@ const PlayerCard = ({ card, playerArea }) => {
   }
 
   return (
-    <motion.div
-    ref={cardRef}
-    className={`relative min-h-0 min-w-0`}
-    drag
-    dragSnapToOrigin
-    dragConstraints={{bottom: 0}}
-    dragElastic={0.2}
-    onDragStart={dragStart}
-    onDragEnd={checkPlay}
-    initial='rest'
-    whileHover='hover'
-    whileTap='tap'
-    variants={cardContainer}
-    draggable={false}
+    <AnimatedCard
+    // stackPosition={stackPosition}
+    getStackPos={getStackPos}
+    firstLoad={firstLoad}
+    idx={idx}
     >
-      <img src={getCardImg(card.img)}
-      className='min-w-[200px] w-52 h-auto rounded-xl'
+      <motion.div
+      layout
+      drag={idx === undefined ? false : true}
+      dragSnapToOrigin
+      dragConstraints={{ bottom: 0 }}
+      dragElastic={0.2}
+      onDragStart={dragStart}
+      onDragEnd={checkPlay}
+      whileHover='hover'
+      whileTap='tap'
+      variants={cardContainer}
       draggable={false}
-      alt="playing card" />
-      {!isDragging
-      ? <motion.div id='tooltip'
-      className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[275px] -left-1 opacity-0 pointer-events-none flex justify-center items-center'
-      variants={tooltip}
       >
-        {getTip(card)}
-      </motion.div>
-      : null}
+        <img src={getCardImg(card.img)}
+        className='min-w-[200px] w-52 h-auto rounded-xl'
+        draggable={false}
+        alt="playing card" />
+        {!isDragging
+        ? <motion.div id='tooltip'
+        className='bg-black text-white rounded-lg p-2 w-52 absolute origin-bottom bottom-[275px] -left-1 opacity-0 pointer-events-none flex justify-center items-center'
+        variants={tooltip}
+        >
+          {getTip(card)}
+        </motion.div>
+        : null}
 
-    </motion.div>
+      </motion.div>
+    </AnimatedCard>
   )
 }
 
