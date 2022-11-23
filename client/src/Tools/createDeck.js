@@ -101,10 +101,8 @@ const createDeck = (playerCount) => {
       deck.push(card);
     }
   })
-  console.log('beforeDeck:', deck);
   deck = shuffleDeck(deck);
   let x = finalHandsAndDeck(deck, playerCount);
-  console.log(x);
   return x;
 }
 

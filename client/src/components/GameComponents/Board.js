@@ -4,6 +4,7 @@ import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
 
+socket.on('countdown', timer => console.log(timer))
 
 const Board = () => {
   const playerAreaRef = useRef();
@@ -28,7 +29,11 @@ const Board = () => {
   const [p5L, setP5L] = useState(null);
   const [stackL, setStackL] = useState(52);
   const [lastCardPlayed, setLastCardPlayed] = useState(null);
-
+  socket.on('game-state', gameState => {
+    console.log(gameState);
+    setMyHand(gameState.hand1);
+    setStackL(gameState.deck.length);
+  })
   useEffect(() => {
     let decks = createDeck(4);
 
@@ -57,9 +62,16 @@ const Board = () => {
     let tempHand = [...myHand];
     let tempCard = tempHand.splice(idx, 1);
 
+    //if type is cat, ask for another cat
+    //if action is a steal, ask for player input on who to steal from
+
+    emitters.playCard(tempCard.type, [idx])
+
     setLastCardPlayed(tempCard[0]);
     setMyHand(tempHand);
-
+  }
+  const drawCard = () => {
+    emitters.drawCard();
   }
 
   const displayOtherHands = (count, side) => {
@@ -80,7 +92,9 @@ const Board = () => {
         {displayOtherHands(p3L, 'top')}
       </div>
       <div id="middle-stack" className='row-start-3 row-end-4 col-start-2 col-end-6 flex justify-center items-end gap-7'>
-        <OtherCard ref={stackRef} side='mid' />
+        <button onClick={drawCard}>
+          <OtherCard ref={stackRef} side='mid' />
+        </button>
         {lastCardPlayed
         ? <PlayerCard key={lastCardPlayed.id} card={lastCardPlayed}  />
         : <div className='w-[200px] h-[271px]'

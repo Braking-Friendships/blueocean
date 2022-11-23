@@ -4,9 +4,6 @@ import { motion } from 'framer-motion';
 import AnimatedCard from './AnimatedCard';
 import { socket, emitters } from '../../socket.js';
 
-socket.on('countdown', timer => console.log(timer))
-socket.on('game-state', gameState => console.log(gameState))
-
 const PlayerCard = ({ card, playerArea, stackPosition, idx, playCard }) => {
   const [isDragging, setIsDragging] = useState(false);
 
