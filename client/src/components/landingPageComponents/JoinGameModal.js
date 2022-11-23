@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -10,10 +11,12 @@ const JoinGameModal = ({ closeModal, userInfo }) => {
   const codeRef = useRef(null)
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(userInfo, 'USERINFO')
     const room = codeRef.current.value
     const userObj = {};
     if (userInfo) {
-      userObj.email = userInfo.email;
+      userObj.username = userInfo.username;
+      userObj.avatar = userInfo.avatar;
       userObj.room = room;
       userObj.socketId = socket.id;
       userObj.fireId = userInfo.firebase_id;
