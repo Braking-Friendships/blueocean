@@ -21,7 +21,7 @@ module.exports = {
   },
   updateUser: async (user) => {
     try {
-      const filter = {username: user.firebaseId};
+      const filter = {firebase_id: user.firebaseId};
       return await User.findOneAndUpdate(filter, user);
     } catch (error) {
       return error;

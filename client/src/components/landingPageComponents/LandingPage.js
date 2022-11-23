@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import JoinGameModal from './JoinGameModal.js'
 import { io } from 'socket.io-client';
 import { socket, emitters } from '../../socket.js'
+import happyCat from '../../assets/avatars/happyCat.png';
 
 const LandingPage = ({userInfo}) => {
   const [showModal, setShowModal] = useState(false);
@@ -22,6 +23,9 @@ const LandingPage = ({userInfo}) => {
   const hostRoom = () => {
     socket.emit('host-room', id)
   }
+
+  const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
+
   return (
     <div className='relative top-1/4'>
       {showModal ? <JoinGameModal closeModal={closeModal} userInfo={userInfo}/> : null}
@@ -35,9 +39,9 @@ const LandingPage = ({userInfo}) => {
         {/* <Profile /> */}
         {!userInfo &&
           <div className='flex flex-col gap-4 justify-center'>
-            <img src={img} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
+            <img src={happyCat} alt='profile picture' className='object cover h-80 w-80 rounded-full' />
             <div className='flex justify-center'>
-              <div className='max-w-max text-2xl'>Username</div>
+              <div className='max-w-max text-2xl'>{guest}</div>
             </div>
           </div>
         }
