@@ -38,7 +38,8 @@ const roomSchema = mongoose.Schema({
   room: String,
   host: String,
   players: [{
-    email: String,
+    username: String,
+    avatar: String,
     socketId: String,
     fireId: String,
   }]

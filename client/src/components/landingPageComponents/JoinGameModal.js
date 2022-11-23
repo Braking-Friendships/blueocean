@@ -15,7 +15,8 @@ const JoinGameModal = ({ closeModal, userInfo }) => {
     const room = codeRef.current.value
     const userObj = {};
     if (userInfo) {
-      userObj.email = userInfo.email;
+      userObj.username = userInfo.username;
+      userObj.avatar = userInfo.avatar;
       userObj.room = room;
       userObj.socketId = socket.id;
       userObj.fireId = userInfo.firebase_id;

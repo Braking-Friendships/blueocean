@@ -24,10 +24,13 @@ const LandingPage = ({userInfo}) => {
   const hostRoom = (e) => {
     const userObj = {};
     if (userInfo) {
-      userObj.email = userInfo.email;
+      userObj.username = userInfo.username;
+      userObj.avatar = userInfo.avatar;
       userObj.socketId = socket.id;
       userObj.fireId = userInfo.firebase_id;
     } else {
+      userObj.username = userInfo.username;
+      userObj.avatar = userInfo.avatar;
       userObj.socketId = socket.id;
     }
     socket.emit('host-room', userObj)
