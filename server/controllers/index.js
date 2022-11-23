@@ -33,6 +33,22 @@ module.exports.controller = {
       })
       .catch(error => console.log(error));
   },
+  createRoom: (room) => {
+    return models.createRoom(room)
+      .then(result => {
+        console.log('Room created')
+        return result;
+      })
+      .catch(error => console.log('Error creating room'));
+  },
+  addPlayer: (room, player) => {
+    return models.addPlayer(room, player)
+      .then(result => {
+        console.log('player added to room')
+        return result;
+      })
+      .catch(error => console.log('Error creating room'));
+  },
 
 
 
