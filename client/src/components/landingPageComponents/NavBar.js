@@ -1,7 +1,8 @@
-import react from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NavBar = ({ userInfo, logout }) => {
+const NavBar = ({user, logout }) => {
+
   return (
     <nav className='flex justify-between text-white bg-[#3D405B] absolute w-screen h-10 pl-4'>
       <Link to='/' className='hover:bg-[#E07A5F] h-10 pt-2'>Braking Friendships</Link>
@@ -9,7 +10,7 @@ const NavBar = ({ userInfo, logout }) => {
         {/* <li className={listItemStyle}>
           <Link to='/instructions'>Instructions</Link>
         </li> */}
-        {userInfo &&
+        {user &&
           <>
             <li className={listItemStyle}>
               <Link to='/profile'>Profile</Link>
@@ -19,7 +20,7 @@ const NavBar = ({ userInfo, logout }) => {
             </li>
           </>
         }
-        {!userInfo &&
+        {!user &&
           <>
             <li className={listItemStyle}>
               <Link to='/login'>Profile</Link>

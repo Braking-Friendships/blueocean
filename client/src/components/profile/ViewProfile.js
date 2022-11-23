@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { socket, emitters } from '../../socket';
 import UserProfile from './UserProfile';
 import FriendProfile from './FriendProfile';
@@ -8,11 +8,12 @@ import ChangeAvatarModal from './ChangeAvatarModal';
 const ViewProfile = ({ userInfo }) => {
   const [userProfileState, setUserProfileState] = useState(true);
   const [friendsProfileState, setFriendsProfileState] = useState(false);
-  const [userProfile, setUserProfile] = useState({});
+  // Render All friend's profile in an array
+    // when player's name is clicked, filter profile to only that person's name and show their profile
   const [friendProfile, setFriendProfile] = useState({});
   const [nameModal, setNameModal] = useState(false);
-  const [avatar, setAvatar] = useState([])
   const [avatarModal, setAvatarModal] = useState(false);
+  const avatarRef = useRef(userInfo.avatar);
 
   const changeProfileView = async (e) => {
     await socket.emit('get-friend-data', { username: e.target.textContent });
@@ -35,52 +36,25 @@ const ViewProfile = ({ userInfo }) => {
     setAvatarModal(true);
   };
 
+  // EDIT USER INFO
   const submitChange = (e) => {
     e.preventDefault();
-    // EDIT USERNAME
     if (e.target.username) {
-      socket.emit('post-edit-username', {
+      const user = {
         firebaseId: userInfo.firebase_id,
         username: e.target.username.value
-      });
-      socket.on('send-edit-username', data => {
-        console.log('data ~~ ', data);
-        setUserProfile(data[0]);
-      })
+      }
+      emitters.editUserInfo(user);
       setNameModal(false);
-    } else { // EDIT AVATAR
-      socket.emit('post-edit-avatar', {
+    } else {
+      const user = {
         firebaseId: userInfo.firebase_id,
-        avatar: avatar
-      });
-      socket.on('send-edit-avatar', data => {
-        console.log('data ~~ ', data);
-        setUserProfile(data[0]);
-      })
+        avatar: avatarRef.current
+      }
+      emitters.editUserInfo(user);
       setAvatarModal(false);
     }
   }
-
-
-  // useEffect(() => {
-  //   setUserProfileState(true);
-  //   setFriendsProfileState(false);
-  //   // HARD CODED DATA
-  //   socket.emit('get-user-data', { firebaseId: 0.14438257512163855 });
-  //   socket.on('send-user-data', data => {
-  //     setUserProfile(data[0]);
-  //     setAvatar(data[0].avatar);
-  //   })
-  // }, [avatarModal])
-
-  // useEffect(() => {
-  //   console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
-  //   console.log(userProfile.username);
-  //   console.log(userProfile);
-  //   console.log(avatar);
-  // }, [userProfile, avatar])
-
-
 
   return (
     <div>
@@ -100,10 +74,9 @@ const ViewProfile = ({ userInfo }) => {
       <ChangeAvatarModal
         avatarModal={avatarModal}
         setAvatarModal={() => setAvatarModal(false)}
-        profileAvatar={userInfo.avatar}
         submitChange={submitChange}
-        avatar={avatar}
-        setAvatar={setAvatar}
+        userAvatar={userInfo.avatar}
+        avatar={avatarRef}
       />
 
       {!userProfileState && friendsProfileState &&
