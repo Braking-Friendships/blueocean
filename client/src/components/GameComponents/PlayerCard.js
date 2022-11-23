@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
 import { motion, useAnimationControls } from 'framer-motion';
 import AnimatedCard from './AnimatedCard';
+import { socket, emitters } from '../../socket.js';
+
+socket.on('countdown', timer => console.log(timer))
+socket.on('game-state', gameState => console.log(gameState))
 
 const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -13,14 +17,30 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
   const checkPlay = (event, info) => {
     // console.log(playerArea.y);
     // console.log(info.point.x, info.point.y);
+
+
     setTimeout(() => {
       setIsDragging(false);
 
     }, 500);
     if(info.point.y < playerArea.y) {
+      // emit card.type and other args to play-card
+      // userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx
+      emitters.playCard('favor', [2], 'next', 1, '')
+      // socket.emit('nope-played', 'cancel')
+
       console.log('played card:', card.type);
+      console.log('card info:', card);
     }
   }
+
+  // emitters.startGame(decks);
+  // emitters.playCard('future', [1], '', '', 6)
+  // emitters.endGame();
+  // emitters.drawCard('hand1')
+  // socket.on('show-future', futureCards => {
+  //   console.log('Next three cards', futureCards)
+  // })
 
   const cardContainer = {
 
