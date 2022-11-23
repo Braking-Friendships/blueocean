@@ -20,6 +20,8 @@ import GameRoom from './components/GameComponents/GameRoom';
 function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState();
+  // help pass badge notifications
+  const [chatMessages, setChatMessages] = useState(0);
 
   const getUserData = async (user) => {
     console.log(user)

@@ -1,12 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { socket, emitters } from '../../socket';
 import Chat from '../ChatComponents/Chat';
 
 
-const Lobby = () => {
+const Lobby = (props) => {
+  // chat badge code --------------
   // state for opening chat
   const [isOpen, setOpen] = useState(false);
+  // const [newMess, setNewMess] = useState(true);
+  // const [badge, setBadge] = useState(0);
+  // const [count, setCount] = useState(0);
 
+  // useEffect(() => {
+  //   // setBadge(props.chatMessages - count)
+  //   // setCount(props.chatMessages);
+  //   // setNewMess(!newMess);
+  // }, [props.chatMessages, isOpen])
 
   return (
     <>
@@ -21,8 +31,12 @@ const Lobby = () => {
         </div>
       </div>
 
-      <div className="absolute inset-y-20 right-10">
-        <button className={!isOpen ? "inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" : "hidden"} type="button" onClick={(e) => setOpen(!isOpen)}>Open Chat</button>
+      <div className={!isOpen ? "absolute inset-y-20 right-10" : "hidden"}>
+        <button className="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" onClick={(e) => setOpen(!isOpen)}>
+          <span className="mr-2">Open Chat</span>
+          {/* {!newMess ? <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">!</span> : ''} */}
+          <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">!</span>
+        </button>
       </div>
       {/* CHAT ENDS HERE --- */}
 

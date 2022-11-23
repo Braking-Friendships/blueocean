@@ -4,7 +4,7 @@ import Chat from '../ChatComponents/Chat';
 import {useState} from 'react';
 
 
-const GameRoom = () => {
+const GameRoom = (props) => {
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -20,8 +20,11 @@ const GameRoom = () => {
         </div>
       </div>
 
-      <div className="absolute inset-y-20 right-10">
-        <button className={!isOpen ? "inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" : "hidden"} type="button" onClick={(e) => setOpen(!isOpen)}>Open Chat</button>
+      <div className={!isOpen ? "absolute inset-y-20 right-10" : "hidden"}>
+        <button className="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" onClick={(e) => setOpen(!isOpen)}>
+          <span className="mr-2">Open Chat</span>
+          <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">!</span>
+        </button>
       </div>
     </>
   )
