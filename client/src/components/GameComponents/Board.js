@@ -38,13 +38,16 @@ const Board = () => {
     // setP5L(decks.hand5.length);
     setStackL(decks.deck.length);
     setFirstLoad(false);
-    // emitters.startGame(decks);
-    // emitters.endGame();
-    // emitters.playCard('hand1', decks.hand1[2].type, 2)
     // emitters.playCard('hand2', decks.hand2[4].type, 4)
-    // emitters.drawCard('hand1')
     // emitters.playerLoses('hand1')
+    emitters.startGame(decks);
   }, []);
+  // emitters.playCard('future', [1], '', '', 6)
+  // emitters.endGame();
+  // emitters.drawCard('hand1')
+  // socket.on('show-future', futureCards => {
+  //   console.log('Next three cards', futureCards)
+  // })
 
   const displayOtherHands = (count, side) => {
     let cards = [];
@@ -53,10 +56,6 @@ const Board = () => {
     }
     return cards;
   }
-
-  emitters.hostRoom();
-  emitters.joinRoom('FKZlSJ')
-  socket.on('game-state', gameState => console.log(gameState))
 
   return (
     <div id="board" className='grid grid-cols-6 grid-rows-5 bg-blue-300 h-screen overflow-hidden col-span-4'>
