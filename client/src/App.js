@@ -24,6 +24,18 @@ function App() {
   const [userInfo, setUserInfo] = useState({});
   const [user, setUser] = useState(false);
 
+
+  const updateRoomState = (change) => {
+    // setRoomState(...roomState, change)
+    // emit (room-updated) => updates
+  }
+
+  // on(room change) invoke updateRoomState(change)
+
+  // in index.js on server
+  // on(room-updated) broadcast(room change) room change to room
+
+
   // USER LOGIN
   const getUserData = async (user) => {
     console.log('LOGIN GET USER DATA: ', user);
@@ -81,7 +93,7 @@ function App() {
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
         <Route path='/instructions' element={<GameInstructions />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
-        <Route path='/lobby' element={<Lobby />}></Route>
+        <Route path='/lobby' element={<Lobby userInfo={userInfo}/>}></Route>
         <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </>
