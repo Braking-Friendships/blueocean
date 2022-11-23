@@ -17,7 +17,6 @@ const JoinGameModal = ({ closeModal, userInfo }) => {
       userObj.room = room;
       userObj.socketId = socket.id;
       userObj.fireId = userInfo.firebase_id;
-
     } else {
       userObj.room = room;
       userObj.socketId = socket.id;
