@@ -159,11 +159,22 @@ io.on('connection', socket => {
     socket.join(roomId);
     console.log('Rooms available', io.of('/').adapter.rooms)
   })
-  socket.on('join-room', userObj => {
+  socket.on('join-room', async userObj => {
     console.log(userObj)
     socket.join(`${userObj.room}`)
-    console.log('Sockets in room', io.of(`/${userObj.room}`).adapter.sids)
+    // room: , userObj
+    // console.log('Sockets in room 1st', io.of(`/${userObj.room}`).adapter.sids)
+    // console.log('Sockets in room 2st', io.of(`/`).adapter.sids)
+    // console.log('Rooms available after joining', io.of(`/`).adapter.rooms.get(userObj.room))
+    // socket.emit('joined', userObj)
+    // io.sockets.in(`${userObj.room}`).emit('hello', userObj);
+    socket.to(`${userObj.room}`).emit('joined', ('hello', userObj))
   })
+  // socket.on('all-joined', users => {
+  //   console.log(users, 'users')
+  //   const room = users[0]?.room
+  //   socket.to(`${room}`).emit('all-users', ('hello', users))
+  // })
   const rooms = io.of('/').adapter.rooms;
   const sids = io.of('/').adapter.sids;
   console.log(rooms)

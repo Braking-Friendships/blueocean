@@ -11,15 +11,49 @@ const Lobby = ({ userInfo }) => {
 
 
   const [roomId, setRoomId] = useState('CdVal6')
-  const [profiles, setProfiles] = useState()
+  const [profiles, setProfiles] = useState([])
   // emitters.joinRoom(roomId)
   // socket.on('game-state', gameState => console.log('game', gameState))
 
+  console.log(socket.id)
+  const [users, setUsers] = useState([])
+  socket.on('joined', data => {
+    setUsers([...users, data])
+    console.log(data)
+    console.log(users)
+  })
+
+
+  // console.log(users[0].host, 'outside')
+  // if (users[0].host === true) {
+  //   console.log('emit')
+  //   socket.emit('all-joined', users)
+  // } else {
+  //   socket.on('all-users', data => {
+  //     console.log(data)
+  //   })
+  // }
+
+
+  // const emitAll = () => {
+  //   console.log('emit all')
+  //   socket.emit('all-joined', users)
+  // }
+  // const getAll = () => {
+  //   console.log('got all')
+  //   socket.on('all-users', data => {
+  //     console.log(data)
+  //   })
+  // }
+
+  // emitAll()
+  // getAll()
 
   return (
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       <h1>{roomId}</h1>
       <div>Game ID</div>
+      <div>Joined:{users?.[0]?.room} id={users?.[0]?.socketId}</div>
       {/* <icon src="" alt="pencil"/> */}
     <br/>
 
