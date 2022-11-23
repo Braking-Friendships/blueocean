@@ -14,7 +14,7 @@ const OtherCard = React.forwardRef(({ side, stackPosition, idx }, ref) => {
     >
       <motion.div
       ref={ref || null}
-      className='min-w-0 min-h-0 p-0'
+      className={`min-w-0  p-0 ${ref ? 'min-h-[271px]' : 'min-h-0'}`}
       >
         <img src={singleCardback}
         className={`pointer-events-none rounded-xl box-border h-auto border-black border-[2px] bg-red-900 min-w-[150px] w-[200px]

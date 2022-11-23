@@ -58,7 +58,19 @@ io.on('connection', socket => {
   }
 
   const drawCard = (username = 'hand1') => {
-    socket.ekGameState[username].push(socket.ekGameState.deck.shift())
+    //Would have to check for bomb before moving on. In which case it would prompt user to defuse.
+    let newCard = socket.ekGameState.deck.pop();
+
+    if(newCard.type === 'bomb'){
+      //Emit the bomb
+      //it should remain on their turn so we can just
+      // end function?
+
+      //somewhere else we can say if they play defuse, we go next player.
+      //Lets extract the logic to switch turns to a new function, for use in skip, bomb/defuse, (attack?)
+    }
+
+    socket.ekGameState[username].push(newCard);
 
     let currPlayer = socket.ekGameState.currentPlayer;
     const playerOrder = socket.ekGameState.playerOrder;
@@ -71,7 +83,7 @@ io.on('connection', socket => {
     }
     // Set current player
     socket.ekGameState.currentPlayer = playerOrder.shift();
-
+    emitState(socket.ekGameState);
     console.log('Player order after:', socket.ekGameState.playerOrder)
     console.log('Current player:', socket.ekGameState.currentPlayer)
     // reset attack counter if attack wasn't played
@@ -150,7 +162,9 @@ io.on('connection', socket => {
             break;
           case 'defuse':
             // insert bomb card at insertidx
-            const bomb = deck.splice(0, 1)
+            // const bomb = deck.splice(0, 1)
+            //Bomb should already be drawn before defuse is played.
+            const bomb = {}
             const copy = deck.slice(0, insertIdx).concat(bomb[0]).concat(deck.slice(insertIdx))
             socket.ekGameState.deck = copy;
             break;

@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getTip, getCardImg } from '../../Tools/cardStuff';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 import AnimatedCard from './AnimatedCard';
 import { socket, emitters } from '../../socket.js';
 
-socket.on('countdown', timer => console.log(timer))
-socket.on('game-state', gameState => console.log(gameState))
-
-const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
+const PlayerCard = ({ card, playerArea, stackPosition, idx, playCard }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const dragStart = () => {
@@ -26,13 +23,23 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
     if(info.point.y < playerArea.y) {
       // emit card.type and other args to play-card
       // userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx
-      emitters.playCard('favor', [2], 'next', 1, '')
+      // emitters.playCard('favor', [2], 'next', 1, '')
       // socket.emit('nope-played', 'cancel')
 
       console.log('played card:', card.type);
+      playCard(idx);
       console.log('card info:', card);
     }
   }
+  /*
+  Need this if i want to set snapback to origin
+  const checkPos = (event, info) => {
+    if(info.point.y < playerArea.y) {
+      setSnapback(false);
+    } else {
+      setSnapback(true);
+    }
+  } */
 
   // emitters.startGame(decks);
   // emitters.playCard('future', [1], '', '', 6)
@@ -90,7 +97,7 @@ const PlayerCard = ({ card, playerArea, stackPosition, idx }) => {
     >
       <motion.div
       layout
-      drag
+      drag={idx === undefined ? false : true}
       dragSnapToOrigin
       dragConstraints={{ bottom: 0 }}
       dragElastic={0.2}

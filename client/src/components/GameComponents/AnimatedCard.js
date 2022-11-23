@@ -31,42 +31,42 @@ const AnimatedCard = ({ stackPosition, idx, side, children }) => {
     return {x, y}
   }
 
-  const animate = async() => {
-    let poo = getTransitionPos();
 
-    await cardControls.start({
-      rotate: 0,
-      x: poo.x,
-      y: poo.y,
-      width: '200px',
-      transition: {
-        duration: 0
-      }
-    })
-
-    await cardControls.start({
-      rotate: set.rotate,
-      x: 0,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: idx * 0.2,
-        ease: 'easeInOut',
-      }
-    })
-
-    cardControls.start({
-      width: set.width,
-      transition: {
-        duration: 0.5,
-        delay: ((8 - idx) * 0.2) - 0.2,
-        ease: 'easeIn'
-      }
-    })
-
-  };
   useEffect(() => {
     if(stackPosition){
+      const animate = async() => {
+        let poo = getTransitionPos();
+
+        await cardControls.start({
+          rotate: 0,
+          x: poo.x,
+          y: poo.y,
+          width: '200px',
+          transition: {
+            duration: 0
+          }
+        })
+
+        await cardControls.start({
+          rotate: set.rotate,
+          x: 0,
+          y: 0,
+          transition: {
+            duration: 0.5,
+            delay: idx * 0.2,
+            ease: 'easeInOut',
+          }
+        })
+
+        cardControls.start({
+          width: set.width,
+          transition: {
+            duration: 0.5,
+            delay: ((8 - idx) * 0.2) - 0.2,
+            ease: 'easeIn'
+          }
+        })
+      };
       animate();
     }
   }, [stackPosition]);
@@ -75,7 +75,7 @@ const AnimatedCard = ({ stackPosition, idx, side, children }) => {
     <motion.div
       layout
       ref={cardRef}
-      className={`relative min-h-0 min-w-0 z-0 p-0 h-auto`}
+      className={`relative min-h-0 min-w-0 z-1 p-0 h-auto`}
       animate={cardControls}
       whileHover={{'zIndex': 10}}
     >
