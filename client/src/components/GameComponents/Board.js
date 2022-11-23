@@ -73,10 +73,12 @@ const Board = () => {
   // })
 
   const playCard = (idx) => {
-    let tempCard = myHand[idx];
+    let tempHand = [...myHand];
+    let tempCard = tempHand.splice(idx, 1)[0];
 
     if(tempCard.type === 'defuse'){
       console.log('defuse');
+      setBOMB(null);
       emitters.defuse(null, [idx]);
     } else if(tempCard.type.includes('cat')) {
       //if type is cat, ask for another cat
@@ -86,6 +88,7 @@ const Board = () => {
     }
     //if action is a steal, ask for player input on who to steal from
     setLastCardPlayed(tempCard);
+    setMyHand(tempHand);
   }
   const drawCard = () => {
     emitters.drawCard();
