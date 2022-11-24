@@ -16,6 +16,7 @@ export const emitters = {
   endGame: () => socket.emit('end-game'),
   playCard: (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => socket.emit('play-card', userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx),
   defuse: (insertIdx, userCardIdxs) => socket.emit('defuse', null, userCardIdxs),
+  steal: (userCardIdxs, opponent) => socket.emit('playCard', 'steal', userCardIdxs, opponent),
   drawCard: (username) => socket.emit('draw-card', username),
   playerLoses: (username) => socket.emit('player-loses', username),
   // chat emmiters -----

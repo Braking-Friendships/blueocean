@@ -17,6 +17,15 @@ const Board = () => {
     return stackRef.current?.getBoundingClientRect();
   }
 
+  const findMatch = (type, currIdx) => {
+    for(let i = 0; i < myHand.length; i++) {
+      if(myHand[i].type === type && i !== currIdx ) {
+        return i;
+      }
+    }
+    return null;
+  }
+
   useEffect(() => {
     setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
   }, [firstLoad]);
@@ -30,11 +39,16 @@ const Board = () => {
   const [lastCardPlayed, setLastCardPlayed] = useState(null);
   const [BOMB, setBOMB] = useState(null);
   const [bombTimer, setBombTimer] = useState(null);
+  const [pickSteal, setPickSteal] = useState(null);
+  // pickSteal: [cardIdxs]
 
   useEffect(() => {
     socket.on('game-state', gameState => {
       console.log(gameState);
       setMyHand(gameState.hand1);
+      setP2L(gameState.hand2.length || null);
+      setP3L(gameState.hand3.length);
+      setP4L(gameState.hand4.length || null);
       setStackL(gameState.deck.length);
     });
 
@@ -51,12 +65,12 @@ const Board = () => {
   useEffect(() => {
     let decks = createDeck(4);
 
-    setMyHand(decks.hand1);
+    /* setMyHand(decks.hand1);
     setP2L(decks.hand2.length || null);
     setP3L(decks.hand3.length);
     setP4L(decks.hand4.length || null);
     // setP5L(decks.hand5.length);
-    setStackL(decks.deck.length);
+    setStackL(decks.deck.length); */
 
     emitters.startGame(decks);
 
@@ -65,12 +79,6 @@ const Board = () => {
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
-  // emitters.playCard('future', [1], '', '', 6)
-  // emitters.endGame();
-  // emitters.drawCard('hand1')
-  // socket.on('show-future', futureCards => {
-  //   console.log('Next three cards', futureCards)
-  // })
 
   const playCard = (idx) => {
     let tempHand = [...myHand];
@@ -78,18 +86,35 @@ const Board = () => {
 
     if(tempCard.type === 'defuse'){
       console.log('defuse');
+      if(BOMB === null) {
+        return;
+      }
       setBOMB(null);
       emitters.defuse(null, [idx]);
+    } else if (tempCard.type === 'favor') {
+      // pickPlayer();
     } else if(tempCard.type.includes('cat')) {
       //if type is cat, ask for another cat
-
+      let secondIdx = findMatch(tempCard.type, idx);
+      if(secondIdx !== null) {
+        setPickSteal([idx, secondIdx]);
+        // emitters.playCard(tempCard.type, [idx, secondIdx]);
+      } else {
+        //Maybe show an error(needs 2 copies)
+        return;
+      }
     } else {
       emitters.playCard(tempCard.type, [idx]);
     }
     //if action is a steal, ask for player input on who to steal from
     setLastCardPlayed(tempCard);
-    setMyHand(tempHand);
+    // setMyHand(tempHand);
   }
+
+  const steal = (userCardIdxs, opponent) => {
+    emitters.steal(userCardIdxs, opponent);
+  }
+
   const drawCard = () => {
     emitters.drawCard();
   }

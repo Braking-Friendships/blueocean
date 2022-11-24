@@ -147,12 +147,12 @@ io.on('connection', socket => {
     //emit just this object
 
     // Remove played cards from user's hand
-    if (userCardIdxs.length === 2) {
-      socket.ekGameState['hand1'].splice(userCardIdxs[1], 1)
-      socket.ekGameState['hand1'].splice(userCardIdxs[0], 1)
-    } else {
-      socket.ekGameState['hand1'].splice(userCardIdxs[0], 1)
-    }
+    socket.ekGameState['hand1'] = socket.ekGameState['hand1'].filter((card, i) => {
+      if(!userCardIdxs.includes(i)) {
+        return true;
+      }
+    })
+    emitState(socket.ekGameState)
 
     // SANS ATTACK
     // [3, 0, 2, 1]
