@@ -133,7 +133,7 @@ io.on('connection', socket => {
     const playerHand = socket.ekGameState['hand1']
     const playerOrder = socket.ekGameState.playerOrder;
     const currPlayer = socket.ekGameState.currentPlayer;
-
+    console.log('--->', userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx);
     // TODO: draw card only on end turn, don't assume a cardtype played means turn is over
 
     //Emit the action to all players, so they can see the card

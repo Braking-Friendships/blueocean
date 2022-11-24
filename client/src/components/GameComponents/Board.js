@@ -3,6 +3,7 @@ import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
 import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
+import PickButtons from './PickButtons';
 
 socket.on('countdown', timer => console.log(timer))
 
@@ -36,6 +37,8 @@ const Board = () => {
   const [p4L, setP4L] = useState(null);
   const [p5L, setP5L] = useState(null);
   const [stackL, setStackL] = useState(52);
+  const [playerOrder, setPlayerOrder] = useState(null);
+  const [currentPlayer, setCurrentPlayer] = useState(null);
   const [lastCardPlayed, setLastCardPlayed] = useState(null);
   const [BOMB, setBOMB] = useState(null);
   const [bombTimer, setBombTimer] = useState(null);
@@ -50,16 +53,16 @@ const Board = () => {
       setP3L(gameState.hand3.length);
       setP4L(gameState.hand4.length || null);
       setStackL(gameState.deck.length);
+      setPlayerOrder(gameState.playerOrder);
+      setCurrentPlayer(currentPlayer);
     });
 
     socket.on('bomb', (newCard) => {
-      console.log(newCard)
       setBOMB(newCard);
     });
     socket.on('countdown', (timer) => {
       setBombTimer(timer);
     })
-
   }, [])
 
   useEffect(() => {
@@ -98,7 +101,6 @@ const Board = () => {
       let secondIdx = findMatch(tempCard.type, idx);
       if(secondIdx !== null) {
         setPickSteal([idx, secondIdx]);
-        // emitters.playCard(tempCard.type, [idx, secondIdx]);
       } else {
         //Maybe show an error(needs 2 copies)
         return;
@@ -113,6 +115,7 @@ const Board = () => {
 
   const steal = (userCardIdxs, opponent) => {
     emitters.steal(userCardIdxs, opponent);
+    setPickSteal(null);
   }
 
   const drawCard = () => {
@@ -175,7 +178,7 @@ const Board = () => {
       <div id="right-player" className='row-start-2 row-end-5 col-start-6 col-end-7 flex flex-col justify-center items-center'>
         {displayOtherHands(p4L, 'right')}
       </div>}
-
+      {pickSteal ? <PickButtons steal={steal} pickSteal={pickSteal} playerOrder={playerOrder} currentPlayer={currentPlayer} /> : null}
     </div>
   )
 }
