@@ -17,6 +17,14 @@ module.exports.controller = {
       })
       .catch(error => console.log(error));
   },
+  searchProfile: (user) => {
+    return models.searchProfile(user)
+      .then(result => {
+        console.log(result, 'result in controller');
+        return result;
+      })
+      .catch(error => console.log(error));
+  },
   updateUser: (user) => {
     return models.createUser(user)
       .then(result => {

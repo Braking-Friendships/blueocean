@@ -19,6 +19,15 @@ module.exports = {
       return error;
     }
   },
+  searchProfile: async (user) => {
+    console.log('Search user: ', user);
+    try {
+      const filter = {username: user.username};
+      return await User.find(filter);
+    } catch (error) {
+      return error;
+    }
+  },
   updateUser: async (user) => {
     try {
       const filter = {firebase_id: user.firebaseId};

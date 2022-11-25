@@ -318,6 +318,12 @@ io.on('connection', socket => {
     socket.emit('send-user-data', userData)
   })
 
+  // SEARCH PROFILE
+  socket.on('search-user', async user => {
+    const userData = await controller.searchProfile(user)
+    console.log(userData)
+    socket.emit('search-result', userData)
+  })
 
 
   // ROOM LISTENERS

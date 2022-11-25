@@ -9,6 +9,7 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import ViewProfile from './components/profile/ViewProfile';
+import SearchProfile from './components/profile/SearchProfile';
 import Lobby from './components/GameLobby/Lobby';
 import Chat from './components/ChatComponents/Chat';
 import GameInstructions from './contexts/GameInstructions';
@@ -105,6 +106,7 @@ function App() {
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
+        <Route path='/profile/search' element={<SearchProfile userInfo={userInfo} />}></Route>
         <Route path='/instructions' element={<GameInstructions />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
         <Route path='/lobby' element={<Lobby userInfo={userInfo}/>}></Route>
