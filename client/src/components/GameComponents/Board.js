@@ -5,7 +5,7 @@ import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
 import PickButtons from './PickButtons';
 
-socket.on('countdown', timer => console.log(timer))
+socket.on('card-countdown', timer => console.log(timer))
 
 const Board = () => {
   const playerAreaRef = useRef();
@@ -44,6 +44,7 @@ const Board = () => {
   const [bombTimer, setBombTimer] = useState(null);
   const [pickSteal, setPickSteal] = useState(null);
   // pickSteal: [cardIdxs]
+  const [nopeable, setNopeable] = useState(false);
 
   useEffect(() => {
     socket.on('game-state', gameState => {
@@ -54,16 +55,27 @@ const Board = () => {
       setP4L(gameState.hand4.length || null);
       setStackL(gameState.deck.length);
       setPlayerOrder(gameState.playerOrder);
-      setCurrentPlayer(currentPlayer);
+      setCurrentPlayer(gameState.currentPlayer);
     });
 
-    socket.on('bomb', (newCard) => {
+    socket.on('bomb', (newCard, gameState) => {
+      setStackL(gameState.deck.length);
       setBOMB(newCard);
     });
-    socket.on('countdown', (timer) => {
+    socket.on('bomb-countdown', (timer) => {
       setBombTimer(timer);
     })
-  }, [])
+    socket.on('card-countdown', (timer) => {
+      if(timer === 0){
+        setNopeable(false);
+      } else {
+        setNopeable(true);
+      }
+    })
+    socket.on('show-future', (cards)=>{
+      console.log(cards)
+    })
+  }, []);
 
   useEffect(() => {
     let decks = createDeck(4);
@@ -87,13 +99,22 @@ const Board = () => {
     let tempHand = [...myHand];
     let tempCard = tempHand.splice(idx, 1)[0];
 
-    if(tempCard.type === 'defuse'){
-      console.log('defuse');
+    if(tempCard.type === 'nope') {
+      if(nopeable) {
+        emitters.nope('nope', [idx]);
+      } else {
+        return;
+      }
+    } /* else if(currentPlayer !== myId) {
+      return;
+    } */
+
+    else if(tempCard.type === 'defuse'){
       if(BOMB === null) {
         return;
       }
       setBOMB(null);
-      emitters.defuse(null, [idx]);
+      emitters.defuse(Math.floor(Math.random()*stackL), [idx]);
     } else if (tempCard.type === 'favor') {
       // pickPlayer();
     } else if(tempCard.type.includes('cat')) {
@@ -114,7 +135,7 @@ const Board = () => {
   }
 
   const steal = (userCardIdxs, opponent) => {
-    emitters.steal(userCardIdxs, opponent);
+    emitters.playCard('steal', userCardIdxs, opponent);
     setPickSteal(null);
   }
 
@@ -142,8 +163,11 @@ const Board = () => {
       <div id="middle-stack" className='row-start-3 row-end-4 col-start-2 col-end-6 flex justify-center items-end gap-7'>
         {BOMB ? <PlayerCard key={BOMB.id} card={BOMB} /> : null}
 
-        <button onClick={drawCard}>
+        <button
+        className='relative'
+        onClick={drawCard}>
           <OtherCard ref={stackRef} side='mid' />
+          <div className='absolute bottom-4 right-4 text-4xl z-20'>{stackL}</div>
         </button>
 
         {lastCardPlayed
