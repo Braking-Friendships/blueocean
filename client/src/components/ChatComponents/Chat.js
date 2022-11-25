@@ -33,7 +33,8 @@ const Chat = (props) => {
   let date = new Date().toISOString();
   console.log(date, 'ISO')
 
-  const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Josh', isItMe: false, message: 'hello', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hello', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: false, message: 'hello', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'hello', date: date}])
+  // dummy/test data
+  const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'yo', date: date}, {username: 'Josh', isItMe: false, message: 'wassup', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hi', date: date}, {username: 'Fernando', isItMe: true, message: 'yoyo', date: date}, {username: 'Hieu', isItMe: false, message: 'hey', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'whats up', date: date}])
 
   const handleMsgSubmit = (message, isItMe = false) => {
     let me = isItMe;
@@ -43,7 +44,8 @@ const Chat = (props) => {
   }
 
   useEffect(() => {
-
+    // adds badge number to chat button
+    // props.setChatMessages(messages.length);
   }, [messages])
 
 
