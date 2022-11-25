@@ -23,7 +23,7 @@ function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState({});
   const [user, setUser] = useState(false);
-  const [roomState, setRoomState] = useState({roomId: id, players:[{userInfo}]});
+  const [roomState, setRoomState] = useState();
 
   socket.on('update-room', roomId => {
     // add socketId to userInfo

@@ -44,11 +44,11 @@ const Lobby = ({ userInfo }) => {
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       <h1>{roomId}</h1>
       <div>Game ID</div>
-      <div>Joined:{users?.[0]?.room} id={users?.[0]?.socketId}</div>
+      <div>Joined:{users?.[0]?.[0].room} id={users?.[0]?.socketId}</div>
       {/* <icon src="" alt="pencil"/> */}
     <br/>
 
-    <button onClick={() => {loadGame(users[0]?.room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
+    <button onClick={() => {loadGame(users?.[0]?.[0].room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
     <br/>
     <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
 
