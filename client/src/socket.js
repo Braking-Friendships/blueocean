@@ -8,6 +8,7 @@ socket.on('connect', () => {
 
 export const emitters = {
   getUserData: (user) => socket.emit('get-user-data', user),
+  getFriendData: (friend) => socket.emit('get-friend-data', friend),
   createUser: (user) => socket.emit('create-user', user),
   editUserInfo: (user) => socket.emit('edit-user', user),
   addFriend: (user) => socket.emit('add-friend', user),
