@@ -342,7 +342,7 @@ io.on('connection', socket => {
     const sendUpdate = await controller.addPlayer(userObj.room, userObj)
     const roomData = await controller.getRoomData(userObj.room)
     io.in(`${userObj.room}`).emit('joined', roomData);
-    // console.log('players in room after joining', io.of('/').adapter.rooms)
+    console.log('players in room after joining', io.of('/').adapter.rooms)
   })
 
     // socket.to(`${userObj.room}`).emit('joined', (userObj))
