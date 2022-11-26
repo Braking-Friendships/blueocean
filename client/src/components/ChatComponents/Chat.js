@@ -20,13 +20,13 @@ const Chat = (props) => {
     console.log('MESSAGE SENT ID: ', socket.id);
   }
   let roomy = '';
-  // add users to rooms
-  const handleRmSubmit = (room) => {
-    // socket to join rooms
-    emitters.handleRmSubmit(room);
-    roomy = room;
-    console.log('JOINED ROOM: ', room);
-  }
+  // add users to rooms -----
+  // const handleRmSubmit = (room) => {
+  //   // socket to join rooms
+  //   emitters.handleRmSubmit(room);
+  //   roomy = room;
+  //   console.log('JOINED ROOM: ', room);
+  // }
 
   // ---------------------------------------------------------
 
@@ -41,6 +41,7 @@ const Chat = (props) => {
     console.log(me);
     let msg = {username: 'Fernando', isItMe: me, message: message, date: date};
     setMessages([...messages, msg]);
+    props.setNewMess([...messages, msg]);
   }
 
   // auto scroll messages in chat
@@ -53,13 +54,10 @@ const Chat = (props) => {
     updateScroll();
     // adds badge number to chat button
     // props.setChatMessages(messages.length);
-  }, [messages])
+  }, [messages, props.receiveScroll])
 
 
   return (
-
-    // <div className="flex flex-col items-center justify-center w-screen min-h-screen bg-[#F4F1DE] text-gray-800 p-10">
-
       // {/* <!-- Component Start --> */}
       <div className="flex flex-col flex-grow w-screen max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
         <div id='chatContainer' className="flex flex-col flex-grow h-98 p-4 overflow-y-auto scroll-smooth">
@@ -90,7 +88,9 @@ const Chat = (props) => {
             </svg>
           </button>
         </form>
-        <form onSubmit={(e) => {
+
+        {/* input to type room to join ----- */}
+        {/* <form onSubmit={(e) => {
             e.preventDefault();
             //joins room
             handleRmSubmit(e.target.rm.value);
@@ -104,11 +104,10 @@ const Chat = (props) => {
               </svg>
             </button>
           </div>
-        </form>
+        </form> */}
+
       </div>
       // {/* <!-- Component End  --> */}
-
-    // </div>
   )
 }
 
