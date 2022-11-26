@@ -320,6 +320,7 @@ io.on('connection', socket => {
 
 
 
+
   // ROOM LISTENERS
   socket.on('host-room', userObj => {
     const roomId = uid();
@@ -334,7 +335,6 @@ io.on('connection', socket => {
   })
   // socket.on('join-room', roomId => {
   //   socket.join(roomId)
-  //   // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
   // })
   socket.on('join-room', async userObj => {
     console.log(userObj)
@@ -342,15 +342,19 @@ io.on('connection', socket => {
     const sendUpdate = await controller.addPlayer(userObj.room, userObj)
     const roomData = await controller.getRoomData(userObj.room)
     io.in(`${userObj.room}`).emit('joined', roomData);
+    // console.log('Sockets in room', io.of(`/${roomId}`).adapter.sids)
     // console.log('players in room after joining', io.of('/').adapter.rooms)
   })
-
     // socket.to(`${userObj.room}`).emit('joined', (userObj))
-
-
   socket.on('join-game', (room) => {
     console.log(room, 'room')
     socket.to(`${room}`).emit('start-join', (room))
+  })
+  socket.on('get-all-rooms', async cb => {
+    const allRooms = await controller.getAllRooms()
+    cb(allRooms)
+    console.log(allRooms, 'ALL ROOMS')
+    // socket.emit('send-user-data', userData)
   })
 
 

@@ -58,6 +58,13 @@ module.exports = {
       return error;
     }
   },
+  getAllRooms: async () => {
+    try {
+      return await Room.find();
+    } catch (error) {
+      return error;
+    }
+  },
 
 
 

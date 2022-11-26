@@ -24,7 +24,6 @@ const JoinGameModal = ({ closeModal, userInfo }) => {
       userObj.room = room;
       userObj.socketId = socket.id;
     }
-    console.log(userObj)
     socket.emit('join-room', userObj)
     navigate(`/lobby`)
   }

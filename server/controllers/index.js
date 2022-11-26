@@ -52,7 +52,15 @@ module.exports.controller = {
   getRoomData: (room) => {
     return models.getRoomData(room)
       .then(result => {
-        console.log(result, 'result in controller');
+        console.log(result, 'getRoomData - result in controller');
+        return result;
+      })
+      .catch(error => console.log(error));
+  },
+  getAllRooms: () => {
+    return models.getAllRooms()
+      .then(result => {
+        console.log(result, 'getAllRooms - result in controller');
         return result;
       })
       .catch(error => console.log(error));

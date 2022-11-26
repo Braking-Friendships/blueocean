@@ -22,7 +22,7 @@ const Lobby = ({ userInfo }) => {
   const [users, setUsers] = useState([])
 
   socket.on('joined', data => {
-    setUsers([...users, data])
+    setUsers(data)
     console.log(data)
     console.log(users)
   })
