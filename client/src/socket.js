@@ -10,6 +10,7 @@ export const emitters = {
   getUserData: (user) => socket.emit('get-user-data', user),
   createUser: (user) => socket.emit('create-user', user),
   editUserInfo: (user) => socket.emit('edit-user', user),
+  addFriend: (user) => socket.emit('add-friend', user),
   searchProfile: (user) => socket.emit('search-user', user),
   hostRoom: () => socket.emit('host-room', socket.id),
   joinRoom: (roomId) => socket.emit('join-room', roomId),

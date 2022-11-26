@@ -26,9 +26,9 @@ module.exports.controller = {
       .catch(error => console.log(error));
   },
   updateUser: (user) => {
-    return models.createUser(user)
+    return models.updateUser(user)
       .then(result => {
-        console.log('User created')
+        console.log('User updated')
         return result;
       })
       .catch(error => console.log('Error creating user'));

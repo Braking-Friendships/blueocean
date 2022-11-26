@@ -53,7 +53,7 @@ function App() {
 
   // USER LOGIN
   const getUserData = async (user) => {
-    console.log('LOGIN GET USER DATA: ', user);
+    // console.log('LOGIN GET USER DATA: ', user);
     emitters.getUserData(user);
     setUser(true);
   };
@@ -82,7 +82,7 @@ function App() {
 
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
-    console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
+    // console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
     const user = { firebaseId: localStorage.getItem('u_id') };
     const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
     if (user.firebaseId) {
@@ -91,11 +91,11 @@ function App() {
     } else { setUserInfo({ username: guest, avatar: happyCat }) }
   }, [user]);
 
-  useEffect(() => {
-    console.log('~~~~ USER/GUEST ~~~~');
-    console.log('user: ', user, userInfo);
-    console.log('SOCKET~~ ', socket.id)
-  }, [userInfo])
+  // useEffect(() => {
+  //   console.log('~~~~ USER/GUEST ~~~~');
+  //   console.log('user: ', user, userInfo);
+  //   console.log('SOCKET~~ ', socket.id)
+  // }, [userInfo])
 
   return (
     <>
@@ -106,7 +106,7 @@ function App() {
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
-        <Route path='/profile/search' element={<SearchProfile userInfo={userInfo} />}></Route>
+        <Route path='/profile/search' element={<SearchProfile userInfo={userInfo}/>}></Route>
         <Route path='/instructions' element={<GameInstructions />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
         <Route path='/lobby' element={<Lobby userInfo={userInfo}/>}></Route>
