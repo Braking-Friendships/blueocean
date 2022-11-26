@@ -50,7 +50,7 @@ function App() {
   // LOGOUT BTN CLICKED
   const logout = () => {
     localStorage.removeItem('u_id');
-    setUserInfo('');
+    setUserInfo({});
     setUser(false);
   };
 
@@ -64,13 +64,18 @@ function App() {
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
     // console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
-    const user = { firebaseId: localStorage.getItem('u_id') };
+    if (localStorage.getItem('u_id') === 'null') localStorage.removeItem('u_id');
+    const user = { firebase_id: localStorage.getItem('u_id') };
     const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
     if (user.firebase_id) {
       getUserData(user);
       setUser(true);
     } else { setUserInfo({ username: guest, avatar: happyCat }) }
   }, [user]);
+
+  // useEffect(() => {
+  //   console.log("🚀 ~ file: App.js ~ line 77 ~ useEffect ~ localStorage.getItem('u_id')", localStorage.getItem('u_id'))
+  // }, []);
 
   // useEffect(() => {
   //   console.log('~~~~ USER/GUEST ~~~~');
