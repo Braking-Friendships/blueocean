@@ -43,7 +43,14 @@ const Chat = (props) => {
     setMessages([...messages, msg]);
   }
 
+  // auto scroll messages in chat
+  function updateScroll() {
+    var element = document.getElementById('chatContainer');
+    element.scrollTop = element.scrollHeight;
+  }
+
   useEffect(() => {
+    updateScroll();
     // adds badge number to chat button
     // props.setChatMessages(messages.length);
   }, [messages])
@@ -55,11 +62,11 @@ const Chat = (props) => {
 
       // {/* <!-- Component Start --> */}
       <div className="flex flex-col flex-grow w-screen max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
-        <div className="flex flex-col flex-grow h-98 p-4 overflow-auto">
+        <div id='chatContainer' className="flex flex-col flex-grow h-98 p-4 overflow-y-auto scroll-smooth">
 
           {/* <!-- chat messages --> */}
-          <div className="transaction-container">
-            <div id='transContainer' className='EContainer'>
+          <div id='chatContainer' className="chat-container">
+            <div id='chatContainer' className='EContainer'>
               {messages.map((mess, index) => (
                 <ChatEntry mess={mess} key={index} />
               ))}
