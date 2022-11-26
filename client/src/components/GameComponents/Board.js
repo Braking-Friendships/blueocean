@@ -7,35 +7,16 @@ import PickButtons from './PickButtons';
 
 socket.on('card-countdown', timer => console.log(timer))
 
-const Board = () => {
+const Board = ({ myId }) => {
   const playerAreaRef = useRef();
   const stackRef = useRef();
 
   const [firstLoad, setFirstLoad] = useState(true);
   const [playerArea, setPlayerArea] = useState(null);
-
-  const getStackPos = () => {
-    return stackRef.current?.getBoundingClientRect();
-  }
-
-  const findMatch = (type, currIdx) => {
-    for(let i = 0; i < myHand.length; i++) {
-      if(myHand[i].type === type && i !== currIdx ) {
-        return i;
-      }
-    }
-    return null;
-  }
-
-  useEffect(() => {
-    setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
-  }, [firstLoad]);
-
   const [myHand, setMyHand] = useState([]);
   const [p2L, setP2L] = useState(null);
   const [p3L, setP3L] = useState(null);
   const [p4L, setP4L] = useState(null);
-  const [p5L, setP5L] = useState(null);
   const [stackL, setStackL] = useState(52);
   const [playerOrder, setPlayerOrder] = useState(null);
   const [currentPlayer, setCurrentPlayer] = useState(null);
@@ -47,12 +28,26 @@ const Board = () => {
   const [nopeable, setNopeable] = useState(false);
 
   useEffect(() => {
+    setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
+  }, [firstLoad]);
+
+  useEffect(() => {
+
     socket.on('game-state', gameState => {
       console.log(gameState);
-      setMyHand(gameState.hand1);
-      setP2L(gameState.hand2.length || null);
-      setP3L(gameState.hand3.length);
-      setP4L(gameState.hand4.length || null);
+      //replace 'c' with myId
+      let myIdx = gameState.initialOrder.indexOf(myId);
+      let playerCount = gameState.initialOrder.length;
+
+      setMyHand(gameState[gameState.initialOrder[myIdx]]);
+
+      if(playerCount === 2) {
+        setP3L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]].length);
+      } else {
+        setP2L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]].length);
+        setP3L(gameState[gameState.initialOrder[(myIdx+2) % playerCount]].length);
+        setP4L(gameState[gameState.initialOrder[(myIdx+3) % playerCount]].length);
+      }
       setStackL(gameState.deck.length);
       setPlayerOrder(gameState.playerOrder);
       setCurrentPlayer(gameState.currentPlayer);
@@ -78,17 +73,6 @@ const Board = () => {
   }, []);
 
   useEffect(() => {
-    let decks = createDeck(4);
-
-    /* setMyHand(decks.hand1);
-    setP2L(decks.hand2.length || null);
-    setP3L(decks.hand3.length);
-    setP4L(decks.hand4.length || null);
-    // setP5L(decks.hand5.length);
-    setStackL(decks.deck.length); */
-
-    emitters.startGame(decks);
-
     let timer = setTimeout(() => {
       setFirstLoad(false);
     }, 1000);
@@ -105,10 +89,9 @@ const Board = () => {
       } else {
         return;
       }
-    } /* else if(currentPlayer !== myId) {
+    } else if(currentPlayer !== myId) {
       return;
-    } */
-
+    }
     else if(tempCard.type === 'defuse'){
       if(BOMB === null) {
         return;
@@ -133,6 +116,18 @@ const Board = () => {
     setLastCardPlayed(tempCard);
     // setMyHand(tempHand);
   }
+  const getStackPos = () => {
+    return stackRef.current?.getBoundingClientRect();
+  }
+
+  const findMatch = (type, currIdx) => {
+    for(let i = 0; i < myHand.length; i++) {
+      if(myHand[i].type === type && i !== currIdx ) {
+        return i;
+      }
+    }
+    return null;
+  }
 
   const steal = (userCardIdxs, opponent) => {
     emitters.playCard('steal', userCardIdxs, opponent);
@@ -140,7 +135,9 @@ const Board = () => {
   }
 
   const drawCard = () => {
-    emitters.drawCard();
+    if(currentPlayer === myId) {
+      emitters.drawCard();
+    }
   }
 
   const displayOtherHands = (count, side) => {

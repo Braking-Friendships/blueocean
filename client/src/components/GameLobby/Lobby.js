@@ -14,7 +14,7 @@ import Chat from '../ChatComponents/Chat.js';
 const Lobby = ({ userInfo }) => {
 
   const [roomId, setRoomId] = useState('CdVal6')
-  const [profiles, setProfiles] = useState([])
+  const [profiles, setProfiles] = useState([]);
   // emitters.joinRoom(roomId)
   // socket.on('game-state', gameState => console.log('game', gameState))
 
@@ -35,7 +35,14 @@ const Lobby = ({ userInfo }) => {
   socket.on('update-room', room_id => setRoomId(room_id))
 
   const loadGame = (room) => {
-    let decks = createDeck(4);
+    //replace with real users
+    //min2 - max4
+    let users = [userInfo.username, 'b', 'c', 'd'];
+
+    let decks = createDeck(users);
+
+    decks.playerOrder = users;
+
     emitters.startGame(decks);
     socket.emit('join-game', room)
     navigate(`/game`)
