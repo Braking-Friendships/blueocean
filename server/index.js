@@ -289,6 +289,13 @@ io.on('connection', socket => {
     console.log('~~ ADD FRIEND ~~ ', user);
     controller.updateFriendList(user)
   })
+  socket.on('remove-friend', async user => {
+    console.log('~~ REMOVE FRIEND ~~ ', user);
+    await controller.updateFriendList(user);
+    const userData = await controller.getUserData(user)
+    // console.log(userData)
+    socket.emit('send-user-data', userData)
+  })
   socket.on('edit-user', async user => {
     console.log('~~ EDIT USER ~~ ', user);
     const updateUser = await controller.updateUser(user)

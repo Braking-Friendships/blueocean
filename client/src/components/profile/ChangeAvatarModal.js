@@ -9,14 +9,7 @@ import tongueCat from "../../assets/avatars/tongueCat.png";
 import unhappyCat from "../../assets/avatars/unhappyCat.png";
 import vampireCat from "../../assets/avatars/vampireCat.png";
 
-const ChangeAvatarModal = ({
-  avatarModal,
-  closeAvatarModal,
-  profileAvatar,
-  submitChange,
-  avatarRef,
-  userAvatar,
-}) => {
+const ChangeAvatarModal = ({ avatarModal, closeAvatarModal, profileAvatar, submitChange, avatarRef, userAvatar }) => {
   const [currentAvatar, setCurrentAvatar] = useState(userAvatar.avatar);
   const avatarChoices = [
     happyCat,

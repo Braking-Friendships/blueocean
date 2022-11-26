@@ -18,17 +18,17 @@ const Profile = ({ userInfo, info, returnToSearch, updateFriendList }) => {
         <div className="flex flex-col pl-10">
           {userInfo.username !== info.username && (
             <button
-              className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-[#81B29A] hover:outline hover:bg-[#E07A5F] text-white font-bold py-2 px-4 rounded "
               onClick={() => {
                 updateFriendList(info);
-                // returnToSearch();
+                returnToSearch();
               }}
             >
               Add Friend
             </button>
           )}
           <button
-            className="bg-[#81B29A] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2"
+            className="bg-[#81B29A] hover:outline hover:bg-[#E07A5F] text-white font-bold py-2 px-4 rounded my-2"
             onClick={() => returnToSearch()}
           >
             BACK
@@ -37,13 +37,14 @@ const Profile = ({ userInfo, info, returnToSearch, updateFriendList }) => {
       </div>
 
       <div className="flex items-center bg-[#3D405B] my-10 p-2 px-10 text-white rounded">
-        <div className="flex flex-col p-4 mr-4">
-          <h2>Username:</h2>
-          {info.username} &nbsp;
+        <div className="flex flex-col py-4 mr-8">
+          <h2 className="text-2xl">Username:</h2>
+          <h2 className="text-xl">{info.username}</h2>
         </div>
-        <div>
+        <div className="flex-col">
           <h4>Number of Wins: {info.total_wins}</h4>
           <h4>Total games played: {info.total_games}</h4>
+          {info.total_games === 0 && <h4>Win Rate: 0%</h4>}
           {info.total_games > 0 && <h4>Win Rate: {calculateWinRate()}</h4>}
         </div>
       </div>

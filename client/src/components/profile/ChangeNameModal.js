@@ -1,9 +1,7 @@
 import React from "react";
 
 const ChangeNameModal = ({ nameModal, setNameModal, submitChange }) => {
-  if (!nameModal) {
-    return null;
-  }
+  if (!nameModal) return null;
 
   return (
     <div>
