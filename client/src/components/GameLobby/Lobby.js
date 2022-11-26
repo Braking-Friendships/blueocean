@@ -32,6 +32,8 @@ const Lobby = ({ userInfo }) => {
     navigate(`/game`)
   })
 
+  socket.on('update-room', room_id => setRoomId(room_id))
+
   const loadGame = (room) => {
     let decks = createDeck(4);
     emitters.startGame(decks);
