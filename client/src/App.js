@@ -23,34 +23,13 @@ function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState({});
   const [user, setUser] = useState(false);
-  const [roomState, setRoomState] = useState();
-
-  // const updateRoomState = (change) => {
-  //   // setRoomState(...roomState, change)
-  //   // emit (room-updated) => updates
-  // }
-
-  // on(room change) invoke updateRoomState(change)
-
-  // in index.js on server
-  // on(room-updated) broadcast(room change) room change to room
+  const [inGameProfiles, setInGameProfiles] = useState();
 
 
-  const updateRoomState = (change) => {
-    // setRoomState(...roomState, change)
-    // emit (room-updated) => updates
-  }
-
-  // on(room change) invoke updateRoomState(change)
-
-  // in index.js on server
-  // on(room-updated) broadcast(room change) room change to room
-
-  // TODO:
-  // set roomState on host room
-  // update roomState on join room for every socket in room
-  // pass down roomState to Lobby and Board.js
-
+  socket.on('joined', data => {
+    setInGameProfiles(data)
+    console.log(inGameProfiles, 'ahahha')
+  })
 
   // USER LOGIN
   const getUserData = async (user) => {
@@ -103,13 +82,13 @@ function App() {
       {location.pathname !== '/game' ? <NavBar userInfo={userInfo} user={user} logout={logout} /> : null}
       <Routes>
         <Route path='/' element={<LandingPage userInfo={userInfo} user={user} />}></Route>
-        <Route path='/game' element={<GameRoom userInfo={userInfo} />}></Route>
+        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles}/>}></Route>
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
         <Route path='/instructions' element={<GameInstructions />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
-        <Route path='/lobby' element={<Lobby userInfo={userInfo}/>}></Route>
+        <Route path='/lobby' element={<Lobby inGameProfiles={inGameProfiles} userInfo={userInfo}/>}></Route>
         <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </>
