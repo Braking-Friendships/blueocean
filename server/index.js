@@ -306,7 +306,7 @@ io.on('connection', socket => {
   })
   socket.on('add-friend', user => {
     console.log('~~ ADD FRIEND ~~ ', user);
-    controller.updateUser(user)
+    controller.updateFriendList(user)
   })
   socket.on('edit-user', async user => {
     console.log('~~ EDIT USER ~~ ', user);

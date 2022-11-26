@@ -29,13 +29,17 @@ module.exports = {
     }
   },
   updateUser: async (user) => {
-    console.log("models: ", user);
     try {
       const filter = { firebase_id: user.firebaseId };
-      return await User.findOneAndUpdate(filter, user, {
-        new: true,
-        upsert: true,
-      });
+      return await User.findOneAndUpdate(filter, user);
+    } catch (error) {
+      return error;
+    }
+  },
+  updateFriendList: async (user) => {
+    try {
+      const filter = { firebase_id: user.firebase_id };
+      return await User.findOneAndUpdate(filter, user);
     } catch (error) {
       return error;
     }

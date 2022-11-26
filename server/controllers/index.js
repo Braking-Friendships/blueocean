@@ -33,6 +33,14 @@ module.exports.controller = {
       })
       .catch(error => console.log('Error creating user'));
   },
+  updateFriendList: (user) => {
+    return models.updateFriendList(user)
+      .then(result => {
+        console.log('User updated')
+        return result;
+      })
+      .catch(error => console.log('Error creating user'));
+  },
   getFriendData: (user) => {
     return models.getFriendData(user)
       .then(result => {
