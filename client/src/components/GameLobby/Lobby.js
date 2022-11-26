@@ -25,15 +25,15 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     }
   }
 
-  console.log(inGameProfiles, 'bla')
+  // console.log(inGameProfiles, 'bla')
   useEffect(() => {
     newMessage();
   }, [newMess])
 
   const navigate = useNavigate();
-  console.log(socket.id)
+  // console.log(socket.id)
 
-  console.log(inGameProfiles)
+  // console.log(inGameProfiles)
 
   socket.on('start-join', (room) => {
     navigate(`/game`)
@@ -43,19 +43,27 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     setHostRoom(roomId)
   })
 
+
   // socket.on('update-room', room_id => setRoomId(room_id))
 
   const loadGame = (room) => {
+    console.log('inGameProfiles in loadGame:', inGameProfiles)
     //replace with real users
     //min2 - max4
-    let users = [userInfo.username, 'b', 'c', 'd'];
+
+    let users = inGameProfiles[0].players.map((player) => {
+     return player.username
+    })
 
     let decks = createDeck(users);
 
     decks.playerOrder = users;
-
-    emitters.startGame(decks);
+    decks.room = inGameProfiles[0].room;
     socket.emit('join-game', room)
+
+    setTimeout(() => {
+      emitters.startGame(decks);
+    }, 10)
     navigate(`/game`)
   }
 

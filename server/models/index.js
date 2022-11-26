@@ -37,6 +37,7 @@ module.exports = {
     }
   },
   createRoom: async (room) => {
+    console.log('creating room', room)
     try {
       return await Room.create(room);
     } catch (error) {
@@ -44,8 +45,9 @@ module.exports = {
     }
   },
   addPlayer: async (room, player) => {
+    // player._id = false;
     try {
-      return await Room.updateOne({room: room}, { $push: {players: player}})
+      return await Room.updateOne({room: room}, { $addToSet: {players: player}})
     } catch {
       return error;
     }

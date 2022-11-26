@@ -5,7 +5,7 @@ import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
 import PickButtons from './PickButtons';
 
-socket.on('card-countdown', timer => console.log(timer))
+// socket.on('card-countdown', timer => console.log(timer))
 
 const Board = ({ myId }) => {
   const playerAreaRef = useRef();
@@ -32,9 +32,8 @@ const Board = ({ myId }) => {
   }, [firstLoad]);
 
   useEffect(() => {
-
     socket.on('game-state', gameState => {
-      console.log(gameState);
+      console.log('in useEffect in board.js', gameState);
       //replace 'c' with myId
       let myIdx = gameState.initialOrder.indexOf(myId);
       let playerCount = gameState.initialOrder.length;
@@ -68,7 +67,7 @@ const Board = ({ myId }) => {
       }
     })
     socket.on('show-future', (cards)=>{
-      console.log(cards)
+      // console.log(cards)
     })
   }, []);
 

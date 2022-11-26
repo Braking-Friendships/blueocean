@@ -10,6 +10,9 @@ const options = {
 };
 const { instrument } = require("@socket.io/admin-ui");
 const io = require('socket.io')(httpServer, options);
+const { router, socketRouter } = require('./routes');
+
+
 const ShortUniqueId = require('short-unique-id');
 const uid = new ShortUniqueId({ length: 6 });
 
@@ -56,7 +59,10 @@ io.on('connection', socket => {
   const emitState = (gameState) => {
     // emit each player's hand, other players hand count and count of deck to respective socket
     // currently emitting to single socket; grab other sockets from current room
-    socket.emit('game-state', gameState)
+    console.log('gamestate room in emitState', gameState.room)
+    // io.to(`${gameState.room}`).emit('game-state', gameState)
+    // socket.to(room).emit('receive-message', message);
+    io.of('/').to(gameState.room).emit('game-state', gameState)
   }
 
   const drawCard = () => {
@@ -90,7 +96,7 @@ io.on('connection', socket => {
       }, 1000);
 
       socket.on('defuse', (insertIdx, userCardIdxs) => {
-        console.log('defuse detected')
+        // console.log('defuse detected')
         clearInterval(bombTimer);
         socket.ekGameState[currPlayer].splice(userCardIdxs[0], 1);
 
@@ -109,7 +115,7 @@ io.on('connection', socket => {
     let currPlayer = socket.ekGameState.currentPlayer;
     const playerOrder = socket.ekGameState.playerOrder;
 
-    console.log('Player order before:', socket.ekGameState.playerOrder)
+    // console.log('Player order before:', socket.ekGameState.playerOrder)
 
     if (currPlayer !== playerOrder[playerOrder.length - 1]) {
       playerOrder.push(currPlayer);
@@ -117,8 +123,8 @@ io.on('connection', socket => {
     // Set current player
     socket.ekGameState.currentPlayer = playerOrder.shift();
     emitState(socket.ekGameState);
-    console.log('Player order after:', socket.ekGameState.playerOrder)
-    console.log('Current player:', socket.ekGameState.currentPlayer)
+    // console.log('Player order after:', socket.ekGameState.playerOrder)
+    // console.log('Current player:', socket.ekGameState.currentPlayer)
     // reset attack counter if attack wasn't played
   }
 
@@ -168,11 +174,11 @@ io.on('connection', socket => {
     const x = setInterval(() => {
       // if attack count > 0 and cardType !== attack {reset attack count}
       socket.emit('card-countdown', timer)
-      console.log(timer)
+      // console.log(timer)
       timer -= 1;
       if (timer < 0) {
         clearInterval(x);
-        console.log('timer up')
+        // console.log('timer up')
         switch (userCardType) {
           case 'attack':
             // increment attack count
@@ -216,7 +222,7 @@ io.on('connection', socket => {
             break;
           default:
             //I feel like there might not be a reason for a default
-            console.log('default');
+            // console.log('default');
             break;
         }
          // Update prevTurns
@@ -236,13 +242,13 @@ io.on('connection', socket => {
       })
       removeCard(userCardIdxs);
       emitState(socket.ekGameState);
-      console.log('cancelled play')
+      // console.log('cancelled play')
     });
   }
 
   // SOCKET LISTENERS
   socket.on('send-message', message => {
-    console.log(message)
+    // console.log(message)
   })
 
   // Socket listeners for chat components ------------
@@ -251,10 +257,10 @@ io.on('connection', socket => {
     if (room === '') {
       // socket.broadcast sends message to everyone except me
       socket.broadcast.emit('receive-message', message);
-      console.log(message);
+      // console.log(message);
     } else {
       // send message to room only
-      socket.to(room).emit('receive-message', message);;
+      socket.to(room).emit('receive-message', message);
     }
   });
   // socket listener for room joins
@@ -268,34 +274,34 @@ io.on('connection', socket => {
   // AUTH/USER DATA LISTENERS
   socket.on('get-user-data', async user => {
     const userData = await controller.getUserData(user)
-    console.log(userData)
+    // console.log(userData)
     socket.emit('send-user-data', userData)
   })
   socket.on('create-user', async user => {
-    console.log('~~ DATA FROM LOGIN ~~ ', user);
+    // console.log('~~ DATA FROM LOGIN ~~ ', user);
     const createUser = await controller.createUser(user)
     const userData = await controller.getUserData(user)
-    console.log(userData)
+    // console.log(userData)
     socket.emit('send-user-data', userData)
   })
 
   // PROFILE CHANGES
   socket.on('get-friend-data', async user => {
     const userData = await controller.getFriendData(user)
-    console.log(userData)
+    // console.log(userData)
     socket.emit('send-friend-data', userData)
   })
   socket.on('edit-user', async user => {
-    console.log('~~ EDIT USER ~~ ', user);
+    // console.log('~~ EDIT USER ~~ ', user);
     const createUser = await controller.updateUser(user)
     const userData = await controller.getUserData(user)
-    console.log(userData)
+    // console.log(userData)
     socket.emit('send-user-data', userData)
   })
   socket.on('post-edit-avatar', async user => {
     const createUser = await controller.updateUser(user)
     const userData = await controller.getUserData(user)
-    console.log(userData)
+    // console.log(userData)
     socket.emit('send-user-data', userData)
   })
 
@@ -317,24 +323,24 @@ io.on('connection', socket => {
   })
 
   socket.on('join-room', async userObj => {
-    console.log(userObj)
+    // console.log(userObj)
     socket.join(`${userObj.room}`)
     const sendUpdate = await controller.addPlayer(userObj.room, userObj)
     const roomData = await controller.getRoomData(userObj.room)
     io.in(`${userObj.room}`).emit('joined', roomData);
-    console.log('players in room after joining', io.of('/').adapter.rooms)
+    // console.log('players in room after joining', io.of('/').adapter.rooms)
   })
 
 
   socket.on('join-game', (room) => {
-    console.log(room, 'room')
+    // console.log(room, 'room')
     socket.to(`${room}`).emit('start-join', (room))
   })
 
 
   const rooms = io.of('/').adapter.rooms;
   const sids = io.of('/').adapter.sids;
-  console.log(rooms)
+  // console.log(rooms)
 
   // GAME STATE LISTENERS
   socket.on('start-game', async gameState => {
@@ -342,10 +348,10 @@ io.on('connection', socket => {
   })
   socket.on('end-game', () => {
     delete socket.ekGameState
-    console.log('Game over', socket.ekGameState)
+    // console.log('Game over', socket.ekGameState)
   })
   socket.on('play-card', (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => {
-    console.log('in play-card', insertIdx)
+    // console.log('in play-card', insertIdx)
     playCard(userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx)
   })
   socket.on('draw-card', (username) => {
@@ -354,7 +360,7 @@ io.on('connection', socket => {
     // socket.ekGameState.deck.splice(0, 1)
   })
   socket.on('player-loses', (username) => {
-    console.log(username, 'lost')
+    // console.log(username, 'lost')
   })
 })
 
