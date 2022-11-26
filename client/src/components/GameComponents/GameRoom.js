@@ -3,7 +3,6 @@ import Board from './Board'
 import Chat from '../ChatComponents/Chat';
 import {useState} from 'react';
 
-
 const GameRoom = (props) => {
   const [isOpen, setOpen] = useState(false);
 
@@ -22,9 +21,9 @@ const GameRoom = (props) => {
 
       <div className={!isOpen ? "absolute inset-y-20 right-10" : "hidden"}>
         {/* badge icon for messages */}
-        <span class="flex h-1 w-3 ml-[7.3rem]">
-          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+        <span className="flex h-1 w-3 ml-[7.3rem]">
+          <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
         </span>
         {/* button to open chat */}
         <button className="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" onClick={(e) => setOpen(!isOpen)}>
