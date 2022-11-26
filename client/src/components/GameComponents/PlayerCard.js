@@ -12,23 +12,16 @@ const PlayerCard = ({ card, playerArea, getStackPos, firstLoad, idx, playCard })
   }
 
   const checkPlay = (event, info) => {
-    // console.log(playerArea.y);
-    // console.log(info.point.x, info.point.y);
-
-
     setTimeout(() => {
       setIsDragging(false);
-
     }, 500);
+
     if(info.point.y < playerArea.y) {
       // emit card.type and other args to play-card
       // userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx
       // emitters.playCard('favor', [2], 'next', 1, '')
       // socket.emit('nope-played', 'cancel')
-
-      console.log('played card:', card.type);
       playCard(idx);
-      console.log('card info:', card);
     }
   }
   /*

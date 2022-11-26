@@ -1,7 +1,6 @@
 import React from "react";
 React.createContext();
 
-
 const bomb = {
   type: 'bomb',
   count: 4,
@@ -73,7 +72,8 @@ const cardTypes = [defuse, attack, skip, favor, nope, shuffle, future, tacocat, 
 
 let totalCount = 1;
 
-const createDeck = (playerCount) => {
+const createDeck = (usersArr) => {
+  const playerCount = usersArr.length;
 
   let deck = [];
 
@@ -102,7 +102,7 @@ const createDeck = (playerCount) => {
     }
   })
   deck = shuffleDeck(deck);
-  let x = finalHandsAndDeck(deck, playerCount);
+  let x = finalHandsAndDeck(deck, usersArr);
   return x;
 }
 
@@ -120,7 +120,9 @@ const shuffleDeck = (deck) => {
 }
 
 //CHANGE IMGs LATER
-const finalHandsAndDeck = (deck, playerCount) => {
+const finalHandsAndDeck = (deck, usersArr) => {
+  const playerCount = usersArr.length;
+
   let result = {};
 
   for(let i = 0; i < playerCount; i++) {
@@ -128,7 +130,7 @@ const finalHandsAndDeck = (deck, playerCount) => {
     for(let i = 0; i < 7; i++){
       hand.push(deck.pop());
     }
-    result[`hand${i+1}`] = hand;
+    result[usersArr[i]] = hand;
   }
 
   for(let i = 0; i < playerCount - 1; i++) {
