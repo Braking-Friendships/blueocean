@@ -23,10 +23,7 @@ function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState({});
   const [user, setUser] = useState(false);
-<<<<<<< HEAD
   const [roomState, setRoomState] = useState();
-=======
-  // const [roomState, setRoomState] = useState({roomId: id, players:[{userInfo}]});
 
   // help pass badge notifications
   const [chatMessages, setChatMessages] = useState(0);
@@ -40,18 +37,7 @@ function App() {
 
   // in index.js on server
   // on(room-updated) broadcast(room change) room change to room
->>>>>>> main
 
-  socket.on('update-room', roomId => {
-    // add socketId to userInfo
-    if (!roomState.roomId) {
-      // update roomState with userInfo and roomId
-    } else {
-      // push userInfo to players in roomState
-    }
-    socket.emit('room-state', roomState)
-    // emit the updated changes
-  })
 
   const updateRoomState = (change) => {
     // setRoomState(...roomState, change)

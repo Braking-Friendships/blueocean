@@ -32,6 +32,8 @@ const Lobby = ({ userInfo }) => {
     navigate(`/game`)
   })
 
+  socket.on('update-room', room_id => setRoomId(room_id))
+
   const loadGame = (room) => {
     let decks = createDeck(4);
     emitters.startGame(decks);
@@ -54,29 +56,8 @@ const Lobby = ({ userInfo }) => {
   // }, [props.chatMessages, isOpen])
 
   return (
-<<<<<<< HEAD
-    <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
-      <h1>{roomId}</h1>
-      <div>Game ID</div>
-      <div>Joined:{users?.[0]?.[0].room} id={users?.[0]?.socketId}</div>
-      {/* <icon src="" alt="pencil"/> */}
-    <br/>
-
-    <button onClick={() => {loadGame(users?.[0]?.[0].room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
-    <br/>
-    <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
-
-
-    <br/>
-    <button className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
-    <br/>
-      <div>Chat functions (imported separately)</div>
-    <br/>
-
-=======
     <>
       {/* CHAT STARTS HERE ----  */}
->>>>>>> main
       <div>
         <div className={isOpen ? 'bg-[#3D405B] h-130 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 mt-20 pb-0 rounded-l-lg': "hidden"}>
           <button type="button" className="absolute left-0 ml-3 mt-3 text-white" onClick={(e) => setOpen(!isOpen)}>X</button>
