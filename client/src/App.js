@@ -64,9 +64,9 @@ function App() {
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
     // console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
-    const user = { firebaseId: localStorage.getItem('u_id') };
+    const user = { firebase_id: localStorage.getItem('u_id') };
     const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
-    if (user.firebaseId) {
+    if (user.firebase_id) {
       getUserData(user);
       setUser(true);
     } else { setUserInfo({ username: guest, avatar: happyCat }) }

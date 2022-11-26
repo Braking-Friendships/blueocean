@@ -4,7 +4,7 @@ const { User, Room } = require("../db/db.js");
 module.exports = {
   createUser: async (user) => {
     try {
-      const filter = { firebase_id: user.firebaseId };
+      const filter = { firebase_id: user.firebase_id };
       return await User.findOneAndUpdate(filter, user, { upsert: true });
     } catch (error) {
       return error;
@@ -13,7 +13,7 @@ module.exports = {
   getUserData: async (user) => {
     console.log("user: ", user);
     try {
-      const filter = { firebase_id: user.firebaseId };
+      const filter = { firebase_id: user.firebase_id };
       return await User.find(filter);
     } catch (error) {
       return error;
@@ -30,7 +30,7 @@ module.exports = {
   },
   updateUser: async (user) => {
     try {
-      const filter = { firebase_id: user.firebaseId };
+      const filter = { firebase_id: user.firebase_id };
       return await User.findOneAndUpdate(filter, user);
     } catch (error) {
       return error;
@@ -82,7 +82,7 @@ module.exports = {
   // CREATE FAKE DUMMY DATA
   createDummyData: async (user) => {
     try {
-      const filter = { firebase_id: user.firebaseId };
+      const filter = { firebase_id: user.firebase_id };
       // await User.drop();
       await User.findOneAndUpdate(filter, user, { upsert: true });
       return;
