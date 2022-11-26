@@ -28,7 +28,7 @@ function App() {
 
   socket.on('joined', data => {
     setInGameProfiles(data)
-    console.log(inGameProfiles)
+    console.log(inGameProfiles, 'ahahha')
   })
 
   // USER LOGIN
@@ -88,7 +88,7 @@ function App() {
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
         <Route path='/instructions' element={<GameInstructions />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
-        <Route path='/lobby' element={<Lobby inGameProfiles={inGameProfiles}/>}></Route>
+        <Route path='/lobby' element={<Lobby inGameProfiles={inGameProfiles} userInfo={userInfo}/>}></Route>
         <Route path='/chat' element={<Chat />}></Route>
       </Routes>
     </>

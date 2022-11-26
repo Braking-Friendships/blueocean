@@ -26,7 +26,10 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
 
     x = stackPosition.x - x;
     let y = stackPosition.bottom - bottom;
-    if(side === 'left' || side === 'right') {
+    if(side === 'top'){
+      console.log('stackPosition', )
+    }
+    if(side === 'left' || side === 'right' || side==='top') {
       y = stackPosition.top - top;
     }
     return {x, y}
