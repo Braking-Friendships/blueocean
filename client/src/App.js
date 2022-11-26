@@ -23,7 +23,7 @@ function App() {
   const location = useLocation();
   const [userInfo, setUserInfo] = useState({});
   const [user, setUser] = useState(false);
-  // const [roomState, setRoomState] = useState({roomId: id, players:[{userInfo}]});
+  const [roomState, setRoomState] = useState();
 
   // const updateRoomState = (change) => {
   //   // setRoomState(...roomState, change)
@@ -45,6 +45,11 @@ function App() {
 
   // in index.js on server
   // on(room-updated) broadcast(room change) room change to room
+
+  // TODO:
+  // set roomState on host room
+  // update roomState on join room for every socket in room
+  // pass down roomState to Lobby and Board.js
 
 
   // USER LOGIN
