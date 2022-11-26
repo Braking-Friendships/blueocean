@@ -10,6 +10,9 @@ const options = {
 };
 const { instrument } = require("@socket.io/admin-ui");
 const io = require('socket.io')(httpServer, options);
+const { router, socketRouter } = require('./routes');
+
+
 const ShortUniqueId = require('short-unique-id');
 const uid = new ShortUniqueId({ length: 6 });
 
