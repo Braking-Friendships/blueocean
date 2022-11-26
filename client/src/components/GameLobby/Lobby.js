@@ -40,18 +40,9 @@ const Lobby = ({ userInfo }) => {
   }
 
 
-  // chat badge code --------------
-  // state for opening chat
+  // state for opening chat -----
   const [isOpen, setOpen] = useState(false);
-  // const [newMess, setNewMess] = useState(true);
-  // const [badge, setBadge] = useState(0);
-  // const [count, setCount] = useState(0);
 
-  // useEffect(() => {
-  //   // setBadge(props.chatMessages - count)
-  //   // setCount(props.chatMessages);
-  //   // setNewMess(!newMess);
-  // }, [props.chatMessages, isOpen])
 
   return (
     <>
@@ -67,10 +58,14 @@ const Lobby = ({ userInfo }) => {
       </div>
 
       <div className={!isOpen ? "absolute inset-y-20 right-10" : "hidden"}>
+        {/* badge icon for messages */}
+        <span class="flex h-1 w-3 ml-[7.3rem]">
+          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+        </span>
+        {/* button to open chat */}
         <button className="inline-block px-6 py-2.5 bg-[#3D405B] text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-[#4b4e6f] hover:shadow-lg" type="button" onClick={(e) => setOpen(!isOpen)}>
           <span className="mr-2">Open Chat</span>
-          {/* {!newMess ? <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">!</span> : ''} */}
-          <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">!</span>
         </button>
       </div>
       {/* CHAT ENDS HERE --- */}
