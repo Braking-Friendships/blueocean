@@ -46,7 +46,14 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
   // socket.on('update-room', room_id => setRoomId(room_id))
 
   const loadGame = (room) => {
-    let decks = createDeck(4);
+    //replace with real users
+    //min2 - max4
+    let users = [userInfo.username, 'b', 'c', 'd'];
+
+    let decks = createDeck(users);
+
+    decks.playerOrder = users;
+
     emitters.startGame(decks);
     socket.emit('join-game', room)
     navigate(`/game`)

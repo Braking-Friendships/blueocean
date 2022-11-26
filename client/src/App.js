@@ -82,7 +82,7 @@ function App() {
       {location.pathname !== '/game' ? <NavBar userInfo={userInfo} user={user} logout={logout} /> : null}
       <Routes>
         <Route path='/' element={<LandingPage userInfo={userInfo} user={user} />}></Route>
-        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles}/>}></Route>
+        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles} userInfo={userInfo} />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
