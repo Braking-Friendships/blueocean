@@ -11,13 +11,13 @@ const Chat = (props) => {
   socket.on('receive-message', message => {
     handleMsgSubmit(message);
     // console.log(message, 'receive');
-    console.log('MESSAGE RECEIVE ID: ', socket.id);
+    // console.log('MESSAGE RECEIVE ID: ', socket.id);
   })
 
   // sends messages to everyone or to a specific user id
   const handleBroadSubmit = (message, room) => {
     emitters.handleBroadSubmit(message, room);
-    console.log('MESSAGE SENT ID: ', socket.id);
+    // console.log('MESSAGE SENT ID: ', socket.id);
   }
   let roomy = '';
   // add users to rooms -----
@@ -31,14 +31,14 @@ const Chat = (props) => {
   // ---------------------------------------------------------
 
   let date = new Date().toISOString();
-  console.log(date, 'ISO')
+  // console.log(date, 'ISO')
 
   // dummy/test data
   const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'yo', date: date}, {username: 'Josh', isItMe: false, message: 'wassup', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hi', date: date}, {username: 'Fernando', isItMe: true, message: 'yoyo', date: date}, {username: 'Hieu', isItMe: false, message: 'hey', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'whats up', date: date}])
 
   const handleMsgSubmit = (message, isItMe = false) => {
     let me = isItMe;
-    console.log(me);
+    // console.log(me);
     let msg = {username: 'Fernando', isItMe: me, message: message, date: date};
     setMessages([...messages, msg]);
     props.setNewMess([...messages, msg]);

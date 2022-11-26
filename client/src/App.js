@@ -29,7 +29,7 @@ function App() {
 
   socket.on('joined', data => {
     setInGameProfiles(data)
-    console.log(inGameProfiles, 'ahahha')
+    console.log(inGameProfiles, 'in game profiles in app')
   })
 
   // USER LOGIN
@@ -42,7 +42,7 @@ function App() {
 
   // USER SIGN-UP
   const createNewUser = async (user) => {
-    console.log('NEW USER CREATED: ', user);
+    // console.log('NEW USER CREATED: ', user);
     emitters.createUser(user);
     setUser(true);
   };
@@ -64,7 +64,7 @@ function App() {
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
     // console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
-    const user = { firebase_id: localStorage.getItem('u_id') };
+    const user = { firebaseId: localStorage.getItem('u_id') };
     const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
     if (user.firebase_id) {
       getUserData(user);
@@ -83,7 +83,7 @@ function App() {
       {location.pathname !== '/game' ? <NavBar userInfo={userInfo} user={user} logout={logout} /> : null}
       <Routes>
         <Route path='/' element={<LandingPage userInfo={userInfo} user={user} />}></Route>
-        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles}/>}></Route>
+        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles} userInfo={userInfo} />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
