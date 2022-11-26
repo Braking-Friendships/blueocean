@@ -18,7 +18,7 @@ const ViewProfile = ({ userInfo }) => {
   const changeProfileView = async (e) => {
     await socket.emit('get-friend-data', { username: e.target.textContent });
     await socket.on('send-friend-data', data => {
-      console.log('data ~~ ', data);
+      // console.log('data ~~ ', data);
       setFriendProfile(data[0]);
     })
     await setUserProfileState(false);

@@ -28,12 +28,12 @@ function App() {
 
   socket.on('joined', data => {
     setInGameProfiles(data)
-    console.log(inGameProfiles, 'in game profiles')
+    console.log(inGameProfiles, 'in game profiles in app')
   })
 
   // USER LOGIN
   const getUserData = async (user) => {
-    console.log('LOGIN GET USER DATA: ', user);
+    // console.log('LOGIN GET USER DATA: ', user);
     emitters.getUserData(user);
     setUser(true);
   };
@@ -41,7 +41,7 @@ function App() {
 
   // USER SIGN-UP
   const createNewUser = async (user) => {
-    console.log('NEW USER CREATED: ', user);
+    // console.log('NEW USER CREATED: ', user);
     emitters.createUser(user);
     setUser(true);
   };
@@ -62,7 +62,7 @@ function App() {
 
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
-    console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
+    // console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
     const user = { firebaseId: localStorage.getItem('u_id') };
     const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
     if (user.firebaseId) {
@@ -71,11 +71,11 @@ function App() {
     } else { setUserInfo({ username: guest, avatar: happyCat }) }
   }, [user]);
 
-  useEffect(() => {
-    console.log('~~~~ USER/GUEST ~~~~');
-    console.log('user: ', user, userInfo);
-    console.log('SOCKET~~ ', socket.id)
-  }, [userInfo])
+  // useEffect(() => {
+  //   // console.log('~~~~ USER/GUEST ~~~~');
+  //   // console.log('user: ', user, userInfo);
+  //   // console.log('SOCKET~~ ', socket.id)
+  // }, [userInfo])
 
   return (
     <>
