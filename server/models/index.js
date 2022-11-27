@@ -77,6 +77,13 @@ module.exports = {
       return error;
     }
   },
+  getAllRooms: async () => {
+    try {
+      return await Room.find();
+    } catch (error) {
+      return error;
+    }
+  },
 
   // CREATE FAKE DUMMY DATA
   createDummyData: async (user) => {

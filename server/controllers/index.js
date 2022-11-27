@@ -73,6 +73,13 @@ module.exports.controller = {
       })
       .catch(error => console.log(error));
   },
+  getAllRooms: () => {
+    return models.getAllRooms()
+      .then(result => {
+        return result;
+      })
+      .catch(error => console.log(error));
+  },
 
 
 
