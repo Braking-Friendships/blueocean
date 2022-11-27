@@ -30,13 +30,13 @@ const GameRoom = ({ userInfo }) => {
     <>
       <div className={isOpen ? 'grid grid-cols-5 bg-[#3D405B]': ""}>
         <Board myId={userInfo.username} />
-        <div className={isOpen ? 'h-170 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 pt-0 pb-0': "hidden"}>
+        <div className={isOpen ? 'h-101 w-[20vw] max-w-sm flex flex-col flex-grow absolute right-0 px-15 pt-0 pb-0 border-l-2 border-black': "hidden"}>
           <button type="button" className="absolute left-0 ml-3 mt-3 text-white" onClick={(e) => {
           setOpen(!isOpen);
           newMessage();
           }}>X</button>
-          <h5 className="absolute ml-48 mt-10 text-white">Chat</h5>
-          <div className="h-170 flex flex-col flex-grow mt-10">
+          <h5 className="absolute ml-[9vw] mt-10 text-white">Chat</h5>
+          <div className="h-101 flex flex-col flex-grow mt-10">
             <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} />
           </div>
         </div>
