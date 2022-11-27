@@ -62,42 +62,12 @@ The overview section includes an image gallery with a sidebar that contains the 
   - Install dependencies in Server:
     1. cd into blueocean/server
     2. `npm install`
+  - Run Servers:
+    1. In client - `npm run start`
+        - client run on PORT 3000
+    2. In server - `npm run server`
+        - server runs on PORT 5001
 
-  3. Create a .gitignore file and place in:
-    -node_modules
-    -client/dist
-    -.env
-
-  4. `npm run server-dev`
-
-  5. `npm run client-dev`:
-    -listens on PORT set in `.env` or 3000
-
-  6. Launch site: http://localhost:3000
+  - Launch site: http://localhost:3000
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-# Server
-
-cd into server
-npm i
-npm run server
--runs on localhost:5001
-
-# Client
-
-cd into client
-npm i
-npm start
--runs on localhost:3000
-
-
-
-# Socket setup
-
-## Client
-npm i socket.io-client
-
-## Server
-npm i socket.io
