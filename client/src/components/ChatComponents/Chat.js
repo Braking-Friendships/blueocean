@@ -39,7 +39,7 @@ const Chat = (props) => {
   const handleMsgSubmit = (message, isItMe = false) => {
     let me = isItMe;
     // console.log(me);
-    let msg = {username: 'Fernando', isItMe: me, message: message, date: date};
+    let msg = {username: props.userInfo.username, isItMe: me, message: message, date: date};
     setMessages([...messages, msg]);
     props.setNewMess([...messages, msg]);
   }
