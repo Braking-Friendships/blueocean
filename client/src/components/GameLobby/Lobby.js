@@ -77,7 +77,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <>
       {/* CHAT STARTS HERE ----  */}
       <div>
-        <div className={isOpen ? 'bg-[#3D405B] h-100 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 mt-20 pb-0 rounded-l-lg border-[0.5px] border-black': "hidden"}>
+        <div className={isOpen ? 'animate-slide-in-right bg-[#3D405B] h-100 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 mt-20 pb-0 rounded-l-lg border-[0.5px] border-black': "hidden"}>
           <button type="button" className="absolute left-0 ml-3 mt-3 text-white" onClick={(e) => {
           setOpen(!isOpen);
           newMessage();
