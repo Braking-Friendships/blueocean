@@ -43,12 +43,9 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     setHostRoom(roomId)
   })
 
-  socket.on('game-over', (winner) => {
-    //Update winners total win count
-
+  socket.on('return-lobby', () => {
     navigate('/lobby');
   })
-
   // socket.on('update-room', room_id => setRoomId(room_id))
 
   const loadGame = (room) => {
@@ -110,11 +107,13 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       {inGameProfiles ? <div>Game ID: {inGameProfiles?.[0]?.room}</div> : <div>Game ID: {hostRoom}</div>}
       <br/>
-
-    <button onClick={() => {loadGame(inGameProfiles?.[0].room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
+        {console.log(socket.id)}
+    <button onClick={() => {loadGame(inGameProfiles?.[0].room)}} className={`bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline `}
+    hidden={socket.id !== inGameProfiles?.[0].host ? true : false}
+    >Ex Kittens</button>
     <br/>
-    <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
-    <br/>
+    {/* <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
+    <br/> */}
     <button onClick={() => {leaveGame()}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
     <br/>
       <div>Chat functions (imported separately)</div>
