@@ -414,6 +414,7 @@ io.on('connection', socket => {
   socket.on('nope-played', (user, userCardIdxs) => {
     io.of('/').to(socket.ekGameState.room).emit('nope-effect');
     socket.ekGameState.prevTurns.push({
+      origin: user,
       userCardType: 'nope',
       userCardIdxs: userCardIdxs ?? [],
       affectedUser: '',
