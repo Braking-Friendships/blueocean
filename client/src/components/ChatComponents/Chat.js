@@ -59,7 +59,7 @@ const Chat = (props) => {
 
   return (
       // {/* <!-- Component Start --> */}
-      <div className="flex flex-col flex-grow w-screen max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
+      <div className="flex flex-col flex-grow w-full max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
         <div id='chatContainer' className="flex flex-col flex-grow h-98 p-4 overflow-y-auto scroll-smooth">
 
           {/* <!-- chat messages --> */}
