@@ -324,6 +324,7 @@ io.on('connection', socket => {
   })
 
 
+
   // ROOM LISTENERS
   socket.on('host-room', userObj => {
     const roomId = uid();
@@ -338,7 +339,6 @@ io.on('connection', socket => {
     socket.emit('update-room', roomId)
     // console.log('Rooms available', io.of('/').adapter.rooms)
   })
-
   socket.on('join-room', async userObj => {
     // console.log(userObj)
     socket.join(`${userObj.room}`)
@@ -352,6 +352,12 @@ io.on('connection', socket => {
   socket.on('join-game', (room) => {
     // console.log(room, 'room')
     socket.to(`${room}`).emit('start-join', (room))
+  })
+  socket.on('get-all-rooms', async cb => {
+    const allRooms = await controller.getAllRooms()
+    console.log(allRooms, 'ALL ROOMS')
+    cb(allRooms)
+    // socket.emit('send-user-data', userData)
   })
 
 
