@@ -43,12 +43,9 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     setHostRoom(roomId)
   })
 
-  socket.on('game-over', (winner) => {
-    //Update winners total win count
-
+  socket.on('return-lobby', () => {
     navigate('/lobby');
   })
-
   // socket.on('update-room', room_id => setRoomId(room_id))
 
   const loadGame = (room) => {
@@ -80,14 +77,14 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <>
       {/* CHAT STARTS HERE ----  */}
       <div>
-        <div className={isOpen ? 'bg-[#3D405B] h-130 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 mt-20 pb-0 rounded-l-lg': "hidden"}>
+        <div className={isOpen ? 'bg-[#3D405B] h-100 w-screen max-w-sm flex flex-col flex-grow absolute right-0 px-15 mt-20 pb-0 rounded-l-lg border-[0.5px] border-black': "hidden"}>
           <button type="button" className="absolute left-0 ml-3 mt-3 text-white" onClick={(e) => {
           setOpen(!isOpen);
           newMessage();
           }}>X</button>
-          <h5 className="absolute ml-48 mt-10 text-white">Chat</h5>
-          <div className="h-130 flex flex-col flex-grow mt-10">
-            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} />
+          <h5 className="absolute ml-[12.5vw] mt-10 text-white">Chat</h5>
+          <div className="h-100 flex flex-col flex-grow mt-10">
+            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} userInfo={userInfo} />
           </div>
         </div>
       </div>
@@ -110,11 +107,13 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       {inGameProfiles ? <div>Game ID: {inGameProfiles?.[0]?.room}</div> : <div>Game ID: {hostRoom}</div>}
       <br/>
-
-    <button onClick={() => {loadGame(inGameProfiles?.[0].room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ex Kittens</button>
+        {console.log(socket.id)}
+    <button onClick={() => {loadGame(inGameProfiles?.[0].room)}} className={`bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline `}
+    hidden={socket.id !== inGameProfiles?.[0].host ? true : false}
+    >Ex Kittens</button>
     <br/>
-    <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
-    <br/>
+    {/* <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
+    <br/> */}
     <button onClick={() => {leaveGame()}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
     <br/>
       <div>Chat functions (imported separately)</div>

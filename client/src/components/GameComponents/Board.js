@@ -3,10 +3,12 @@ import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
 import { socket, emitters } from '../../socket.js';
 import PickButtons from './PickButtons';
+import CardDisplay from './CardDisplay';
+import GameOverScreen from './GameOverScreen';
 
 // socket.on('card-countdown', timer => console.log(timer))
 
-const Board = ({ myId }) => {
+const Board = ({ myId, userInfo }) => {
   const playerAreaRef = useRef();
   const stackRef = useRef();
 
@@ -26,6 +28,8 @@ const Board = ({ myId }) => {
   const [cardTimer, setCardTimer] = useState(null);
   const [pickSteal, setPickSteal] = useState(null);
   // pickSteal: [cardIdxs]
+  const [futureCards, setFutureCards] = useState(null);
+  const [gameOver, setGameOver] = useState(null);
 
   useEffect(() => {
     setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
@@ -56,10 +60,10 @@ const Board = ({ myId }) => {
       setPlayerOrder(gameState.playerOrder);
       setInitialOrder(gameState.initialOrder);
       setCurrentPlayer(gameState.currentPlayer);
-      let card = gameState.prevTurns[gameState.prevTurns.length - 1]?.userCardType;
+      let turn = gameState.prevTurns[gameState.prevTurns.length - 1];
 
-      if(card) {
-        setLastCardPlayed({type: card, img: card, id: 100});
+      if(turn) {
+        setLastCardPlayed({type: turn.userCardType, img: turn.userCardType, id: 100, affected: turn.affectedUser, origin: turn.origin});
       }
     });
 
@@ -70,6 +74,7 @@ const Board = ({ myId }) => {
     socket.on('bomb-countdown', (timer) => {
       if(timer === 0) {
         setBombTimer(null);
+        setBOMB(null);
       } else {
         setBombTimer(timer);
       }
@@ -82,13 +87,28 @@ const Board = ({ myId }) => {
       }
     })
     socket.on('show-future', (cards)=>{
-      console.log(cards)
+      setFutureCards(cards);
     })
     socket.on('defuse', () => {
       setBombTimer(null);
       setBOMB(null);
     });
-    socket.on('nope-effect', () => emitters.clearInterval());
+    socket.on('nope-effect', () => {
+      setCardTimer(null);
+      emitters.clearInterval()
+    });
+    socket.on('game-over', (winner) => {
+      //Update winners total win count
+      let tempUser = {...userInfo};
+      setGameOver(winner);
+      if(tempUser.total_games !== undefined){
+        if(myId === winner) {
+          tempUser.total_wins++;
+        }
+        tempUser.total_games++;
+      }
+      emitters.editUserInfo(tempUser);
+    })
   }, []);
 
   useEffect(() => {
@@ -103,7 +123,6 @@ const Board = ({ myId }) => {
     let tempCard = tempHand.splice(idx, 1)[0];
 
     if(tempCard.type === 'nope') {
-      console.log('me card timer', cardTimer);
       if(cardTimer !== null) {
         emitters.nope(myId, [idx]);
         setCardTimer(null);
@@ -111,8 +130,6 @@ const Board = ({ myId }) => {
       } else {
         return;
       }
-    } else if(cardTimer !== null) {
-      return;
     } else if(currentPlayer !== myId) {
       return;
     } else if(tempCard.type === 'defuse'){
@@ -122,11 +139,13 @@ const Board = ({ myId }) => {
       setBOMB(null);
       emitters.defuse(Math.floor(Math.random()*stackL), [idx]);
       return;
+    } else if(cardTimer !== null || bombTimer !== null) {
+      return;
     }
 
     setCardTimer(6);
     if (tempCard.type === 'favor') {
-      // pickPlayer();
+      setPickSteal({ card: tempCard, idxs: [idx] });
     } else if(tempCard.type.includes('cat')) {
       //if type is cat, ask for another cat
       let secondIdx = findMatch(tempCard.type, idx);
@@ -134,6 +153,7 @@ const Board = ({ myId }) => {
         setPickSteal({ card: tempCard, idxs: [idx, secondIdx] });
       } else {
         //Maybe show an error(needs 2 copies)
+        setCardTimer(null);
         return;
       }
     } else {
@@ -162,7 +182,7 @@ const Board = ({ myId }) => {
   }
 
   const drawCard = () => {
-    if(currentPlayer === myId) {
+    if(currentPlayer === myId && cardTimer === null && bombTimer === null) {
       emitters.drawCard();
     }
   }
@@ -173,6 +193,10 @@ const Board = ({ myId }) => {
       cards.push(<OtherCard key={i} side={side} getStackPos={getStackPos} firstLoad={firstLoad} idx={i} />)
     }
     return cards;
+  }
+
+  const closeFuture = () => {
+    setFutureCards(null);
   }
 
   return (
@@ -227,6 +251,13 @@ const Board = ({ myId }) => {
         >
           {cardTimer ? <div>Card Timer: {cardTimer}</div> : null}
           {bombTimer ? <div className='text-red-600'>Bomb Timer: {bombTimer}</div> : null}
+          {lastCardPlayed
+          && (
+          lastCardPlayed.type === 'bomb'
+          ? <div>{lastCardPlayed.origin} blew up!</div>
+          : <div>
+            {lastCardPlayed.origin} played {lastCardPlayed.type} {lastCardPlayed.affected && `on ${lastCardPlayed.affected}`}
+          </div>)}
           <div>Current Player:</div>
           <div>{currentPlayer}</div>
           <div> ---> </div>
@@ -257,6 +288,8 @@ const Board = ({ myId }) => {
         {displayOtherHands(p4L, 'right')}
       </div>}
       {pickSteal ? <PickButtons steal={steal} pickSteal={pickSteal} playerOrder={playerOrder} currentPlayer={currentPlayer} /> : null}
+      {futureCards ? <CardDisplay futureCards={futureCards} closeFuture={closeFuture} /> : null}
+      {gameOver ? <GameOverScreen winner={gameOver} /> : null}
     </div>
   )
 }
