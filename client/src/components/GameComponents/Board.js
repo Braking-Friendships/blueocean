@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PlayerCard from './PlayerCard';
 import OtherCard from './OtherCard';
-import createDeck from '../../Tools/createDeck';
 import { socket, emitters } from '../../socket.js';
 import PickButtons from './PickButtons';
 
@@ -19,13 +18,14 @@ const Board = ({ myId }) => {
   const [p4L, setP4L] = useState(null);
   const [stackL, setStackL] = useState(52);
   const [playerOrder, setPlayerOrder] = useState(null);
+  const [initialOrder, setInitialOrder] = useState(null);
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [lastCardPlayed, setLastCardPlayed] = useState(null);
   const [BOMB, setBOMB] = useState(null);
   const [bombTimer, setBombTimer] = useState(null);
+  const [cardTimer, setCardTimer] = useState(null);
   const [pickSteal, setPickSteal] = useState(null);
   // pickSteal: [cardIdxs]
-  const [nopeable, setNopeable] = useState(false);
 
   useEffect(() => {
     setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
@@ -33,6 +33,7 @@ const Board = ({ myId }) => {
 
   useEffect(() => {
     socket.on('game-state', gameState => {
+      emitters.updateSocket(gameState);
       console.log('in useEffect in board.js', gameState);
       //replace 'c' with myId
       let myIdx = gameState.initialOrder.indexOf(myId);
@@ -41,15 +42,25 @@ const Board = ({ myId }) => {
       setMyHand(gameState[gameState.initialOrder[myIdx]]);
 
       if(playerCount === 2) {
-        setP3L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]].length);
+        setP3L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]]?.length);
+      } else if (playerCount === 3) {
+        setP2L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]]?.length);
+        setP3L(gameState[gameState.initialOrder[(myIdx+2) % playerCount]]?.length);
       } else {
-        setP2L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]].length);
-        setP3L(gameState[gameState.initialOrder[(myIdx+2) % playerCount]].length);
-        setP4L(gameState[gameState.initialOrder[(myIdx+3) % playerCount]].length);
+        setP2L(gameState[gameState.initialOrder[(myIdx+1) % playerCount]]?.length);
+        setP3L(gameState[gameState.initialOrder[(myIdx+2) % playerCount]]?.length);
+        setP4L(gameState[gameState.initialOrder[(myIdx+3) % playerCount]]?.length);
       }
+
       setStackL(gameState.deck.length);
       setPlayerOrder(gameState.playerOrder);
+      setInitialOrder(gameState.initialOrder);
       setCurrentPlayer(gameState.currentPlayer);
+      let card = gameState.prevTurns[gameState.prevTurns.length - 1]?.userCardType;
+
+      if(card) {
+        setLastCardPlayed({type: card, img: card, id: 100});
+      }
     });
 
     socket.on('bomb', (newCard, gameState) => {
@@ -57,18 +68,27 @@ const Board = ({ myId }) => {
       setBOMB(newCard);
     });
     socket.on('bomb-countdown', (timer) => {
-      setBombTimer(timer);
+      if(timer === 0) {
+        setBombTimer(null);
+      } else {
+        setBombTimer(timer);
+      }
     })
     socket.on('card-countdown', (timer) => {
-      if(timer === 0){
-        setNopeable(false);
+      if(timer === 0) {
+        setCardTimer(null);
       } else {
-        setNopeable(true);
+        setCardTimer(timer);
       }
     })
     socket.on('show-future', (cards)=>{
-      // console.log(cards)
+      console.log(cards)
     })
+    socket.on('defuse', () => {
+      setBombTimer(null);
+      setBOMB(null);
+    });
+    socket.on('nope-effect', () => emitters.clearInterval());
   }, []);
 
   useEffect(() => {
@@ -83,27 +103,35 @@ const Board = ({ myId }) => {
     let tempCard = tempHand.splice(idx, 1)[0];
 
     if(tempCard.type === 'nope') {
-      if(nopeable) {
-        emitters.nope('nope', [idx]);
+      console.log('me card timer', cardTimer);
+      if(cardTimer !== null) {
+        emitters.nope(myId, [idx]);
+        setCardTimer(null);
+        return;
       } else {
         return;
       }
+    } else if(cardTimer !== null) {
+      return;
     } else if(currentPlayer !== myId) {
       return;
-    }
-    else if(tempCard.type === 'defuse'){
+    } else if(tempCard.type === 'defuse'){
       if(BOMB === null) {
         return;
       }
       setBOMB(null);
       emitters.defuse(Math.floor(Math.random()*stackL), [idx]);
-    } else if (tempCard.type === 'favor') {
+      return;
+    }
+
+    setCardTimer(6);
+    if (tempCard.type === 'favor') {
       // pickPlayer();
     } else if(tempCard.type.includes('cat')) {
       //if type is cat, ask for another cat
       let secondIdx = findMatch(tempCard.type, idx);
       if(secondIdx !== null) {
-        setPickSteal([idx, secondIdx]);
+        setPickSteal({ card: tempCard, idxs: [idx, secondIdx] });
       } else {
         //Maybe show an error(needs 2 copies)
         return;
@@ -128,8 +156,8 @@ const Board = ({ myId }) => {
     return null;
   }
 
-  const steal = (userCardIdxs, opponent) => {
-    emitters.playCard('steal', userCardIdxs, opponent);
+  const steal = (userCardType, userCardIdxs, opponent) => {
+    emitters.playCard(userCardType, userCardIdxs, opponent);
     setPickSteal(null);
   }
 
@@ -153,10 +181,20 @@ const Board = ({ myId }) => {
       <div id="left-player" className='row-start-2 row-end-5 col-start-1 col-end-2 flex flex-col justify-center items-center '>
         {displayOtherHands(p2L, 'left')}
       </div>}
+      <div
+      className='row-start-3 row-end-4 col-start-2 col-end-3 flex justify-center items-start text-2xl'
+      >
+        {initialOrder !== null && (initialOrder.length > 2 ? initialOrder[(initialOrder.indexOf(myId) + 1) % initialOrder.length] : null)}
+      </div>
       <div id="top-player" className='row-start-1 row-end-2 col-start-3 col-end-5  flex justify-center'>
         {displayOtherHands(p3L, 'top')}
       </div>
-      <div id="middle-stack" className='row-start-3 row-end-4 col-start-2 col-end-6 flex justify-center items-end gap-7'>
+      <div
+      className='row-start-2 row-end-3 col-start-3 col-end-5 flex justify-center items-start text-2xl'
+      >
+        {initialOrder !== null && (initialOrder.length === 2 ? initialOrder[(initialOrder.indexOf(myId) + 1) % initialOrder.length] : initialOrder[(initialOrder.indexOf(myId) + 2) % initialOrder.length])}
+      </div>
+      <div id="middle-stack" className='row-start-3 row-end-4 col-start-3 col-end-5 flex justify-center items-end gap-7 bg-white'>
         {BOMB ? <PlayerCard key={BOMB.id} card={BOMB} /> : null}
 
         <button
@@ -183,6 +221,21 @@ const Board = ({ myId }) => {
           backgroundRepeat: 'no-repeat'
         }}
         ></div>}
+
+        <div
+        className='bg-green-300 rounded-md flex flex-col justify-center items-center h-full p-10'
+        >
+          {cardTimer ? <div>Card Timer: {cardTimer}</div> : null}
+          {bombTimer ? <div className='text-red-600'>Bomb Timer: {bombTimer}</div> : null}
+          <div>Current Player:</div>
+          <div>{currentPlayer}</div>
+          <div> ---> </div>
+        </div>
+      </div>
+      <div
+        className='row-start-4 row-end-5 col-start-2 col-end-6 flex justify-center items-end text-2xl p-20'
+      >
+        {myId}
       </div>
       <div
       id="bottom-player"
@@ -193,6 +246,11 @@ const Board = ({ myId }) => {
         {myHand?.map((card, i) =>
           <PlayerCard key={card.id} card={card} playerArea={playerArea} firstLoad={firstLoad} getStackPos={getStackPos} idx={i} playCard={playCard} />
         )}
+      </div>
+      <div
+      className='row-start-3 row-end-4 col-start-5 col-end-6 flex justify-center items-start text-2xl'
+      >
+        {initialOrder !== null && (initialOrder.length === 4 ? initialOrder[(initialOrder.indexOf(myId) + 3) % initialOrder.length] : null)}
       </div>
       {p4L &&
       <div id="right-player" className='row-start-2 row-end-5 col-start-6 col-end-7 flex flex-col justify-center items-center'>

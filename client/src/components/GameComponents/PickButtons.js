@@ -3,7 +3,7 @@ import React from 'react'
 const PickButtons = ({ steal, pickSteal, playerOrder, currentPlayer }) => {
 
   const onClick = (opponent) => {
-    steal(pickSteal, opponent);
+    steal(pickSteal.card.type, pickSteal.idxs, opponent);
   }
   console.log('-->', playerOrder, currentPlayer)
   return (

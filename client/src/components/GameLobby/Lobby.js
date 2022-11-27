@@ -43,6 +43,11 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     setHostRoom(roomId)
   })
 
+  socket.on('game-over', (winner) => {
+    //Update winners total win count
+
+    navigate('/lobby');
+  })
 
   // socket.on('update-room', room_id => setRoomId(room_id))
 
@@ -117,7 +122,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
 
         <div className ='flex flex-row justify-center items-center'>
           {inGameProfiles ? (inGameProfiles?.[0]?.players.map((player) =>
-          <div className ='flex flex-col justify-center items-center'>
+          <div key={player.username} className ='flex flex-col justify-center items-center'>
             <h4>{player.username}</h4>
             <img src={player.avatar} className='pointer-events-none w-52 h-auto rounded-full' alt="avatar card" />
           </div>)) :
