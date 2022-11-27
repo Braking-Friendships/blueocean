@@ -33,15 +33,8 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
   const navigate = useNavigate();
   console.log(socket.id)
 
-<<<<<<< HEAD
-  socket.on('joined', data => {
-    setUsers(data)
-    console.log(data)
-    console.log(users)
-  })
-=======
+
   console.log(inGameProfiles)
->>>>>>> main
 
   socket.on('start-join', (room) => {
     navigate(`/game`)
