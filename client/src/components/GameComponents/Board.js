@@ -126,7 +126,7 @@ const Board = ({ myId }) => {
 
     setCardTimer(6);
     if (tempCard.type === 'favor') {
-      // pickPlayer();
+      setPickSteal({ card: tempCard, idxs: [idx] });
     } else if(tempCard.type.includes('cat')) {
       //if type is cat, ask for another cat
       let secondIdx = findMatch(tempCard.type, idx);

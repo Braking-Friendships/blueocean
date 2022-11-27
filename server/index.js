@@ -209,12 +209,12 @@ io.on('connection', socket => {
 
             endTurn();
             break;
-          case 'favor':
+          /* case 'favor':
             // remove card from affectedPlayer and give it to current player
             const giveCard = socket.ekGameState[affectedUser].splice(0, 1)
             socket.ekGameState[currPlayer].push(giveCard[0])
             // pass in user to drawCard once we have a working data structure for gamestate
-            break;
+            break; */
           case 'future':
             // show player next three cards
             let searchIdx = deck.length - 3;
@@ -231,6 +231,7 @@ io.on('connection', socket => {
             break;
 
           default:
+            affectedUserIdx = Math.floor(Math.random() * socket.ekGameState[affectedUser].length);
             const stealedCard = socket.ekGameState[affectedUser].splice(affectedUserIdx, 1);
             socket.ekGameState[currPlayer].push(stealedCard[0]);
             break;
