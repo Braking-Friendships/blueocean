@@ -85,7 +85,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
           setOpen(!isOpen);
           newMessage();
           }}>X</button>
-          <h5 className="absolute ml-48 mt-10 text-white">Chat</h5>
+          <h5 className="absolute ml-[12.5vw] mt-10 text-white">Chat</h5>
           <div className="h-100 flex flex-col flex-grow mt-10">
             <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} userInfo={userInfo} />
           </div>

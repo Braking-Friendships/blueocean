@@ -66,6 +66,7 @@ const Chat = (props) => {
 
           {/* <!-- chat messages --> */}
           <div id='chatContainer' className="chat-container">
+            <span className='ml-[9vw]'>Start chatting...</span>
             <div id='chatContainer' className='EContainer'>
               {messages.map((mess, index) => (
                 <ChatEntry mess={mess} key={index} />
