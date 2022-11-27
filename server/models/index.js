@@ -84,6 +84,20 @@ module.exports = {
       return error;
     }
   },
+  deleteRoom: async (room) => {
+    try {
+      const filter = { room: room };
+      return await Room.deleteOne(filter);
+    } catch (error) {
+      return error;
+    }
+  },
+
+
+
+
+
+
 
   // CREATE FAKE DUMMY DATA
   createDummyData: async (user) => {

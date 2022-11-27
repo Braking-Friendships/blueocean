@@ -34,12 +34,14 @@ const Chat = (props) => {
   // console.log(date, 'ISO')
 
   // dummy/test data
-  const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'yo', date: date}, {username: 'Josh', isItMe: false, message: 'wassup', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hi', date: date}, {username: 'Fernando', isItMe: true, message: 'yoyo', date: date}, {username: 'Hieu', isItMe: false, message: 'hey', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'whats up', date: date}])
+  // const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'yo', date: date}, {username: 'Josh', isItMe: false, message: 'wassup', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hi', date: date}, {username: 'Fernando', isItMe: true, message: 'yoyo', date: date}, {username: 'Hieu', isItMe: false, message: 'hey', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'whats up', date: date}]);
+
+  const [messages, setMessages] = useState([]);
 
   const handleMsgSubmit = (message, isItMe = false) => {
     let me = isItMe;
     // console.log(me);
-    let msg = {username: 'Fernando', isItMe: me, message: message, date: date};
+    let msg = {username: props.userInfo.username, isItMe: me, message: message, date: date};
     setMessages([...messages, msg]);
     props.setNewMess([...messages, msg]);
   }
@@ -59,11 +61,12 @@ const Chat = (props) => {
 
   return (
       // {/* <!-- Component Start --> */}
-      <div className="flex flex-col flex-grow w-screen max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
+      <div className="flex flex-col flex-grow w-full max-w-sm bg-[#F2CC8F] shadow-xl rounded-lg overflow-hidden mt-12">
         <div id='chatContainer' className="flex flex-col flex-grow h-98 p-4 overflow-y-auto scroll-smooth">
 
           {/* <!-- chat messages --> */}
           <div id='chatContainer' className="chat-container">
+            <span className='ml-[9vw]'>Start chatting...</span>
             <div id='chatContainer' className='EContainer'>
               {messages.map((mess, index) => (
                 <ChatEntry mess={mess} key={index} />
