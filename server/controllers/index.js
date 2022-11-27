@@ -80,6 +80,13 @@ module.exports.controller = {
       })
       .catch(error => console.log(error));
   },
+  deleteRoom: (room) => {
+    return models.deleteRoom(room)
+      .then(result => {
+        return result;
+      })
+      .catch(error => console.log(error));
+  },
 
 
 
