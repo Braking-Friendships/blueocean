@@ -355,8 +355,8 @@ io.on('connection', socket => {
   })
   socket.on('get-all-rooms', async cb => {
     const allRooms = await controller.getAllRooms()
-    cb(allRooms)
     console.log(allRooms, 'ALL ROOMS')
+    cb(allRooms)
     // socket.emit('send-user-data', userData)
   })
 

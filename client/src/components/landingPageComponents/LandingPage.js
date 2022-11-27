@@ -47,7 +47,7 @@ const LandingPage = ({userInfo}) => {
       console.log(res)
       const filteredRooms = [];
       res.forEach((arr) => {
-        if (arr.players.length < 9) {
+        if (arr.players.length < 5) {
           filteredRooms.push(arr.room)
         }
       })

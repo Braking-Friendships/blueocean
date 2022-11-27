@@ -68,8 +68,7 @@ module.exports.controller = {
   getRoomData: (room) => {
     return models.getRoomData(room)
       .then(result => {
-<<<<<<< HEAD
-        console.log(result, 'getRoomData - result in controller');
+        // console.log(result, 'result in controller');
         return result;
       })
       .catch(error => console.log(error));
@@ -77,10 +76,6 @@ module.exports.controller = {
   getAllRooms: () => {
     return models.getAllRooms()
       .then(result => {
-        console.log(result, 'getAllRooms - result in controller');
-=======
-        // console.log(result, 'result in controller');
->>>>>>> main
         return result;
       })
       .catch(error => console.log(error));
