@@ -4,7 +4,7 @@ module.exports.controller = {
   createUser: (user) => {
     return models.createUser(user)
       .then(result => {
-        console.log('User created')
+        // console.log('User created')
         return result;
       })
       .catch(error => console.log('Error creating user'));
@@ -17,10 +17,26 @@ module.exports.controller = {
       })
       .catch(error => console.log(error));
   },
-  updateUser: (user) => {
-    return models.createUser(user)
+  searchProfile: (user) => {
+    return models.searchProfile(user)
       .then(result => {
-        console.log('User created')
+        console.log(result, 'result in controller');
+        return result;
+      })
+      .catch(error => console.log(error));
+  },
+  updateUser: (user) => {
+    return models.updateUser(user)
+      .then(result => {
+        console.log('User updated')
+        return result;
+      })
+      .catch(error => console.log('Error creating user'));
+  },
+  updateFriendList: (user) => {
+    return models.updateFriendList(user)
+      .then(result => {
+        // console.log('User created')
         return result;
       })
       .catch(error => console.log('Error creating user'));
@@ -28,7 +44,7 @@ module.exports.controller = {
   getFriendData: (user) => {
     return models.getFriendData(user)
       .then(result => {
-        console.log(result, 'result in controller');
+        // console.log(result, 'result in controller');
         return result;
       })
       .catch(error => console.log(error));
@@ -47,11 +63,12 @@ module.exports.controller = {
         console.log('player added to room')
         return result;
       })
-      .catch(error => console.log('Error creating room'));
+      .catch(error => console.log('Error adding player'));
   },
   getRoomData: (room) => {
     return models.getRoomData(room)
       .then(result => {
+<<<<<<< HEAD
         console.log(result, 'getRoomData - result in controller');
         return result;
       })
@@ -61,6 +78,9 @@ module.exports.controller = {
     return models.getAllRooms()
       .then(result => {
         console.log(result, 'getAllRooms - result in controller');
+=======
+        // console.log(result, 'result in controller');
+>>>>>>> main
         return result;
       })
       .catch(error => console.log(error));
@@ -73,7 +93,7 @@ module.exports.controller = {
   createDummyData: (user) => {
     return models.createDummyData(user)
       .then(result => {
-        console.log('User Dummy Data created');
+        // console.log('User Dummy Data created');
         return result;
       })
       .catch(error => console.log('Error creating user'));

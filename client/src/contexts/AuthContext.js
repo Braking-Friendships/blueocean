@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     let currUser = user.user;
     let response = {
       email: currUser.email,
-      firebaseId: currUser.uid
+      firebase_id: currUser.uid
     }
     if (currUser) {
       setCurrentUser(response);
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     let currUser = user.user;
     let response = {
       email: currUser.email,
-      firebaseId: currUser.uid
+      firebase_id: currUser.uid
     }
     if (currUser) {
       setCurrentUser(response);

@@ -13,6 +13,9 @@ const NavBar = ({user, logout }) => {
         {user &&
           <>
             <li className={listItemStyle}>
+              <Link to='/profile/search'>Search</Link>
+            </li>
+            <li className={listItemStyle}>
               <Link to='/profile'>Profile</Link>
             </li>
             <li className={listItemStyle} onClick={() => logout()}>

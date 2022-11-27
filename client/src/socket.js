@@ -3,13 +3,17 @@ import { io } from 'socket.io-client';
 export const socket = io('http://localhost:5001');
 
 socket.on('connect', () => {
-  console.log('connected', socket.id)
+  // console.log('connected', socket.id)
 })
 
 export const emitters = {
   getUserData: (user) => socket.emit('get-user-data', user),
+  getFriendData: (friend) => socket.emit('get-friend-data', friend),
   createUser: (user) => socket.emit('create-user', user),
   editUserInfo: (user) => socket.emit('edit-user', user),
+  addFriend: (user) => socket.emit('add-friend', user),
+  removeFriend: (user) => socket.emit('remove-friend', user),
+  searchProfile: (user) => socket.emit('search-user', user),
   hostRoom: () => socket.emit('host-room', socket.id),
   joinRoom: (roomId) => socket.emit('join-room', roomId),
   startGame: (gameState) => socket.emit('start-game', gameState),

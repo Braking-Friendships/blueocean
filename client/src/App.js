@@ -9,6 +9,7 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import NavBar from './components/landingPageComponents/NavBar';
 import LandingPage from './components/landingPageComponents/LandingPage';
 import ViewProfile from './components/profile/ViewProfile';
+import SearchProfile from './components/profile/SearchProfile';
 import Lobby from './components/GameLobby/Lobby';
 import Chat from './components/ChatComponents/Chat';
 import GameInstructions from './contexts/GameInstructions';
@@ -28,12 +29,12 @@ function App() {
 
   socket.on('joined', data => {
     setInGameProfiles(data)
-    console.log(inGameProfiles, 'ahahha')
+    console.log(inGameProfiles, 'in game profiles in app')
   })
 
   // USER LOGIN
   const getUserData = async (user) => {
-    console.log('LOGIN GET USER DATA: ', user);
+    // console.log('LOGIN GET USER DATA: ', user);
     emitters.getUserData(user);
     setUser(true);
   };
@@ -41,7 +42,7 @@ function App() {
 
   // USER SIGN-UP
   const createNewUser = async (user) => {
-    console.log('NEW USER CREATED: ', user);
+    // console.log('NEW USER CREATED: ', user);
     emitters.createUser(user);
     setUser(true);
   };
@@ -49,7 +50,7 @@ function App() {
   // LOGOUT BTN CLICKED
   const logout = () => {
     localStorage.removeItem('u_id');
-    setUserInfo('');
+    setUserInfo({});
     setUser(false);
   };
 
@@ -62,30 +63,36 @@ function App() {
 
   // CHECK TO SEE IF USER IS LOGGED IN
   useEffect(() => {
-    console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
-    const user = { firebaseId: localStorage.getItem('u_id') };
+    // console.log('~~ LOCAL STORAGE ~~', localStorage.getItem('u_id'));
+    if (localStorage.getItem('u_id') === 'null') localStorage.removeItem('u_id');
+    const user = { firebase_id: localStorage.getItem('u_id') };
     const guest = 'Guest' + Math.floor(Math.random() * 1000000).toString();
-    if (user.firebaseId) {
+    if (user.firebase_id) {
       getUserData(user);
       setUser(true);
     } else { setUserInfo({ username: guest, avatar: happyCat }) }
   }, [user]);
 
-  useEffect(() => {
-    console.log('~~~~ USER/GUEST ~~~~');
-    console.log('user: ', user, userInfo);
-    console.log('SOCKET~~ ', socket.id)
-  }, [userInfo])
+  // useEffect(() => {
+  //   console.log("🚀 ~ file: App.js ~ line 77 ~ useEffect ~ localStorage.getItem('u_id')", localStorage.getItem('u_id'))
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log('~~~~ USER/GUEST ~~~~');
+  //   console.log('user: ', user, userInfo);
+  //   console.log('SOCKET~~ ', socket.id)
+  // }, [userInfo])
 
   return (
     <>
       {location.pathname !== '/game' ? <NavBar userInfo={userInfo} user={user} logout={logout} /> : null}
       <Routes>
         <Route path='/' element={<LandingPage userInfo={userInfo} user={user} />}></Route>
-        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles}/>}></Route>
+        <Route path='/game' element={<GameRoom inGameProfiles={inGameProfiles} userInfo={userInfo} />}></Route>
         <Route path='/login' element={<Login getUserData={getUserData} />}></Route>
         <Route path='/signup' element={<Signup createNewUser={createNewUser} />}></Route>
         <Route path='/profile' element={<ViewProfile userInfo={userInfo} />}></Route>
+        <Route path='/profile/search' element={<SearchProfile userInfo={userInfo}/>}></Route>
         <Route path='/instructions' element={<GameInstructions />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
         <Route path='/lobby' element={<Lobby inGameProfiles={inGameProfiles} userInfo={userInfo}/>}></Route>

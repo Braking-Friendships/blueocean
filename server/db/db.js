@@ -14,7 +14,11 @@ db.once('open', () => {
 const userSchema = mongoose.Schema({
   email: String,
   firebase_id: String,
-  username: String,
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   firstName: String,
   lastName: String,
   avatar: {
@@ -38,6 +42,7 @@ const roomSchema = mongoose.Schema({
   room: String,
   host: String,
   players: [{
+    _id: false,
     username: String,
     avatar: String,
     socketId: String,

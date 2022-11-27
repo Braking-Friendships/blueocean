@@ -11,7 +11,7 @@ const JoinGameModal = ({ closeModal, userInfo }) => {
   const codeRef = useRef(null)
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userInfo, 'USERINFO')
+    // console.log(userInfo, 'USERINFO')
     const room = codeRef.current.value
     const userObj = {};
     if (userInfo) {
@@ -24,6 +24,7 @@ const JoinGameModal = ({ closeModal, userInfo }) => {
       userObj.room = room;
       userObj.socketId = socket.id;
     }
+    // console.log(userObj)
     socket.emit('join-room', userObj)
     navigate(`/lobby`)
   }
