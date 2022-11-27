@@ -18,9 +18,11 @@ export const emitters = {
   joinRoom: (roomId) => socket.emit('join-room', roomId),
   startGame: (gameState) => socket.emit('start-game', gameState),
   endGame: () => socket.emit('end-game'),
+  updateSocket: (gameState) => socket.emit('update-socket', gameState),
   playCard: (userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx) => socket.emit('play-card', userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx),
   defuse: (insertIdx, userCardIdxs) => socket.emit('defuse', null, userCardIdxs),
-  nope: (userCardType, userCardIdxs)=> socket.emit('nope-played', userCardType, userCardIdxs),
+  nope: (user, userCardIdxs)=> socket.emit('nope-played', user, userCardIdxs),
+  clearInterval: ()=>socket.emit('clear-card-interval'),
   drawCard: (username) => socket.emit('draw-card', username),
   playerLoses: (username) => socket.emit('player-loses', username),
   // chat emmiters -----
