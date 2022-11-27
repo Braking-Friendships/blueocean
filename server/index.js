@@ -141,6 +141,7 @@ io.on('connection', socket => {
   }
 
   const endTurn = (shouldAddToEnd = true) => {
+    socket.removeAllListeners('defuse')
     let currPlayer = socket.ekGameState.currentPlayer;
     const playerOrder = socket.ekGameState.playerOrder;
 
@@ -264,6 +265,7 @@ io.on('connection', socket => {
 
     socket.on('clear-card-interval', () => {
       clearInterval(x);
+      socket.removeAllListeners('clear-card-interval')
     });
   }
 
@@ -422,6 +424,7 @@ io.on('connection', socket => {
     removeCard(userCardIdxs, user);
     emitState(socket.ekGameState);
     // console.log('cancelled play')
+    // socket.off('nope-played')
   })
 })
 
