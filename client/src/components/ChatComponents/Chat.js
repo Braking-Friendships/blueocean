@@ -34,7 +34,9 @@ const Chat = (props) => {
   // console.log(date, 'ISO')
 
   // dummy/test data
-  const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'yo', date: date}, {username: 'Josh', isItMe: false, message: 'wassup', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hi', date: date}, {username: 'Fernando', isItMe: true, message: 'yoyo', date: date}, {username: 'Hieu', isItMe: false, message: 'hey', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'whats up', date: date}])
+  // const [messages, setMessages] = useState([{username: 'Fernando', isItMe: true, message: 'yo', date: date}, {username: 'Josh', isItMe: false, message: 'wassup', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Jonah', isItMe: false, message: 'hi', date: date}, {username: 'Fernando', isItMe: true, message: 'yoyo', date: date}, {username: 'Hieu', isItMe: false, message: 'hey', date: date}, {username: 'Fernando', isItMe: true, message: 'hello', date: date}, {username: 'Hieu', isItMe: true, message: 'hello', date: date}, {username: 'Eric', isItMe: false, message: 'hello', date: date}, {username: 'Joe', isItMe: false, message: 'whats up', date: date}]);
+
+  const [messages, setMessages] = useState([]);
 
   const handleMsgSubmit = (message, isItMe = false) => {
     let me = isItMe;
