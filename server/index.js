@@ -291,6 +291,17 @@ io.on('connection', socket => {
     // console.log(userData)
     socket.emit('send-friend-data', userData)
   })
+  socket.on('add-friend', user => {
+    console.log('~~ ADD FRIEND ~~ ', user);
+    controller.updateFriendList(user)
+  })
+  socket.on('remove-friend', async user => {
+    console.log('~~ REMOVE FRIEND ~~ ', user);
+    await controller.updateFriendList(user);
+    const userData = await controller.getUserData(user)
+    // console.log(userData)
+    socket.emit('send-user-data', userData)
+  })
   socket.on('edit-user', async user => {
     // console.log('~~ EDIT USER ~~ ', user);
     const createUser = await controller.updateUser(user)
@@ -299,12 +310,18 @@ io.on('connection', socket => {
     socket.emit('send-user-data', userData)
   })
   socket.on('post-edit-avatar', async user => {
-    const createUser = await controller.updateUser(user)
+    const updateUser = await controller.updateUser(user)
     const userData = await controller.getUserData(user)
     // console.log(userData)
     socket.emit('send-user-data', userData)
   })
 
+  // SEARCH PROFILE
+  socket.on('search-user', async user => {
+    const userData = await controller.searchProfile(user)
+    console.log(userData)
+    socket.emit('search-result', userData)
+  })
 
 
   // ROOM LISTENERS

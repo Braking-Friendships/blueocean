@@ -12,13 +12,29 @@ module.exports.controller = {
   getUserData: (user) => {
     return models.getUserData(user)
       .then(result => {
-        // console.log(result, 'result in controller');
+        console.log(result, 'result in controller');
+        return result;
+      })
+      .catch(error => console.log(error));
+  },
+  searchProfile: (user) => {
+    return models.searchProfile(user)
+      .then(result => {
+        console.log(result, 'result in controller');
         return result;
       })
       .catch(error => console.log(error));
   },
   updateUser: (user) => {
-    return models.createUser(user)
+    return models.updateUser(user)
+      .then(result => {
+        console.log('User updated')
+        return result;
+      })
+      .catch(error => console.log('Error creating user'));
+  },
+  updateFriendList: (user) => {
+    return models.updateFriendList(user)
       .then(result => {
         // console.log('User created')
         return result;
