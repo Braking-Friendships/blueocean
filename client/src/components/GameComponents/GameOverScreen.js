@@ -5,7 +5,7 @@ const GameOverScreen = ({ winner }) => {
 
   return (
     <div
-    className='absolute top-0 left-0 w-screen h-screen flex justify-center items-center'
+    className='absolute top-0 left-0 w-screen h-screen flex justify-center items-center z-[100]'
     >
       <div
       className='rounded-xl bg-slate-50 flex flex-col justify-center items-center text-xl p-8 gap-6'

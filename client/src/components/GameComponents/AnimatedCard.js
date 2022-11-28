@@ -80,9 +80,9 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
     <motion.div
       layout
       ref={cardRef}
-      className={`relative min-h-0 min-w-0 z-1 p-0 h-auto`}
+      className={`relative min-h-0 min-w-0 p-0 h-auto ${side === 'mid' ? 'z-10' : 'z-[5]'}`}
       animate={cardControls}
-      whileHover={{'zIndex': 10}}
+      whileHover={side !== 'mid' ? {'zIndex': 11} : null}
     >
       {children}
     </motion.div>
