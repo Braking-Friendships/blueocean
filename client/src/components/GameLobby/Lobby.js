@@ -24,7 +24,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
       setBadge(false);
     }
   }
-
+  console.log(socket.id);
   // console.log(inGameProfiles, 'bla')
   useEffect(() => {
     newMessage();
@@ -84,7 +84,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
           }}>X</button>
           <h5 className="absolute ml-[12.5vw] mt-10 text-white">Chat</h5>
           <div className="h-100 flex flex-col flex-grow mt-10">
-            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} userInfo={userInfo} />
+            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} inGameProfiles={inGameProfiles} userInfo={userInfo} />
           </div>
         </div>
       </div>

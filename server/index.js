@@ -275,15 +275,14 @@ io.on('connection', socket => {
   })
 
   // Socket listeners for chat components ------------
-  socket.on('send-chat-message', (message, room) => {
+  socket.on('send-chat-message', (user, message, room) => {
     // if room text is empty send to everyone
     if (room === '') {
       // socket.broadcast sends message to everyone except me
-      socket.broadcast.emit('receive-message', message);
-      // console.log(message);
+      socket.broadcast.emit('receive-message', user, message);
     } else {
       // send message to room only
-      socket.to(room).emit('receive-message', message);
+      socket.to(room).emit('receive-message', user, message);
     }
   });
   // socket listener for room joins
