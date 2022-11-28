@@ -6,6 +6,7 @@ import PickButtons from './PickButtons';
 import CardDisplay from './CardDisplay';
 import GameOverScreen from './GameOverScreen';
 import { motion } from 'framer-motion';
+import ArrowPointer from './ArrowPointer';
 
 // socket.on('card-countdown', timer => console.log(timer))
 
@@ -221,7 +222,7 @@ const Board = ({ myId, userInfo }) => {
       >
         {initialOrder !== null && (initialOrder.length === 2 ? initialOrder[(initialOrder.indexOf(myId) + 1) % initialOrder.length] : initialOrder[(initialOrder.indexOf(myId) + 2) % initialOrder.length])}
       </div>
-      <div id="middle-stack" className='row-start-3 row-end-4 col-start-3 col-end-6 flex justify-center items-end gap-7 bg-white'>
+      <div id="middle-stack" className='row-start-3 row-end-4 col-start-3 col-end-6 flex justify-center items-end gap-7'>
         {BOMB ? <PlayerCard key={BOMB.id} card={BOMB} /> : null}
 
         <button
@@ -250,9 +251,9 @@ const Board = ({ myId, userInfo }) => {
         ></div>}
 
         <div
-        className='bg-green-300 rounded-md flex flex-col justify-center items-center h-[271px] w-[200px] p-2 text-center'
+        className='bg-[#81B29A] rounded-md flex flex-col justify-center items-center h-[271px] w-[200px] p-2 text-center'
         >
-          {cardTimer ? <div>Card Timer: {cardTimer}</div> : null}
+          {cardTimer ? <div>Nope Timer: {cardTimer}</div> : null}
           {bombTimer ? <div className='text-red-600'>Bomb Timer: {bombTimer}</div> : null}
           {lastCardPlayed
           && (
@@ -264,7 +265,7 @@ const Board = ({ myId, userInfo }) => {
           <div className=' bg-black w-full h-[1px] m-2'></div>
           <div className='text-xl'>Current Player:</div>
           <div>{currentPlayer}</div>
-          <div> ---> </div>
+          <ArrowPointer currentPlayer={currentPlayer} initialOrder={initialOrder} myId={myId} />
         </div>
       </div>
       <div
@@ -274,7 +275,7 @@ const Board = ({ myId, userInfo }) => {
       </div>
       <div
       id="bottom-player"
-      className='row-start-5 row-end-6 col-start-2 col-end-7 flex justify-center items-end gap-2 bg-red-300'
+      className='row-start-5 row-end-6 col-start-2 col-end-7 flex justify-center items-end gap-2'
       ref={playerAreaRef}
       draggable={false}
       >

@@ -23,7 +23,7 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
   const getTransitionPos = () => {
     let { x, top, bottom } = cardRef.current?.getBoundingClientRect();
     let stackPosition = getStackPos();
-
+    console.log(stackPosition);
     x = stackPosition.x - x;
     let y = stackPosition.bottom - bottom;
     if(side === 'top'){
@@ -80,7 +80,7 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
     <motion.div
       layout
       ref={cardRef}
-      className={`relative min-h-0 min-w-0 p-0 h-auto ${side === 'mid' ? 'z-10' : 'z-[5]'}`}
+      className={`relative min-h-0 min-w-0 p-0 h-auto ${side === 'mid' ? 'z-10 min-h-[271px]' : 'z-[5]'}`}
       animate={cardControls}
       whileHover={side !== 'mid' ? {'zIndex': 11} : null}
     >
