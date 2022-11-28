@@ -89,17 +89,27 @@ io.on('connection', socket => {
           // player loses
           // remove player from order and delete player hand
           clearInterval(bombTimer);
+
           socket.ekGameState.playerOrder = socket.ekGameState.playerOrder.filter((user) => {
             return user !== currPlayer;
           })
-          console.log('BOMB INFO HERE:', socket.ekGameState)
+
           if(socket.ekGameState.playerOrder.length === 1) {
             io.of('/').to(socket.ekGameState.room).emit('game-over', socket.ekGameState.playerOrder[0]);
-            socket.ekGameState = null;
+            return;
           }
           socket.ekGameState[currPlayer] = null;
+          let tempTurn = {
+            origin: socket.ekGameState.currentPlayer,
+            userCardType: 'bomb',
+            userCardIdxs: [],
+            affectedUser: '',
+            affectedUserIdx: '',
+            insertIdx: ''
+          }
+          socket.ekGameState.prevTurns.push(tempTurn);
 
-          endTurn();
+          endTurn(false);
         }
       }, 1000);
 
@@ -109,6 +119,15 @@ io.on('connection', socket => {
         socket.ekGameState[currPlayer].splice(userCardIdxs[0], 1);
 
         socket.ekGameState.deck = deck.slice(0, insertIdx).concat([newCard]).concat(deck.slice(insertIdx));
+        let tempTurn = {
+          origin: socket.ekGameState.currentPlayer,
+          userCardType: 'defuse',
+          userCardIdxs: userCardIdxs ?? [],
+          affectedUser: '',
+          affectedUserIdx: '',
+          insertIdx: ''
+        }
+        socket.ekGameState.prevTurns.push(tempTurn);
         io.of('/').to(socket.ekGameState.room).emit('defuse');
         endTurn();
 
@@ -121,13 +140,14 @@ io.on('connection', socket => {
     }
   }
 
-  const endTurn = () => {
+  const endTurn = (shouldAddToEnd = true) => {
+    socket.removeAllListeners('defuse')
     let currPlayer = socket.ekGameState.currentPlayer;
     const playerOrder = socket.ekGameState.playerOrder;
 
     // console.log('Player order before:', socket.ekGameState.playerOrder)
 
-    if (currPlayer !== playerOrder[playerOrder.length - 1]) {
+    if (currPlayer !== playerOrder[playerOrder.length - 1] && shouldAddToEnd) {
       playerOrder.push(currPlayer);
     }
     // Set current player
@@ -161,6 +181,7 @@ io.on('connection', socket => {
 
     //Emit the action to all players, so they can see the card
     let tempTurn = {
+      origin: socket.ekGameState.currentPlayer,
       userCardType: userCardType ?? '',
       userCardIdxs: userCardIdxs ?? [],
       affectedUser: affectedUser ?? '',
@@ -244,6 +265,7 @@ io.on('connection', socket => {
 
     socket.on('clear-card-interval', () => {
       clearInterval(x);
+      socket.removeAllListeners('clear-card-interval')
     });
   }
 
@@ -359,7 +381,9 @@ io.on('connection', socket => {
     cb(allRooms)
     // socket.emit('send-user-data', userData)
   })
-
+  socket.on('return-lobby', () => {
+    io.of('/').to(socket.ekGameState.room).emit('return-lobby');
+  })
 
   const rooms = io.of('/').adapter.rooms;
   const sids = io.of('/').adapter.sids;
@@ -389,6 +413,7 @@ io.on('connection', socket => {
   socket.on('nope-played', (user, userCardIdxs) => {
     io.of('/').to(socket.ekGameState.room).emit('nope-effect');
     socket.ekGameState.prevTurns.push({
+      origin: user,
       userCardType: 'nope',
       userCardIdxs: userCardIdxs ?? [],
       affectedUser: '',
@@ -398,6 +423,7 @@ io.on('connection', socket => {
     removeCard(userCardIdxs, user);
     emitState(socket.ekGameState);
     // console.log('cancelled play')
+    // socket.off('nope-played')
   })
 })
 
