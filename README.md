@@ -65,6 +65,7 @@ The game lobby allows users to communicate with each other and prepare to enter 
 ### Gameplay:
 <div align="center">
   <img src="https://user-images.githubusercontent.com/104481165/204189936-9e702755-875f-4271-a775-aa6615f4f4b1.png" alt="Gameplay" width="500">
+  <img src="https://user-images.githubusercontent.com/104597125/204372071-e50c4333-67b1-44cc-afbb-0997a5012805.gif" alt="Card Animation" width="500">
 </div>
 The design of the gameplay contains animations and all the logic that are needed to allow the smooth flow of the game.
 <table>
