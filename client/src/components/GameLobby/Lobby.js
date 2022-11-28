@@ -24,7 +24,6 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
       setBadge(false);
     }
   }
-  console.log(socket.id);
   // console.log(inGameProfiles, 'bla')
   useEffect(() => {
     newMessage();
@@ -49,7 +48,6 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
   // socket.on('update-room', room_id => setRoomId(room_id))
 
   const loadGame = (room) => {
-    console.log('inGameProfiles in loadGame:', inGameProfiles)
     //replace with real users
     //min2 - max4
 
@@ -107,7 +105,6 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       {inGameProfiles ? <div>Game ID: {inGameProfiles?.[0]?.room}</div> : <div>Game ID: {hostRoom}</div>}
       <br/>
-        {console.log(socket.id)}
     <button onClick={() => {loadGame(inGameProfiles?.[0].room)}} className={`bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline `}
     hidden={socket.id !== inGameProfiles?.[0].host ? true : false}
     >Ex Kittens</button>
@@ -116,10 +113,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <br/> */}
     <button onClick={() => {leaveGame()}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
     <br/>
-      <div>Chat functions (imported separately)</div>
-    <br/>
-
-        <div className ='flex flex-row justify-center items-center'>
+        <div className ='flex flex-row justify-center items-center gap-8'>
           {inGameProfiles ? (inGameProfiles?.[0]?.players.map((player) =>
           <div key={player.username} className ='flex flex-col justify-center items-center'>
             <h4>{player.username}</h4>

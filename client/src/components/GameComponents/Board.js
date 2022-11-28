@@ -5,6 +5,8 @@ import { socket, emitters } from '../../socket.js';
 import PickButtons from './PickButtons';
 import CardDisplay from './CardDisplay';
 import GameOverScreen from './GameOverScreen';
+import { motion } from 'framer-motion';
+import ArrowPointer from './ArrowPointer';
 
 // socket.on('card-countdown', timer => console.log(timer))
 
@@ -30,6 +32,7 @@ const Board = ({ myId, userInfo }) => {
   // pickSteal: [cardIdxs]
   const [futureCards, setFutureCards] = useState(null);
   const [gameOver, setGameOver] = useState(null);
+  const [shuffle, setShuffle] = useState(false);
 
   useEffect(() => {
     setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
@@ -108,6 +111,13 @@ const Board = ({ myId, userInfo }) => {
         tempUser.total_games++;
       }
       emitters.editUserInfo(tempUser);
+    })
+    socket.on('shuffle', () => {
+      setShuffle(true);
+      setTimeout(() => {
+        setShuffle(false);
+
+      }, 100);
     })
   }, []);
 
@@ -200,32 +210,34 @@ const Board = ({ myId, userInfo }) => {
   }
 
   return (
-    <div id="board" className='grid grid-cols-6 grid-rows-5 h-screen overflow-hidden col-span-4'>
+    <div id="board" className='grid grid-cols-7 grid-rows-5 h-screen overflow-hidden col-span-4'>
       {p2L !== null &&
       <div id="left-player" className='row-start-2 row-end-5 col-start-1 col-end-2 flex flex-col justify-center items-center '>
         {displayOtherHands(p2L, 'left')}
       </div>}
-      <div
-      className='row-start-3 row-end-4 col-start-2 col-end-3 flex justify-center items-start text-2xl'
+      <motion.div
+      className='row-start-3 row-end-4 col-start-2 col-end-3 flex justify-center items-end text-2xl'
+      initial={false}
+      animate={{rotate: 90}}
       >
         {initialOrder !== null && (initialOrder.length > 2 ? initialOrder[(initialOrder.indexOf(myId) + 1) % initialOrder.length] : null)}
-      </div>
-      <div id="top-player" className='row-start-1 row-end-2 col-start-3 col-end-5  flex justify-center'>
+      </motion.div>
+      <div id="top-player" className='row-start-1 row-end-2 col-start-3 col-end-6  flex justify-center'>
         {displayOtherHands(p3L, 'top')}
       </div>
       <div
-      className='row-start-2 row-end-3 col-start-3 col-end-5 flex justify-center items-start text-2xl'
+      className='row-start-2 row-end-3 col-start-3 col-end-6 flex justify-center items-start text-2xl short:p-10 mid:p-0'
       >
         {initialOrder !== null && (initialOrder.length === 2 ? initialOrder[(initialOrder.indexOf(myId) + 1) % initialOrder.length] : initialOrder[(initialOrder.indexOf(myId) + 2) % initialOrder.length])}
       </div>
-      <div id="middle-stack" className='row-start-3 row-end-4 col-start-3 col-end-5 flex justify-center items-end gap-7 bg-white'>
+      <div id="middle-stack" className='row-start-3 row-end-4 col-start-3 col-end-6 flex justify-center items-end gap-7'>
         {BOMB ? <PlayerCard key={BOMB.id} card={BOMB} /> : null}
 
         <button
         className='relative'
         onClick={drawCard}>
-          <OtherCard ref={stackRef} side='mid' />
-          <div className='absolute bottom-4 right-4 text-4xl z-20'>{stackL}</div>
+          <OtherCard ref={stackRef} side='mid' shuffle={shuffle} />
+          <div className='absolute bottom-4 right-4 text-4xl z-10'>{stackL}</div>
         </button>
 
         {lastCardPlayed
@@ -247,9 +259,9 @@ const Board = ({ myId, userInfo }) => {
         ></div>}
 
         <div
-        className='bg-green-300 rounded-md flex flex-col justify-center items-center h-full p-10'
+        className='bg-[#81B29A] rounded-md flex flex-col justify-center items-center h-[271px] w-[200px] p-2 text-center'
         >
-          {cardTimer ? <div>Card Timer: {cardTimer}</div> : null}
+          {cardTimer ? <div>Nope Timer: {cardTimer}</div> : null}
           {bombTimer ? <div className='text-red-600'>Bomb Timer: {bombTimer}</div> : null}
           {lastCardPlayed
           && (
@@ -258,19 +270,20 @@ const Board = ({ myId, userInfo }) => {
           : <div>
             {lastCardPlayed.origin} played {lastCardPlayed.type} {lastCardPlayed.affected && `on ${lastCardPlayed.affected}`}
           </div>)}
-          <div>Current Player:</div>
+          <div className=' bg-black w-full h-[1px] m-2'></div>
+          <div className='text-xl'>Current Player:</div>
           <div>{currentPlayer}</div>
-          <div> ---> </div>
+          <ArrowPointer currentPlayer={currentPlayer} initialOrder={initialOrder} myId={myId} />
         </div>
       </div>
       <div
-        className='row-start-4 row-end-5 col-start-2 col-end-6 flex justify-center items-end text-2xl p-20'
+        className='row-start-4 row-end-5 col-start-2 col-end-7 flex justify-center text-2xl tall:p-10 tall:items-end short:p-0 mid:items-center short:items-start'
       >
         {myId}
       </div>
       <div
       id="bottom-player"
-      className='row-start-5 row-end-6 col-start-2 col-end-6 flex justify-center items-end gap-2 bg-red-300'
+      className='row-start-5 row-end-6 col-start-2 col-end-7 flex justify-center items-end gap-2'
       ref={playerAreaRef}
       draggable={false}
       >
@@ -278,13 +291,15 @@ const Board = ({ myId, userInfo }) => {
           <PlayerCard key={card.id} card={card} playerArea={playerArea} firstLoad={firstLoad} getStackPos={getStackPos} idx={i} playCard={playCard} />
         )}
       </div>
-      <div
-      className='row-start-3 row-end-4 col-start-5 col-end-6 flex justify-center items-start text-2xl'
+      <motion.div
+      className='row-start-3 row-end-4 col-start-6 col-end-7 flex justify-center items-end text-2xl'
+      initial={false}
+      animate={{rotate: -90}}
       >
         {initialOrder !== null && (initialOrder.length === 4 ? initialOrder[(initialOrder.indexOf(myId) + 3) % initialOrder.length] : null)}
-      </div>
+      </motion.div>
       {p4L &&
-      <div id="right-player" className='row-start-2 row-end-5 col-start-6 col-end-7 flex flex-col justify-center items-center'>
+      <div id="right-player" className='row-start-2 row-end-5 col-start-7 col-end-8 flex flex-col justify-center items-center'>
         {displayOtherHands(p4L, 'right')}
       </div>}
       {pickSteal ? <PickButtons steal={steal} pickSteal={pickSteal} playerOrder={playerOrder} currentPlayer={currentPlayer} /> : null}

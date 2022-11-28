@@ -28,7 +28,7 @@ const GameRoom = ({ inGameProfiles, userInfo }) => {
 
   return (
     <>
-      <div className={isOpen ? 'grid grid-cols-5 bg-blue-300': "bg-blue-300"}>
+      <div className={isOpen ? 'grid grid-cols-5 bg-[#F4F1DE]': "bg-[#F4F1DE]"}>
         <Board myId={userInfo.username} userInfo={userInfo} />
         <div className={isOpen ? 'animate-slide-in-right  bg-[#3D405B] h-101 w-[20vw] max-w-sm flex flex-col flex-grow absolute right-0 px-15 pt-0 pb-0 border-l-2 border-black': "hidden"}>
           <button type="button" className="absolute left-0 ml-3 mt-3 text-white" onClick={(e) => {
