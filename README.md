@@ -23,25 +23,8 @@ Our team built a fully functional web application for an online card game featur
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## App Features
-<!-- TODO: USE THIS TEMPLATE FOR EACH FEATURE  -->
-<!-- ### EXAMPLE PAGE:
-<div align="center">
-  <img src="FILE" alt="EXAMPLE" width="500">
-</div>
-OVERVIEW DESCRIPTION GOES HERE
-<table>
-  <tr>
-    <td>
-      <img src="SOURCE" alt="SCREENSHOT" width="500">
-    </td>
-    <td>
-      <b>Title:</b>  Explanation.
-    </td>
-  </tr>
-</table>
-<p align="right">(<a href="#top">back to top</a>)</p> -->
-
-### EXAMPLE PAGE:
+<!-- LANDING PAGE -->
+### Main Page:
 <div align="center">
   <img src="https://user-images.githubusercontent.com/104481165/204183849-d216b26d-f091-4d6e-b932-6c5f629bcf50.png" alt="Landing Page" width="500">
 </div>
@@ -57,6 +40,72 @@ This is the main page of the website. Here contains the Navigation Bar on top, w
   </tr>
 </table>
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- GAME LOBBY -->
+### Game Lobby:
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/104481165/204186172-64ce905d-1a5b-46bc-b4f5-dadc7bb0e076.png" alt="Game Lobby" width="500">
+</div>
+The game lobby allows users to communicate with each other and prepare to enter the gameplay. Up to 4 players are allowed to be in the game lobby at any time. Only the host has the ability to start the game.
+<table>
+  <tr>
+    <td>
+      <img src="https://user-images.githubusercontent.com/104481165/204186172-64ce905d-1a5b-46bc-b4f5-dadc7bb0e076.png" alt="SCREENSHOT" width="500">
+    </td>
+    <td>
+      <b>Title:</b>  Explanation.
+    </td>
+  </tr>
+</table>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- GAMEPLAY -->
+### Gameplay:
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/104481165/204189936-9e702755-875f-4271-a775-aa6615f4f4b1.png" alt="Gameplay" width="500">
+</div>
+The design of the gameplay contains animations and all the logic that are needed to allow the smooth flow of the game.
+<table>
+  <tr>
+    <td>
+      <img src="SOURCE" alt="SCREENSHOT" width="500">
+    </td>
+    <td>
+      <b>Title:</b>  Explanation.
+    </td>
+  </tr>
+</table>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- CHAT -->
+### Chat Feature:
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/104481165/204187763-62f2bc73-4d1c-4d54-9b4f-273d5dfa34f1.png" alt="Chat" width="500">
+</div>
+Chat feature is available in the game lobby and during gameplay. The game chat allows players to communicate with each other more effectively while being immersed in the game.
+<table>
+  <tr>
+    <td>
+      <img src="https://user-images.githubusercontent.com/104481165/204187337-3c6749b6-de7b-4e40-b071-4fa31af09ce3.png" alt="chat lobby" width="500">
+    </td>
+    <td>
+      <b>Lobby Chat:</b>  The chat bar opens on the right side of the screen and can be collapsed to allow players more versatlity and control. Chat displays an interactive icon to show any new messages.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://user-images.githubusercontent.com/104481165/204189148-02ca12f6-52af-4ee6-a218-752879592ac7.png" alt="chat gameplay" width="500">
+    </td>
+    <td>
+      <b>Gameplay Chat:</b>  Gameplay chat is also on the right side and can be toggled to close as needed.
+    </td>
+  </tr>
+</table>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- LOGIN FEATURE -->
 ### Login/Signup:
@@ -83,6 +132,7 @@ This is the main page of the website. Here contains the Navigation Bar on top, w
   </tr>
 </table>
 <p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- PROFILE FEATURE -->
 ### Profile:
@@ -142,22 +192,7 @@ The profile page is only available for users who has an account. The user can ac
 </table>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-### Game Lobby:
-<div align="center">
-  <img src="https://user-images.githubusercontent.com/104481165/204186172-64ce905d-1a5b-46bc-b4f5-dadc7bb0e076.png" alt="Game Lobby" width="500">
-</div>
-The game lobby allows users to communicate with each other and prepare to enter the gameplay. Up to 4 players are allowed to be in the game lobby at any time. Only the host has the ability to start the game.
-<table>
-  <tr>
-    <td>
-      <img src="SOURCE" alt="SCREENSHOT" width="500">
-    </td>
-    <td>
-      <b>Title:</b>  Explanation.
-    </td>
-  </tr>
-</table>
-<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 ### Built with:
 * [React](https://reactjs.org/)
