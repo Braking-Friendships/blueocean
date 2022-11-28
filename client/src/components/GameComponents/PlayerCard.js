@@ -16,7 +16,7 @@ const PlayerCard = ({ card, playerArea, getStackPos, firstLoad, idx, playCard })
       setIsDragging(false);
     }, 500);
 
-    if(info.point.y < playerArea.y) {
+    if(info.point.y < (playerArea.y - 200)) {
       // emit card.type and other args to play-card
       // userCardType, userCardIdxs, affectedUser, affectedUserIdx, insertIdx
       // emitters.playCard('favor', [2], 'next', 1, '')

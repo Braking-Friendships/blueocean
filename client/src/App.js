@@ -29,7 +29,7 @@ function App() {
 
   socket.on('joined', data => {
     setInGameProfiles(data)
-    console.log(inGameProfiles, 'in game profiles in app')
+    // console.log(inGameProfiles, 'in game profiles in app')
   })
 
   // USER LOGIN

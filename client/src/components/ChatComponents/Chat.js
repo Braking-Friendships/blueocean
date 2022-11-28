@@ -8,15 +8,15 @@ const Chat = (props) => {
   // SOCKET.IO -----------------------------------------------
 
   // recieves/post messages
-  socket.on('receive-message', message => {
-    handleMsgSubmit(message);
-    // console.log(message, 'receive');
+  socket.on('receive-message', (user, message, avatar) => {
+    handleMsgSubmit(user, message, avatar);
+    // console.log(user, message, 'receive');
     // console.log('MESSAGE RECEIVE ID: ', socket.id);
   })
 
   // sends messages to everyone or to a specific user id
-  const handleBroadSubmit = (message, room) => {
-    emitters.handleBroadSubmit(message, room);
+  const handleBroadSubmit = (user, message, avatar, room) => {
+    emitters.handleBroadSubmit(user, message, avatar, room);
     // console.log('MESSAGE SENT ID: ', socket.id);
   }
   let roomy = '';
@@ -38,10 +38,11 @@ const Chat = (props) => {
 
   const [messages, setMessages] = useState([]);
 
-  const handleMsgSubmit = (message, isItMe = false) => {
+
+  const handleMsgSubmit = (user, message, avatar, isItMe = false) => {
     let me = isItMe;
-    // console.log(me);
-    let msg = {username: props.userInfo.username, isItMe: me, message: message, date: date};
+    // create message obj
+    let msg = {username: user, isItMe: me, message: message, avatar: avatar, date: date};
     setMessages([...messages, msg]);
     props.setNewMess([...messages, msg]);
   }
@@ -66,7 +67,7 @@ const Chat = (props) => {
 
           {/* <!-- chat messages --> */}
           <div id='chatContainer' className="chat-container">
-            <span className='ml-[9vw]'>Start chatting...</span>
+            <span className='ml-[35%]'>Start chatting...</span>
             <div id='chatContainer' className='EContainer'>
               {messages.map((mess, index) => (
                 <ChatEntry mess={mess} key={index} />
@@ -78,11 +79,18 @@ const Chat = (props) => {
         {/* type your message bar --------------------- */}
         <form className="bg-gray-300 p-4 flex items-start" onSubmit={(e) => {
           e.preventDefault();
-          // display sent message right away to sender
-          handleMsgSubmit(e.target.msg.value, true);
-          // sends messages to all
-          handleBroadSubmit(e.target.msg.value, roomy);
-          e.target.msg.value = '';
+          (props.inGameProfiles !== undefined) ?
+            props.inGameProfiles[0].players.forEach((curr, index, collection) => {
+              if (curr.socketId === socket.id) {
+                console.log(curr, 'im in submit message')
+                // display sent message right away to sender
+                handleMsgSubmit(curr.username, e.target.msg.value, curr.avatar, true);
+                // sends messages to all
+                handleBroadSubmit(curr.username, e.target.msg.value, curr.avatar, roomy);
+                e.target.msg.value = '';
+              }
+            }) :
+            console.log('Players are undefined!');
         }}>
           <input className="flex-row items-center h-10 w-11/12 rounded px-3 text-sm" type="text" name='msg' placeholder="Type your message…"></input>
           <button type='submit' className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">

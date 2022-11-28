@@ -52,7 +52,6 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
   })
 
   const loadGame = (room) => {
-    console.log('inGameProfiles in loadGame:', inGameProfiles)
     //replace with real users
     //min2 - max4
 
@@ -96,7 +95,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
           }}>X</button>
           <h5 className="absolute ml-[12.5vw] mt-10 text-white">Chat</h5>
           <div className="h-100 flex flex-col flex-grow mt-10">
-            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} userInfo={userInfo} />
+            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} inGameProfiles={inGameProfiles} userInfo={userInfo} />
           </div>
         </div>
       </div>
@@ -119,7 +118,6 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <div className="w-screen h-screen bg-[#F4F1DE] flex flex-col justify-center items-center">
       {inGameProfiles ? <div>Game ID: {inGameProfiles?.[0]?.room}</div> : <div>Game ID: {hostRoom}</div>}
       <br/>
-        {console.log(socket.id)}
     <button onClick={() => {loadGame(inGameProfiles?.[0].room)}} className={`bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline `}
     hidden={socket.id !== inGameProfiles?.[0]?.host ? true : false}
     >Ex Kittens</button>
@@ -128,6 +126,7 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     <br/> */}
     <button onClick={() => {leaveGame(inGameProfiles?.[0]?.room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
     <br/>
+      <div>Chat functions (imported separately)</div>
     <br/>
 
         <div className ='flex flex-row justify-center items-center'>

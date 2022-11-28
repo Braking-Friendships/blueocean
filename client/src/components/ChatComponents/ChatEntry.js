@@ -15,12 +15,12 @@ const ChatEntry = (props) => {
           </div>
           <span className="text-xs text-gray-500 leading-none">{`${formatDistanceToNow(parseISO(props.mess.date))}`}</span>
         </div>
-        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+        <img src={props.mess.avatar} className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" alt="profile avatar"></img>
       </div> :
       // {/* response bubble -----------------------
       <div className="flex w-full mt-2 space-x-3 max-w-xs">
         {/* profile bubble --- */}
-        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+        <img src={props.mess.avatar} className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" alt="profile avatar"></img>
         <div>
           {/* chat bubble ----- */}
           <div className="bg-[#E07A5F] p-3 rounded-r-lg rounded-bl-lg">
