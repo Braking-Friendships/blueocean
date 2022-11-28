@@ -8,15 +8,15 @@ const Chat = (props) => {
   // SOCKET.IO -----------------------------------------------
 
   // recieves/post messages
-  socket.on('receive-message', (user, message) => {
-    handleMsgSubmit(user, message);
+  socket.on('receive-message', (user, message, avatar) => {
+    handleMsgSubmit(user, message, avatar);
     // console.log(user, message, 'receive');
     // console.log('MESSAGE RECEIVE ID: ', socket.id);
   })
 
   // sends messages to everyone or to a specific user id
-  const handleBroadSubmit = (user, message, room) => {
-    emitters.handleBroadSubmit(user, message, room);
+  const handleBroadSubmit = (user, message, avatar, room) => {
+    emitters.handleBroadSubmit(user, message, avatar, room);
     // console.log('MESSAGE SENT ID: ', socket.id);
   }
   let roomy = '';
@@ -39,10 +39,10 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
 
 
-  const handleMsgSubmit = (user, message, isItMe = false) => {
+  const handleMsgSubmit = (user, message, avatar, isItMe = false) => {
     let me = isItMe;
     // create message obj
-    let msg = {username: user, isItMe: me, message: message, date: date};
+    let msg = {username: user, isItMe: me, message: message, avatar: avatar, date: date};
     setMessages([...messages, msg]);
     props.setNewMess([...messages, msg]);
   }
@@ -82,10 +82,11 @@ const Chat = (props) => {
           (props.inGameProfiles !== undefined) ?
             props.inGameProfiles[0].players.forEach((curr, index, collection) => {
               if (curr.socketId === socket.id) {
+                console.log(curr, 'im in submit message')
                 // display sent message right away to sender
-                handleMsgSubmit(curr.username, e.target.msg.value, true);
+                handleMsgSubmit(curr.username, e.target.msg.value, curr.avatar, true);
                 // sends messages to all
-                handleBroadSubmit(curr.username, e.target.msg.value, roomy);
+                handleBroadSubmit(curr.username, e.target.msg.value, curr.avatar, roomy);
                 e.target.msg.value = '';
               }
             }) :

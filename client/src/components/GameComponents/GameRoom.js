@@ -3,7 +3,7 @@ import Board from './Board'
 import Chat from '../ChatComponents/Chat';
 import {useState, useEffect} from 'react';
 
-const GameRoom = ({ userInfo }) => {
+const GameRoom = ({ inGameProfiles, userInfo }) => {
   // state for opening chat and badge icon -----
   const [isOpen, setOpen] = useState(false);
   const [receiveScroll, setReceiveScroll] = useState(false);
@@ -37,7 +37,7 @@ const GameRoom = ({ userInfo }) => {
           }}>X</button>
           <h5 className="absolute ml-[9vw] mt-10 text-white">Chat</h5>
           <div className="h-101 flex flex-col flex-grow mt-10">
-            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} userInfo={userInfo} />
+            <Chat setNewMess={setNewMess} receiveScroll={receiveScroll} inGameProfiles={inGameProfiles} userInfo={userInfo} />
           </div>
         </div>
       </div>
