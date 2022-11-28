@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useAnimationControls } from 'framer-motion';
 
-const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
+const AnimatedCard = ({ getStackPos, firstLoad, idx, side, shuffle, children }) => {
   const cardRef = useRef();
   const cardControls = useAnimationControls();
 
@@ -75,6 +75,28 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
     animate();
 
   }, []);
+
+  const shuffleAnimate = async () => {
+    await cardControls.start({
+      rotateY: 1080,
+      transition: {
+        duration: 2.5,
+        ease: 'easeInOut'
+      }
+    })
+    cardControls.start({
+      rotateY: 0,
+      transition: {
+        duration: 0
+      }
+    })
+  }
+
+  useEffect(() => {
+    if(shuffle === true && side === 'mid'){
+      shuffleAnimate();
+    }
+  }, [shuffle]);
 
   return (
     <motion.div

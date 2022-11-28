@@ -4,10 +4,11 @@ import cardback from '../../assets/cards/cardback.png';
 import singleCardback from '../../assets/cards/singleCardback.png';
 import AnimatedCard from './AnimatedCard';
 
-const OtherCard = React.forwardRef(({ side, getStackPos, firstLoad, idx }, ref) => {
+const OtherCard = React.forwardRef(({ side, getStackPos, firstLoad, idx, shuffle }, ref) => {
 
   return (
     <AnimatedCard
+    shuffle={shuffle}
     side={side}
     getStackPos={getStackPos}
     firstLoad={firstLoad}

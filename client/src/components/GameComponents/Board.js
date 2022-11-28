@@ -32,6 +32,7 @@ const Board = ({ myId, userInfo }) => {
   // pickSteal: [cardIdxs]
   const [futureCards, setFutureCards] = useState(null);
   const [gameOver, setGameOver] = useState(null);
+  const [shuffle, setShuffle] = useState(false);
 
   useEffect(() => {
     setPlayerArea(playerAreaRef.current?.getBoundingClientRect());
@@ -110,6 +111,13 @@ const Board = ({ myId, userInfo }) => {
         tempUser.total_games++;
       }
       emitters.editUserInfo(tempUser);
+    })
+    socket.on('shuffle', () => {
+      setShuffle(true);
+      setTimeout(() => {
+        setShuffle(false);
+
+      }, 100);
     })
   }, []);
 
@@ -228,7 +236,7 @@ const Board = ({ myId, userInfo }) => {
         <button
         className='relative'
         onClick={drawCard}>
-          <OtherCard ref={stackRef} side='mid' />
+          <OtherCard ref={stackRef} side='mid' shuffle={shuffle} />
           <div className='absolute bottom-4 right-4 text-4xl z-10'>{stackL}</div>
         </button>
 
