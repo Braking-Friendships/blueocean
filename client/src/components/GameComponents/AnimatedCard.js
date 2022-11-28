@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, useAnimationControls } from 'framer-motion';
 
-const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
+const AnimatedCard = ({ getStackPos, firstLoad, idx, side, shuffle, children }) => {
   const cardRef = useRef();
   const cardControls = useAnimationControls();
 
@@ -23,7 +23,7 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
   const getTransitionPos = () => {
     let { x, top, bottom } = cardRef.current?.getBoundingClientRect();
     let stackPosition = getStackPos();
-
+    console.log(stackPosition);
     x = stackPosition.x - x;
     let y = stackPosition.bottom - bottom;
     if(side === 'top'){
@@ -76,13 +76,35 @@ const AnimatedCard = ({ getStackPos, firstLoad, idx, side, children }) => {
 
   }, []);
 
+  const shuffleAnimate = async () => {
+    await cardControls.start({
+      rotateY: 1080,
+      transition: {
+        duration: 2.5,
+        ease: 'easeInOut'
+      }
+    })
+    cardControls.start({
+      rotateY: 0,
+      transition: {
+        duration: 0
+      }
+    })
+  }
+
+  useEffect(() => {
+    if(shuffle === true && side === 'mid'){
+      shuffleAnimate();
+    }
+  }, [shuffle]);
+
   return (
     <motion.div
       layout
       ref={cardRef}
-      className={`relative min-h-0 min-w-0 z-1 p-0 h-auto`}
+      className={`relative min-h-0 min-w-0 p-0 h-auto ${side === 'mid' ? 'z-10 min-h-[271px]' : 'z-[5]'}`}
       animate={cardControls}
-      whileHover={{'zIndex': 10}}
+      whileHover={side !== 'mid' ? {'zIndex': 11} : null}
     >
       {children}
     </motion.div>

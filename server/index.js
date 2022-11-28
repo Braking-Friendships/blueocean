@@ -248,7 +248,8 @@ io.on('connection', socket => {
             endTurn();
             break;
           case 'shuffle':
-            shuffle(socket.ekGameState.deck)
+            shuffle(socket.ekGameState.deck);
+            io.of('/').to(socket.ekGameState.room).emit('shuffle');
             break;
 
           default:
