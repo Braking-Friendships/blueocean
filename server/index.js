@@ -371,6 +371,12 @@ io.on('connection', socket => {
     // console.log('players in room after joining', io.of('/').adapter.rooms)
   })
 
+  socket.on('delete-room', room => {
+    controller.deleteRoom(room);
+    socket.emit('room-deleted')
+    io.in(`${room}`).emit('room-deleted');
+  })
+
 
   socket.on('join-game', (room) => {
     // console.log(room, 'room')

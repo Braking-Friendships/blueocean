@@ -25,7 +25,6 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     }
   }
 
-  // console.log(inGameProfiles, 'bla')
   useEffect(() => {
     newMessage();
   }, [newMess])
@@ -48,6 +47,10 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
   })
   // socket.on('update-room', room_id => setRoomId(room_id))
 
+  socket.on('room-deleted', () => {
+    navigate(`/`)
+  })
+
   const loadGame = (room) => {
     console.log('inGameProfiles in loadGame:', inGameProfiles)
     //replace with real users
@@ -69,8 +72,17 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
     navigate(`/game`)
   }
 
-  const leaveGame = () => {
-    navigate(`/`)
+  const leaveGame = (room) => {
+    if (inGameProfiles) {
+      if (socket.id === inGameProfiles?.[0].host) {
+        socket.emit('delete-room', room)
+      } else {
+        navigate(`/`)
+      }
+    } else {
+      console.log('only host in room')
+      socket.emit('delete-room', room)
+    }
   }
 
   return (
@@ -109,14 +121,13 @@ const Lobby = ({ inGameProfiles, userInfo }) => {
       <br/>
         {console.log(socket.id)}
     <button onClick={() => {loadGame(inGameProfiles?.[0].room)}} className={`bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline `}
-    hidden={socket.id !== inGameProfiles?.[0].host ? true : false}
+    hidden={socket.id !== inGameProfiles?.[0]?.host ? true : false}
     >Ex Kittens</button>
     <br/>
     {/* <button className="bg-[#3D405B] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">UNO</button>
     <br/> */}
-    <button onClick={() => {leaveGame()}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
+    <button onClick={() => {leaveGame(inGameProfiles?.[0]?.room)}}className="bg-[#E07A5F] hover:outline text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Leave Game</button>
     <br/>
-      <div>Chat functions (imported separately)</div>
     <br/>
 
         <div className ='flex flex-row justify-center items-center'>

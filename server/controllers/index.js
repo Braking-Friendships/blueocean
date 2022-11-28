@@ -83,6 +83,7 @@ module.exports.controller = {
   deleteRoom: (room) => {
     return models.deleteRoom(room)
       .then(result => {
+        console.log('room deleted')
         return result;
       })
       .catch(error => console.log(error));
