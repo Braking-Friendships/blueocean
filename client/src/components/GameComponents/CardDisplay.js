@@ -4,7 +4,9 @@ import PlayerCard from './PlayerCard';
 const CardDisplay = ({ futureCards, closeFuture }) => {
   const reverseCards = () => {
     let result = [];
-    for(let i = 2; i >= 0; i--) {
+    let length = futureCards.length - 1;
+
+    for(let i = length; i >= 0; i--) {
       result.push(futureCards[i]);
     }
     return result;

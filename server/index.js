@@ -141,6 +141,7 @@ io.on('connection', socket => {
   }
 
   const endTurn = (shouldAddToEnd = true) => {
+    socket.removeAllListeners('defuse')
     let currPlayer = socket.ekGameState.currentPlayer;
     const playerOrder = socket.ekGameState.playerOrder;
 
@@ -264,6 +265,7 @@ io.on('connection', socket => {
 
     socket.on('clear-card-interval', () => {
       clearInterval(x);
+      socket.removeAllListeners('clear-card-interval')
     });
   }
 
@@ -273,15 +275,14 @@ io.on('connection', socket => {
   })
 
   // Socket listeners for chat components ------------
-  socket.on('send-chat-message', (message, room) => {
+  socket.on('send-chat-message', (user, message, room) => {
     // if room text is empty send to everyone
     if (room === '') {
       // socket.broadcast sends message to everyone except me
-      socket.broadcast.emit('receive-message', message);
-      // console.log(message);
+      socket.broadcast.emit('receive-message', user, message);
     } else {
       // send message to room only
-      socket.to(room).emit('receive-message', message);
+      socket.to(room).emit('receive-message', user, message);
     }
   });
   // socket listener for room joins
@@ -412,6 +413,7 @@ io.on('connection', socket => {
   socket.on('nope-played', (user, userCardIdxs) => {
     io.of('/').to(socket.ekGameState.room).emit('nope-effect');
     socket.ekGameState.prevTurns.push({
+      origin: user,
       userCardType: 'nope',
       userCardIdxs: userCardIdxs ?? [],
       affectedUser: '',
@@ -421,6 +423,7 @@ io.on('connection', socket => {
     removeCard(userCardIdxs, user);
     emitState(socket.ekGameState);
     // console.log('cancelled play')
+    // socket.off('nope-played')
   })
 })
 
