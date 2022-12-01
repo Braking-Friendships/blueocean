@@ -1,16 +1,33 @@
-# Braking Friendship Gamez
-## Featuring - Exploding Kittens Web App
+<h1 align="center">
+  <br>
+  Braking Friendships
+  <br>
+</h1>
 
-### Contributors
+<h4 align="center">
+  <br>
+  A real-time/multiplayer card game that allows up to 4 player gameplay (Featuring - Exploding Kittens)
+  <br>
+</h4>
+
+![-react](https://user-images.githubusercontent.com/103979716/199112745-aea0ac0c-11f8-40be-a7b5-08300e3945a5.svg)
+![-javascript](https://user-images.githubusercontent.com/103979716/199113123-04739e76-7bf1-4ce8-a19b-68228ebabc5f.svg)
+![-express](https://user-images.githubusercontent.com/103979716/199112780-09753942-cce4-4551-9b0d-91d391a5d0fe.svg)
+![-tailwind](https://user-images.githubusercontent.com/103979716/205179159-3d7bb4cd-7bf7-4834-aba6-aaacd5c182b0.svg)
+![-socket io (1)](https://user-images.githubusercontent.com/103979716/205179477-cc07e317-b77a-4b44-a57e-7ca011ff4802.svg)
+![-mongodb](https://user-images.githubusercontent.com/103979716/205179494-e3fe89a2-6bcb-47d5-a0c1-b7cb47991ed0.svg)
+
+<h2 align="center">Contributors</h2>
 <a href="https://github.com/joshgarza">Josh Garza</a>,
-<a href="https://github.com/jonahchoi">Jonah Choi</a>
+<a href="https://github.com/jonahchoi">Jonah Choi</a>,
 <a href="https://github.com/hieungo89">Hieu Ngo</a>,
 <a href="https://github.com/Fernando-Gamboa">Fernando Gamboa</a>,
 <a href="https://github.com/jredboyz">Joseph Redmond</a>,
 <a href="https://github.com/ericpei1">Eric Pei</a>
 
+<br></br>
 <!-- ABOUT THE PROJECT -->
-## About the Project
+<h2>About the Project</h2>
 Our team built a fully functional web application for an online card game featuring Exploding Kittens with all the features such as login, profile, lobby, gameplay, and chat.
 
 ### This project includes the following sections:
