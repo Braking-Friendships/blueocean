@@ -10,12 +10,14 @@
   <br>
 </h4>
 
-![-react](https://user-images.githubusercontent.com/103979716/199112745-aea0ac0c-11f8-40be-a7b5-08300e3945a5.svg)
-![-javascript](https://user-images.githubusercontent.com/103979716/199113123-04739e76-7bf1-4ce8-a19b-68228ebabc5f.svg)
-![-express](https://user-images.githubusercontent.com/103979716/199112780-09753942-cce4-4551-9b0d-91d391a5d0fe.svg)
-![-tailwind](https://user-images.githubusercontent.com/103979716/205179159-3d7bb4cd-7bf7-4834-aba6-aaacd5c182b0.svg)
-![-socket io (1)](https://user-images.githubusercontent.com/103979716/205179477-cc07e317-b77a-4b44-a57e-7ca011ff4802.svg)
-![-mongodb](https://user-images.githubusercontent.com/103979716/205179494-e3fe89a2-6bcb-47d5-a0c1-b7cb47991ed0.svg)
+<a href="https://reactjs.org/">![-react](https://user-images.githubusercontent.com/103979716/199112745-aea0ac0c-11f8-40be-a7b5-08300e3945a5.svg)</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">![-javascript](https://user-images.githubusercontent.com/103979716/199113123-04739e76-7bf1-4ce8-a19b-68228ebabc5f.svg)</a>
+<a href="https://expressjs.com/">![-express](https://user-images.githubusercontent.com/103979716/199112780-09753942-cce4-4551-9b0d-91d391a5d0fe.svg)</a>
+<a href="https://tailwindcss.com/">![-tailwind](https://user-images.githubusercontent.com/103979716/205179159-3d7bb4cd-7bf7-4834-aba6-aaacd5c182b0.svg)</a>
+<a href="https://socket.io/">![-socket io (1)](https://user-images.githubusercontent.com/103979716/205179477-cc07e317-b77a-4b44-a57e-7ca011ff4802.svg)</a>
+<a href="https://firebase.google.com/">![-firebase](https://user-images.githubusercontent.com/103979716/205181943-6501e316-fa60-4a9f-b241-afa1c098a44f.svg)</a>
+<a href="https://www.npmjs.com/package/framer-motion">![-framer-motion](https://user-images.githubusercontent.com/103979716/205181960-9a53a8cc-93de-457e-8da8-47d1e7691610.svg)</a>
+<a href="https://www.mongodb.com/">![-mongodb](https://user-images.githubusercontent.com/103979716/205179494-e3fe89a2-6bcb-47d5-a0c1-b7cb47991ed0.svg)</a>
 
 <h2 align="center">Contributors</h2>
 <a href="https://github.com/joshgarza">Josh Garza</a>,
@@ -210,19 +212,6 @@ The profile page is only available for users who has an account. The user can ac
 </table>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-### Built with:
-* [React](https://reactjs.org/)
-* [Express](https://expressjs.com/)
-* [Firebase](https://firebase.google.com/)
-* [Framer-motion](https://www.npmjs.com/package/framer-motion)
-* [Tailwind](https://tailwindcss.com/)
-* [Socket.io](https://socket.io/)
-* [MongoDB](https://www.mongodb.com/)
-
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Getting Started:
   - Install dependencies in Client:
