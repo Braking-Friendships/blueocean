@@ -33,11 +33,12 @@
 Our team built a fully functional web application for an online card game featuring Exploding Kittens with all the features such as login, profile, lobby, gameplay, and chat.
 
 ### This project includes the following sections:
-1. Landing Page
-2. Login Page
-3. Profile Page
-4. Game Lobby
-5. Gameplay
+1. Main Page
+2. Game Lobby
+3. Gameplay
+4. Chat Feature
+5. Login/Signup
+6. Profile
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -67,7 +68,7 @@ This is the main page of the website. Here contains the Navigation Bar on top, w
   <img src="https://user-images.githubusercontent.com/103979716/205190128-1546abd0-3262-483a-be15-1fc36c71c715.png" alt="Game Lobby" width="500">
 </div>
 <br></br>
-The game lobby allows users to communicate with each other and prepare to enter the gameplay. Up to 4 players are allowed to be in the game lobby at any time. Only the host has the ability to start the game.
+The game lobby allows users to communicate with each other and prepare to enter the gameplay. Up to 4 players are allowed to be in the game lobby at any time.
 <br></br>
 <table>
   <tr>
@@ -108,7 +109,7 @@ The design of the gameplay contains animations and all the logic that are needed
   <img src="https://user-images.githubusercontent.com/104481165/204187763-62f2bc73-4d1c-4d54-9b4f-273d5dfa34f1.png" alt="Chat" width="500">
 </div>
 <br></br>
-Chat feature is available in the game lobby and during gameplay. The game chat allows players to communicate with each other more effectively while being immersed in the game.
+Chat feature is available in the game lobby and during gameplay. The game chat allows players to communicate with each other more effectively while being immersed in the game. The chat notifies user's with a live notification badge, removing the need the keep the chat component open at all times but while being at ease that no message will be missed.
 <br></br>
 <table>
   <tr>
