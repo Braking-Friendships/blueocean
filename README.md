@@ -48,7 +48,9 @@ Our team built a fully functional web application for an online card game featur
 <div align="center">
   <img src="https://user-images.githubusercontent.com/104481165/204183849-d216b26d-f091-4d6e-b932-6c5f629bcf50.png" alt="Landing Page" width="500">
 </div>
+<br></br>
 This is the main page of the website. Here contains the Navigation Bar on top, with the options to create a game room, join a game room, or join a random game room.
+<br></br>
 <table>
   <tr>
     <td>
@@ -89,7 +91,9 @@ The game lobby allows users to communicate with each other and prepare to enter 
   <img src="https://user-images.githubusercontent.com/104481165/204189936-9e702755-875f-4271-a775-aa6615f4f4b1.png" alt="Gameplay" width="500">
   <img src="https://user-images.githubusercontent.com/104597125/204372071-e50c4333-67b1-44cc-afbb-0997a5012805.gif" alt="Card Animation" width="500">
 </div>
+<br></br>
 The design of the gameplay contains animations and all the logic that are needed to allow the smooth flow of the game.
+<br></br>
 <table>
   <tr>
     <td>
@@ -137,7 +141,9 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
 <div align="center">
   <img src="https://user-images.githubusercontent.com/104481165/204165920-53d1b3b4-efb4-430a-81db-08a1a29992c0.png" alt="Login" width="500">
 </div>
+<br></br>
   Users have the ability to login and/or signup for an account.
+<br></br>
 <table>
   <tr>
     <td>
@@ -164,7 +170,9 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
 <div align="center">
   <img src="https://user-images.githubusercontent.com/104481165/204163788-b6bb9c17-47cc-499c-b8fc-cf2cb598c907.png" alt="Profile Page" width="500">
 </div>
+<br></br>
 The profile page is only available for users who has an account. The user can access their profile page to see their username, avatar, game info, and friends. User also has the ability to change their username and avatar.
+<br></br>
 <table>
   <tr>
     <td>
