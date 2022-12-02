@@ -64,16 +64,18 @@ This is the main page of the website. Here contains the Navigation Bar on top, w
 <!-- GAME LOBBY -->
 ### Game Lobby:
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/104481165/204186172-64ce905d-1a5b-46bc-b4f5-dadc7bb0e076.png" alt="Game Lobby" width="500">
+  <img src="https://user-images.githubusercontent.com/103979716/205190128-1546abd0-3262-483a-be15-1fc36c71c715.png" alt="Game Lobby" width="500">
 </div>
+<br></br>
 The game lobby allows users to communicate with each other and prepare to enter the gameplay. Up to 4 players are allowed to be in the game lobby at any time. Only the host has the ability to start the game.
+<br></br>
 <table>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204186172-64ce905d-1a5b-46bc-b4f5-dadc7bb0e076.png" alt="SCREENSHOT" width="500">
+      <img src="https://user-images.githubusercontent.com/103979716/205190923-0ad2d99c-a92a-4667-ba5f-09c07dc9969a.png" alt="SCREENSHOT" width="250">
     </td>
     <td>
-      <b>Title:</b>  Explanation.
+      <b>Lobby for joining players:</b>  Joining players do not have the option to start the game, that's a host privilege
     </td>
   </tr>
 </table>
@@ -105,11 +107,13 @@ The design of the gameplay contains animations and all the logic that are needed
 <div align="center">
   <img src="https://user-images.githubusercontent.com/104481165/204187763-62f2bc73-4d1c-4d54-9b4f-273d5dfa34f1.png" alt="Chat" width="500">
 </div>
+<br></br>
 Chat feature is available in the game lobby and during gameplay. The game chat allows players to communicate with each other more effectively while being immersed in the game.
+<br></br>
 <table>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204187337-3c6749b6-de7b-4e40-b071-4fa31af09ce3.png" alt="chat lobby" width="500">
+      <img src="https://user-images.githubusercontent.com/103979716/205186880-e2b95e14-9e90-4596-bf57-d843f07aa209.png" alt="chat lobby" width="500">
     </td>
     <td>
       <b>Lobby Chat:</b>  The chat bar opens on the right side of the screen and can be collapsed to allow players more versatlity and control. Chat displays an interactive icon to show any new messages.
@@ -117,7 +121,7 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204189148-02ca12f6-52af-4ee6-a218-752879592ac7.png" alt="chat gameplay" width="500">
+      <img src="https://user-images.githubusercontent.com/103979716/205187690-935aa0eb-cf4c-426d-bd0c-997e7138b0c0.png" alt="chat gameplay" width="500">
     </td>
     <td>
       <b>Gameplay Chat:</b>  Gameplay chat is also on the right side and can be toggled to close as needed.
