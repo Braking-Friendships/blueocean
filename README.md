@@ -88,13 +88,14 @@ The game lobby allows users to communicate with each other and prepare to enter 
 <!-- GAMEPLAY -->
 ### Gameplay:
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/104481165/204189936-9e702755-875f-4271-a775-aa6615f4f4b1.png" alt="Gameplay" width="500">
-  <img src="https://user-images.githubusercontent.com/104597125/204372071-e50c4333-67b1-44cc-afbb-0997a5012805.gif" alt="Card Animation" width="500">
+  <img src="https://user-images.githubusercontent.com/104597125/205201547-89a22d28-427d-44a8-b513-3145eb60a510.PNG" alt="Gameboard" width="500">
+  <img src="https://user-images.githubusercontent.com/104597125/204372071-e50c4333-67b1-44cc-afbb-0997a5012805.gif" alt="Initial card distribution Animation gif" width="500">
+  <img src="https://user-images.githubusercontent.com/104597125/205201658-6a48ccd0-fcb0-4d57-ab7d-15e516ca0806.gif" alt="Playing a card example gif" width="500">
 </div>
 <br></br>
-The design of the gameplay contains animations and all the logic that are needed to allow the smooth flow of the game.
+Once the game is started, players are taken to the game board. Here, there are several animations that bring the cards to life and make the game more fun. Players are able to hover over cards to see their description, drag cards upward to play them, and draw a new card. There are several unique abilities that cards can perform, including seeing the next three cards in the deck and cancelling out previous cards. Real time updates were achieved using web sockets to provide a seamless experience for all players.
 <br></br>
-<table>
+<!-- <table>
   <tr>
     <td>
       <img src="SOURCE" alt="SCREENSHOT" width="500">
@@ -103,7 +104,7 @@ The design of the gameplay contains animations and all the logic that are needed
       <b>Title:</b>  Explanation.
     </td>
   </tr>
-</table>
+</table> -->
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
