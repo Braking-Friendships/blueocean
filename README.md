@@ -10,14 +10,14 @@
   <br>
 </h4>
 
-<a href="https://reactjs.org/">![-react](https://user-images.githubusercontent.com/103979716/199112745-aea0ac0c-11f8-40be-a7b5-08300e3945a5.svg)</a>
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">![-javascript](https://user-images.githubusercontent.com/103979716/199113123-04739e76-7bf1-4ce8-a19b-68228ebabc5f.svg)</a>
-<a href="https://expressjs.com/">![-express](https://user-images.githubusercontent.com/103979716/199112780-09753942-cce4-4551-9b0d-91d391a5d0fe.svg)</a>
-<a href="https://tailwindcss.com/">![-tailwind](https://user-images.githubusercontent.com/103979716/205179159-3d7bb4cd-7bf7-4834-aba6-aaacd5c182b0.svg)</a>
-<a href="https://socket.io/">![-socket io (1)](https://user-images.githubusercontent.com/103979716/205179477-cc07e317-b77a-4b44-a57e-7ca011ff4802.svg)</a>
-<a href="https://firebase.google.com/">![-firebase](https://user-images.githubusercontent.com/103979716/205181943-6501e316-fa60-4a9f-b241-afa1c098a44f.svg)</a>
-<a href="https://www.npmjs.com/package/framer-motion">![-framer-motion](https://user-images.githubusercontent.com/103979716/205181960-9a53a8cc-93de-457e-8da8-47d1e7691610.svg)</a>
-<a href="https://www.mongodb.com/">![-mongodb](https://user-images.githubusercontent.com/103979716/205179494-e3fe89a2-6bcb-47d5-a0c1-b7cb47991ed0.svg)</a>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">![-javascript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black)</a>
+<a href="https://reactjs.org/">![-react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)</a>
+<a href="https://expressjs.com/">![-express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)</a>
+<a href="https://tailwindcss.com/">![-tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)</a>
+<a href="https://socket.io/">![-socket io (1)](https://img.shields.io/badge/Socket.io-010101.svg?style=for-the-badge&logo=socketdotio&logoColor=white)</a>
+<a href="https://firebase.google.com/">![-firebase](https://img.shields.io/badge/Firebase-FFCA28.svg?style=for-the-badge&logo=Firebase&logoColor=black)</a>
+<a href="https://www.mongodb.com/">![-mongodb](https://img.shields.io/badge/MongoDB-47A248.svg?style=for-the-badge&logo=MongoDB&logoColor=white)</a>
+<a href="https://www.npmjs.com/package/framer-motion">![-framer-motion](https://img.shields.io/badge/Framer_Motion-CC2927.svg?style=for-the-badge&logoColor=white)</a>
 
 <h2 align="center">Contributors</h2>
 <a href="https://github.com/joshgarza">Josh Garza</a>,
@@ -53,8 +53,8 @@ This is the main page of the website. Here contains the Navigation Bar on top, w
 <br></br>
 <table>
   <tr>
-    <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204184281-320224f3-93f2-4aeb-ba9e-34d17f609bb9.png" alt="Nav Bar" width="500">
+    <td width="25%">
+      <img src="https://user-images.githubusercontent.com/104481165/204184281-320224f3-93f2-4aeb-ba9e-34d17f609bb9.png" alt="Nav Bar">
     </td>
     <td>
       <b>Navigation Bar:</b>  The navigation bar inclues the company logo, profile, and login process. The navigation bar changes depending on user's login status. Users with an account can acces their profile and search for other users.
@@ -74,8 +74,8 @@ The game lobby allows users to communicate with each other and prepare to enter 
 <br></br>
 <table>
   <tr>
-    <td>
-      <img src="https://user-images.githubusercontent.com/103979716/205190923-0ad2d99c-a92a-4667-ba5f-09c07dc9969a.png" alt="SCREENSHOT" width="250">
+    <td width="25%">
+      <img src="https://user-images.githubusercontent.com/103979716/205190923-0ad2d99c-a92a-4667-ba5f-09c07dc9969a.png" alt="SCREENSHOT">
     </td>
     <td>
       <b>Lobby for joining players:</b>  Joining players do not have the option to start the game, that's a host privilege
@@ -118,8 +118,8 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
 <br></br>
 <table>
   <tr>
-    <td>
-      <img src="https://user-images.githubusercontent.com/103979716/205186880-e2b95e14-9e90-4596-bf57-d843f07aa209.png" alt="chat lobby" width="500">
+    <td width="25%">
+      <img src="https://user-images.githubusercontent.com/103979716/205186880-e2b95e14-9e90-4596-bf57-d843f07aa209.png" alt="chat lobby">
     </td>
     <td>
       <b>Lobby Chat:</b>  The chat bar opens on the right side of the screen and can be collapsed to allow players more versatlity and control. Chat displays an interactive icon to show any new messages.
@@ -127,7 +127,7 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/103979716/205187690-935aa0eb-cf4c-426d-bd0c-997e7138b0c0.png" alt="chat gameplay" width="500">
+      <img src="https://user-images.githubusercontent.com/103979716/205187690-935aa0eb-cf4c-426d-bd0c-997e7138b0c0.png" alt="chat gameplay">
     </td>
     <td>
       <b>Gameplay Chat:</b>  Gameplay chat is also on the right side and can be toggled to close as needed.
@@ -147,8 +147,8 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
 <br></br>
 <table>
   <tr>
-    <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204165920-53d1b3b4-efb4-430a-81db-08a1a29992c0.png" alt="Zoom View Screenshot" width="500">
+    <td width="25%">
+      <img src="https://user-images.githubusercontent.com/104481165/204165920-53d1b3b4-efb4-430a-81db-08a1a29992c0.png" alt="Zoom View Screenshot">
     </td>
     <td>
       <b>Login Page:</b>  User can login with their email and password. If user forgot password, they can reset it with the 'forget password' button. User can signup for a new account by clicking the 'signup' button.
@@ -156,7 +156,7 @@ Chat feature is available in the game lobby and during gameplay. The game chat a
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204165932-b302ee74-4c7b-4e59-bb70-8a429b89cd3f.png" alt="Zoom View Screenshot" width="500">
+      <img src="https://user-images.githubusercontent.com/104481165/204165932-b302ee74-4c7b-4e59-bb70-8a429b89cd3f.png" alt="Zoom View Screenshot">
     </td>
     <td>
       <b>Account Registration Page:</b>  In order to register for an account, user needs to input a username, email, password, and confirm password.
@@ -176,8 +176,8 @@ The profile page is only available for users who has an account. The user can ac
 <br></br>
 <table>
   <tr>
-    <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204163938-3902fa09-64d9-46a6-bdb9-2d03e4585cb4.png" alt="Guest Account" width="500">
+    <td width="25%">
+      <img src="https://user-images.githubusercontent.com/104481165/204163938-3902fa09-64d9-46a6-bdb9-2d03e4585cb4.png" alt="Guest Account">
     </td>
     <td>
       <b>Guest Account:</b>  Guest accounts have a defaulted avatar with a random guest ID number. They have the option to login to be able to view their profile.
@@ -185,7 +185,7 @@ The profile page is only available for users who has an account. The user can ac
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204164028-25fa396b-e1b4-4310-a9d7-60dbe9dab7d3.png" alt="User Account" width="500">
+      <img src="https://user-images.githubusercontent.com/104481165/204164028-25fa396b-e1b4-4310-a9d7-60dbe9dab7d3.png" alt="User Account">
     </td>
     <td>
       <b>User Account:</b>  User account will show the user's avatar and their username in the landing page. They also have the option to search for other users and add them as friend.
@@ -193,7 +193,7 @@ The profile page is only available for users who has an account. The user can ac
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204165158-3dcf901d-4c76-4c45-b189-8b43662b454b.png" alt="Search Profile" width="500">
+      <img src="https://user-images.githubusercontent.com/104481165/204165158-3dcf901d-4c76-4c45-b189-8b43662b454b.png" alt="Search Profile">
     </td>
     <td>
       <b>Edit Username/Avatar:</b> User can edit their username. New username must be different than the ones from the database. Users can also choose from one of the 9 avatars ta
@@ -201,7 +201,7 @@ The profile page is only available for users who has an account. The user can ac
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204164150-0ba2878e-c299-44c0-a90b-84dd6b6df87f.png" alt="Friend's Profile" width="500">
+      <img src="https://user-images.githubusercontent.com/104481165/204164150-0ba2878e-c299-44c0-a90b-84dd6b6df87f.png" alt="Friend's Profile">
     </td>
     <td>
       <b>Friend's Profile:</b> Clicking on a friend's profile in the user's profile page will render the page to view the friend's profile.
@@ -209,7 +209,7 @@ The profile page is only available for users who has an account. The user can ac
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204164321-a7d4ad8b-ed7d-4382-93a6-fa96aad8cb40.png" alt="Search Profile" width="500">
+      <img src="https://user-images.githubusercontent.com/104481165/204164321-a7d4ad8b-ed7d-4382-93a6-fa96aad8cb40.png" alt="Search Profile">
     </td>
     <td>
       <b>Search:</b>  User can search for other users by their username. User can then view the profile page upon clicking on the username.
@@ -217,7 +217,7 @@ The profile page is only available for users who has an account. The user can ac
   </tr>
   <tr>
     <td>
-      <img src="https://user-images.githubusercontent.com/104481165/204164338-3eef63d2-3f95-4436-875d-292828fd49d8.png" alt="Search Profile" width="500">
+      <img src="https://user-images.githubusercontent.com/104481165/204164338-3eef63d2-3f95-4436-875d-292828fd49d8.png" alt="Search Profile">
     </td>
     <td>
       <b>Add Friend:</b>  Searched profile page has the option to add the user as a friend. This will add the profile to the user's friend list.
